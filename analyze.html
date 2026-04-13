@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyze Your Website - Quantum AI Labs</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<header>
+    <nav>
+        <div class="logo">Quantum AI Labs</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="analyze.html" class="active">Analyze</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section class="hero" style="padding: 3rem 2rem;">
+        <h1>Analyze Your Website</h1>
+        <p>Enter your web address and discover your AIFR score in seconds.</p>
+    </section>
+
+    <section>
+        <div class="form-group" style="max-width: 600px; margin: 0 auto;">
+            <form id="analyze-form">
+                <input type="url" id="website-url" placeholder="www.yourwebsite.com" required>
+                <button type="submit" class="btn-analiseer">Analyze</button>
+            </form>
+        </div>
+        
+        <div id="results" style="display: none;">
+            <div class="score-grid" id="score-grid">
+                <!-- Scores will be inserted here -->
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <p><strong>Total AIFR Score: <span id="total-score">0</span>/100</strong></p>
+                <p id="score-message" style="margin-top: 0.5rem; color: var(--gray);"></p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="contact.html" class="btn btn-primary">Contact Us For Full Report</a>
+            </div>
+        </div>
+        
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Analyzing your website...</p>
+        </div>
+        
+        <div id="error" class="error" style="display: none;">
+            <p>Sorry, something went wrong. Please try again.</p>
+        </div>
+    </section>
+    
+    <section>
+        <h2>How It Works</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>1. Enter URL</h3>
+                <p>Enter the web address of the website you want to analyze.</p>
+            </div>
+            <div class="feature">
+                <h3>2. Click Analyze</h3>
+                <p>Our system automatically starts analyzing the website.</p>
+            </div>
+            <div class="feature">
+                <h3>3. See Results</h3>
+                <p>Within seconds you have your complete AIFR score.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Quantum AI Labs</h4>
+            <p>Quantum AI Labs - Your partner in website quality.</p>
+        </div>
+        <div class="footer-section">
+            <h4>Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                            <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>Email: info@qail.co.za</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Quantum AI Labs. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+document.getElementById('analyze-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const url = document.getElementById('website-url').value;
+    const loading = document.getElementById('loading');
+    const results = document.getElementById('results');
+    const error = document.getElementById('error');
+    
+    loading.style.display = 'block';
+    results.style.display = 'none';
+    error.style.display = 'none';
+    
+    try {
+        // Fetch the website
+        const response = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(url));
+        const data = await response.json();
+        
+        // Parse the HTML
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data.contents, 'text/html');
+        
+        // Calculate AIFR scores (simplified version)
+        const scores = calculateAIFR(doc, url);
+        
+        // Display results
+        displayResults(scores);
+        
+        loading.style.display = 'none';
+        results.style.display = 'block';
+    } catch (err) {
+        console.error(err);
+        loading.style.display = 'none';
+        error.style.display = 'block';
+    }
+});
+
+function calculateAIFR(doc, url) {
+    // Design Score
+    let design = 50;
+    if (doc.querySelector('style') || doc.querySelector('link[rel="stylesheet"]')) design += 20;
+    if (doc.querySelector('h1')) design += 10;
+    if (doc.querySelectorAll('h2, h3, h4').length > 3) design += 10;
+    if (doc.querySelector('header') && doc.querySelector('footer')) design += 10;
+    
+    // Mobile Score
+    let mobile = 60;
+    if (doc.querySelector('meta[name="viewport"]')) mobile += 25;
+    if (doc.querySelectorAll('[style*="flex"]').length > 0) mobile += 15;
+    
+    // Content Score  
+    let content = 40;
+    const text = doc.body.innerText;
+    if (text.length > 500) content += 20;
+    if (text.split(' ').length > 100) content += 20;
+    if (doc.querySelectorAll('p').length > 3) content += 20;
+    
+    // Contact Score
+    let contact = 30;
+    if (doc.querySelector('a[href*="mailto"]') || doc.body.innerText.includes('@')) contact += 25;
+    if (doc.body.innerText.toLowerCase().includes('contact')) contact += 20;
+    if (doc.querySelector('address') || doc.querySelector('.contact')) contact += 25;
+    
+    // SEO Score
+    let seo = 40;
+    if (doc.querySelector('title') && doc.querySelector('title').innerText.length > 5) seo += 20;
+    if (doc.querySelector('meta[name="description"]')) seo += 20;
+    if (doc.querySelectorAll('h1, h2, h3').length > 2) seo += 20;
+    
+    // Images Score
+    let images = 50;
+    if (doc.querySelectorAll('img').length > 0) {
+        images += 20;
+        const imagesWithAlt = doc.querySelectorAll('img[alt]').length;
+        if (imagesWithAlt > doc.querySelectorAll('img').length / 2) images += 10;
+    }
+    
+    return {
+        design: Math.min(100, design),
+        mobile: Math.min(100, mobile),
+        content: Math.min(100, content),
+        contact: Math.min(100, contact),
+        seo: Math.min(100, seo),
+        images: Math.min(100, images)
+    };
+}
+
+function displayResults(scores) {
+    const scoreGrid = document.getElementById('score-grid');
+    const labels = {
+        design: 'Design & Structure',
+        mobile: 'Mobile Ready',
+        content: 'Content',
+        contact: 'Contact Info',
+        seo: 'SEO',
+        images: 'Images & Media'
+    };
+    
+    let html = '';
+    let total = 0;
+    
+    for (const [key, label] of Object.entries(labels)) {
+        const value = scores[key];
+        total += value;
+        
+        let colorClass = 'score-low';
+        if (value >= 70) colorClass = 'score-high';
+        else if (value >= 50) colorClass = 'score-medium';
+        
+        html += `
+            <div class="score-card">
+                <h4>${label}</h4>
+                <div class="score-value">${value}</div>
+                <div class="score-bar">
+                    <div class="score-bar-fill ${colorClass}" style="width: ${value}%"></div>
+                </div>
+            </div>
+        `;
+    }
+    
+    scoreGrid.innerHTML = html;
+    
+    const totalScore = Math.round(total / 6);
+    document.getElementById('total-score').textContent = totalScore;
+    
+    let message = '';
+    if (totalScore >= 80) message = 'Excellent! Your website is well optimized.';
+    else if (totalScore >= 60) message = 'Good. There are areas that can be improved.';
+    else if (totalScore >= 40) message = 'Moderate. We recommend improving your website.';
+    else message = 'Critical. Contact us for a full analysis.';
+    
+    document.getElementById('score-message').textContent = message;
+}
+
+// Check for URL in query string
+const urlParams = new URLSearchParams(window.location.search);
+const urlParam = urlParams.get('url');
+if (urlParam) {
+    document.getElementById('website-url').value = urlParam;
+    document.getElementById('analyze-form').dispatchEvent(new Event('submit'));
+}
+</script>
+</body>
+</html>

@@ -110,11 +110,18 @@ document.getElementById('analyze-form').addEventListener('submit', async functio
     e.preventDefault();
     
     let url = document.getElementById('website-url').value.trim();
+    // Add https:// if missing
     if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
         url = 'https://' + url;
     } else if (url.startsWith('http://')) {
         url = url.replace('http://', 'https://');
     }
+    // Handle non-www domains (add www automatically for common sites)
+    const urlObj = new URL(url);
+    if (!urlObj.hostname.startsWith('www.') && !urlObj.hostname.includes('.')) {
+        urlObj.hostname = 'www.' + urlObj.hostname;
+    }
+    url = urlObj.toString().replace(/\/$/, '');
     const loading = document.getElementById('loading');
     const results = document.getElementById('results');
     const error = document.getElementById('error');

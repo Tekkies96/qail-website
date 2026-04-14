@@ -116,9 +116,10 @@ document.getElementById('analyze-form').addEventListener('submit', async functio
     } else if (url.startsWith('http://')) {
         url = url.replace('http://', 'https://');
     }
-    // Handle non-www domains (add www automatically for common sites)
+    // Handle non-www domains - add www only for www-less domains
     const urlObj = new URL(url);
-    if (!urlObj.hostname.startsWith('www.') && !urlObj.hostname.includes('.')) {
+    if (urlObj.hostname.match(/^[a-z0-9-]+\.[a-z]+$/i)) {
+        // domain like absa.co.za - no subdomain, add www
         urlObj.hostname = 'www.' + urlObj.hostname;
     }
     url = urlObj.toString().replace(/\/$/, '');

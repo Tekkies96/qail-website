@@ -50,11 +50,21 @@
     <section class="preview-tool">
         <h2>Try It Now</h2>
         <p>Enter a website address and see the results:</p>
-        <form action="analyze.html" method="get">
-            <input type="url" name="url" placeholder="www.yourwebsite.com" required>
+        <form action="analyze.html" method="get" id="home-analyze-form">
+            <input type="text" name="url" id="home-url-input" placeholder="www.yourwebsite.com" required>
             <button type="submit" class="btn btn-primary">Analyze</button>
         </form>
     </section>
+
+    <script>
+    document.getElementById('home-analyze-form').addEventListener('submit', function(e) {
+        var input = document.getElementById('home-url-input');
+        var url = input.value.trim();
+        if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+            input.value = 'https://' + url;
+        }
+    });
+    </script>
 
     <section class="faq">
         <h2>Frequently Asked Questions</h2>

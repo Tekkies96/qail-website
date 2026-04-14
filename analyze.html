@@ -159,26 +159,39 @@ document.getElementById('analyze-form').addEventListener('submit', async functio
         loading.style.display = 'none';
         results.style.display = 'block';
     } catch (err) {
-        console.error('Fetch error:', err);
-        loading.style.display = 'none';
+        console.error('Primary fetch error:', err);
         
-        // Try proxy as fallback
-        try {
-            const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
-            const proxyResponse = await fetch(proxyUrl, { mode: 'cors' });
-            if (proxyResponse.ok) {
-                const data = { contents: await proxyResponse.text() };
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(data.contents, 'text/html');
-                const scores = calculateAIFR(doc, url);
-                displayResults(scores);
-                results.style.display = 'block';
-                return;
+        // Try multiple fallbacks
+        const fallbacks = [
+            'https://api.allorigins.win/raw?url=',
+            'https://r.jina.ai/http://'
+        ];
+        
+        for (const proxy of fallbacks) {
+            try {
+                const proxyUrl = proxy + encodeURIComponent(url);
+                const pfResponse = await fetch(proxyUrl, { mode: 'cors' });
+                if (pfResponse.ok) {
+                    const data = { contents: await pfResponse.text() };
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(data.contents, 'text/html');
+                    const scores = calculateAIFR(doc, url);
+                    displayResults(scores);
+                    results.style.display = 'block';
+                    return;
+                }
+            } catch (e) {
+                console.error('Fallback ' + proxy + ' failed:', e);
             }
-        } catch (proxyErr) {
-            console.error('Proxy also failed:', proxyErr);
         }
         
+        loading.style.display = 'none';
+        error.style.display = 'block';
+        return;
+    }
+        loading.style.display = 'none';
+        
+        loading.style.display = 'none';
         error.style.display = 'block';
     }
 });

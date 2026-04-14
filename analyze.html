@@ -30,7 +30,7 @@
     <section>
         <div class="form-group" style="max-width: 600px; margin: 0 auto;">
             <form id="analyze-form">
-                <input type="url" id="website-url" placeholder="www.yourwebsite.com" required>
+                <input type="text" id="website-url" placeholder="www.yourwebsite.com" required>
                 <button type="submit" class="btn-analiseer">Analyze</button>
             </form>
         </div>
@@ -109,7 +109,10 @@
 document.getElementById('analyze-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    const url = document.getElementById('website-url').value;
+    let url = document.getElementById('website-url').value.trim();
+    if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'https://' + url;
+    }
     const loading = document.getElementById('loading');
     const results = document.getElementById('results');
     const error = document.getElementById('error');

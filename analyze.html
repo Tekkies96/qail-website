@@ -112,6 +112,8 @@ document.getElementById('analyze-form').addEventListener('submit', async functio
     let url = document.getElementById('website-url').value.trim();
     if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
         url = 'https://' + url;
+    } else if (url.startsWith('http://')) {
+        url = url.replace('http://', 'https://');
     }
     const loading = document.getElementById('loading');
     const results = document.getElementById('results');

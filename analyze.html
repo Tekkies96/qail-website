@@ -156,6 +156,20 @@ document.getElementById('analyze-btn').addEventListener('click', async function(
         // Display results
         displayResults(scores);
         
+        // Log search - try to send to server (will fail gracefully if no server)
+        try {
+            fetch('/log-search', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({url: url, score: Math.round(total/6), timestamp: new Date().toISOString()})
+            }).catch(() => {}); // Silent fail
+        } catch (e) {}
+        
+        // Also store in localStorage for retrieval
+        const searches = JSON.parse(localStorage.getItem('qail_searches') || '[]');
+        searches.unshift({url: url, score: Math.round(total/6), timestamp: new Date().toISOString()});
+        localStorage.setItem('qail_searches', JSON.stringify(searches.slice(0, 50)));
+        
         loading.style.display = 'none';
         results.style.display = 'block';
     } catch (err) {

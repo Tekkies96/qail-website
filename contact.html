@@ -37,7 +37,28 @@
                 
                 <div class="form-group">
                     <label for="cellphone">Cellphone Number *</label>
-                    <input type="tel" id="cellphone" name="cellphone" placeholder="+27..." required>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <select id="country-code" name="country-code" style="width: 120px; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; background: var(--white);">
+                            <option value="+27">+27 🇿🇦</option>
+                            <option value="+1">+1 🇺🇸</option>
+                            <option value="+44">+44 🇬🇧</option>
+                            <option value="+61">+61 🇦🇺</option>
+                            <option value="+49">+49 🇩🇪</option>
+                            <option value="+31">+31 🇳🇱</option>
+                            <option value="+21">+21 🇿🇦</option>
+                            <option value="+265">+265 🇲🇼</option>
+                            <option value="+263">+263 🇿🇼</option>
+                            <option value="+260">+260 🇿🇲</option>
+                            <option value="+267">+267 🇧🇼</option>
+                            <option value="+264">+264 🇳🇦</option>
+                            <option value="+258">+258 🇲🇿</option>
+                            <option value="+254">+254 🇰🇪</option>
+                            <option value="+255">+255 🇹🇿</option>
+                            <option value="+256">+256 🇺🇬</option>
+                            <option value="+251">+251 🇪🇹</option>
+                        </select>
+                        <input type="tel" id="cellphone" name="cellphone" placeholder="82 123 4567" style="flex: 1;" required>
+                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -247,7 +268,9 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
     const email = document.getElementById('email').value;
     const subject = document.getElementById('subject').value;
     const message = document.getElementById('message').value;
+    const countryCode = document.getElementById('country-code').value;
     const cellphone = document.getElementById('cellphone').value;
+    const fullPhone = countryCode + ' ' + cellphone;
     
     document.getElementById('contact-form').style.display = 'none';
     document.getElementById('form-success').style.display = 'block';

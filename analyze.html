@@ -343,8 +343,17 @@ const urlParams = new URLSearchParams(window.location.search);
 const urlParam = urlParams.get('url');
 if (urlParam) {
     document.getElementById('website-url').value = urlParam;
-    document.getElementById('analyze-form').dispatchEvent(new Event('submit'));
+    // Auto-trigger the analysis
+    setTimeout(function() {
+        document.getElementById('analyze-btn').click();
+    }, 100);
 }
+
+// Also handle form submission
+document.getElementById('analyze-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('analyze-btn').click();
+});
 </script>
 </body>
 </html>

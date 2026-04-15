@@ -141,7 +141,7 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
     
     // Use jina.ai to fetch the website content
     var domain = url.replace('https://', '').replace('http://', '').replace('www.', '');
-    var fetchUrl = 'https://r.jina.ai/http://' + domain;
+    var fetchUrl = '/api?url=' + encodeURIComponent(url);
     
     console.log('Fetching:', fetchUrl);
     
@@ -150,7 +150,7 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
         if (!response.ok) {
             throw new Error('Failed to fetch');
         }
-        return response.text();
+        return response.json().then(function(data) { return data.html; });
     })
     .then(function(html) {
         var parser = new DOMParser();

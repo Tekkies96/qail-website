@@ -27,7 +27,7 @@
 <main>
     <section class="hero" style="padding: 3rem 2rem;">
         <h1>Analyze Your Website</h1>
-        <p>Enter your web address and discover your AIFR score in seconds.</p>
+        <p>Enter your web address and discover both your Website Analysis Score and AIFR Score (AI Friendliness) in seconds.</p>
     </section>
 
     <section>
@@ -44,7 +44,8 @@
             </div>
             
             <div style="text-align: center; margin-top: 2rem;">
-                <p><strong>Total AIFR Score: <span id="total-score">0</span>/100</strong></p>
+                <p><strong>Website Analysis Score: <span id="total-score">0</span>/100</strong></p>
+                <p><strong>AIFR Score (AI Friendliness): <span id="aifr-score">0</span>/100</strong></p>
                 <p id="score-message" style="margin-top: 0.5rem; color: var(--gray);"></p>
             </div>
             
@@ -78,8 +79,8 @@
                 <p>Our system automatically starts analyzing the website.</p>
             </div>
             <div class="feature">
-                <h3>3. See Results</h3>
-                <p>Within seconds you have your complete AIFR score.</p>
+                <h3>3. See Two Scores</h3>
+                <p>Get your <strong>Website Analysis Score</strong> (0-100) and <strong>AIFR Score</strong> (AI Friendliness Rating).</p>
             </div>
         </div>
     </section>
@@ -304,13 +305,18 @@ function displayResults(scores) {
     
     scoreGrid.innerHTML = html;
     
-    const totalScore = Math.round(total / 6);
-    document.getElementById('total-score').textContent = totalScore;
+    // Website Analysis Score (general quality)
+    const websiteScore = Math.round(total / 6);
+    document.getElementById('total-score').textContent = websiteScore;
+    
+    // AIFR Score (AI Friendliness - same calculation for now)
+    // Could be refined later to focus on AI-specific factors
+    document.getElementById('aifr-score').textContent = websiteScore;
     
     let message = '';
-    if (totalScore >= 80) message = 'Excellent! Your website is well optimized.';
-    else if (totalScore >= 60) message = 'Good. There are areas that can be improved.';
-    else if (totalScore >= 40) message = 'Moderate. We recommend improving your website.';
+    if (websiteScore >= 80) message = 'Excellent! Your website is well optimized.';
+    else if (websiteScore >= 60) message = 'Good. There are areas that can be improved.';
+    else if (websiteScore >= 40) message = 'Moderate. We recommend improving your website.';
     else message = 'Critical. Contact us for a full analysis.';
     
     document.getElementById('score-message').textContent = message;

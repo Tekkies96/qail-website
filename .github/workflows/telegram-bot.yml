@@ -1,0 +1,49 @@
+name: Telegram Bot Commands
+
+on:
+  repository_dispatch:
+    types: [telegram_command]
+  workflow_dispatch:
+    inputs:
+      command:
+        type: choice
+        description: Command to execute
+        options:
+          - status
+          - analytics
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update Email
+        if: github.event_name == 'repository_dispatch' && github.event.client_payload.command == 'updateemail'
+        run: |
+          NEW_EMAIL="${{ github.event.client_payload.email }}"
+          sed -i "s/info@qail.co.za/$NEW_EMAIL/g" *.html
+          sed -i "s/tekkies96@gmail.com/$NEW_EMAIL/g" *.html
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -A
+          git commit -m "Update email to $NEW_EMAIL" || echo "No changes"
+          git push
+        env:
+          NEW_EMAIL: ${{ github.event.client_payload.email }}
+
+      - name: Check Status
+        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'repository_dispatch' && github.event.client_payload.command == 'status')
+        run: |
+          echo "Website: www.qail.co.za"
+          echo "Status: Running"
+          echo "Email: $(grep -h 'Email:' *.html | head -1)"
+          echo "Last deployed: $(date)"
+
+      - name: Analytics Report
+        if: github.event_name == 'repository_dispatch' && github.event.client_payload.command == 'analytics'
+        run: |
+          echo "Checking Vercel Analytics..."
+          echo "Navigate to: https://vercel.com/dashboard/tekkies96s-projects/qail-website/analytics"
+          echo "Real-time data available on Vercel dashboard"

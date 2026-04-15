@@ -144,13 +144,14 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
     var fetchUrl = '/api?url=' + encodeURIComponent(url);
     
     console.log('Fetching:', fetchUrl);
+        console.log('API should return JSON');
     
     fetch(fetchUrl, { mode: 'cors' })
     .then(function(response) {
         if (!response.ok) {
             throw new Error('Failed to fetch');
         }
-        return response.json().then(function(data) { return data.html; });
+        return response.text().then(function(text) { console.log('API response length:', text.length); return text; }).then(function(text) { try { return JSON.parse(text).html; } catch(e) { console.log('Not JSON, using as raw HTML'); return text; } });
     })
     .then(function(html) {
         var parser = new DOMParser();

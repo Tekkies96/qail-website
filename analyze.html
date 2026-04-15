@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <script async src="https://cdn.jsdelivr.net/npm/@vercel/analytics@1.4.4" defer></script>
-<script>
-</script>
 <header>
     <nav>
         <div class="logo">Quantum AI Labs</div>
@@ -17,8 +15,7 @@
             <li><a href="services.html">Services</a></li>
             <li><a href="analyze.html" class="active">Analyze</a></li>
             <li><a href="portfolio.html">Portfolio</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
+            <li><a href="faq.html">FAQ</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>
@@ -32,16 +29,19 @@
 
     <section>
         <div class="form-group" style="max-width: 600px; margin: 0 auto;">
-            <form id="analyze-form" onsubmit="return false;">
-                <input type="text" id="website-url" placeholder="www.yourwebsite.com" onkeydown="if(event.key==='Enter')event.preventDefault()" required>
-                <button type="button" class="btn-analiseer" id="analyze-btn">Analyze</button>
+            <form id="analyze-form">
+                <input type="text" id="website-url" placeholder="www.yourwebsite.com" required>
+                <button type="submit" class="btn-analiseer">Analyze</button>
             </form>
         </div>
         
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Analyzing your website...</p>
+        </div>
+        
         <div id="results" style="display: none;">
-            <div class="score-grid" id="score-grid">
-                <!-- Scores will be inserted here -->
-            </div>
+            <div class="score-grid" id="score-grid"></div>
             
             <div style="text-align: center; margin-top: 2rem;">
                 <p><strong>Website Analysis Score: <span id="total-score">0</span>/100</strong></p>
@@ -54,16 +54,8 @@
             </div>
         </div>
         
-        <div id="loading" class="loading" style="display: none;">
-            <div class="spinner"></div>
-            <p>Analyzing your website...</p>
-        </div>
-        
         <div id="error" class="error" style="display: none;">
             <p>Sorry, something went wrong. Please try again.</p>
-        </div>
-        
-        <div id="search-history" style="display: none; margin-top: 2rem; padding: 1rem; background: #f5f5f5; border-radius: 8px;">
         </div>
     </section>
     
@@ -97,9 +89,8 @@
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="services.html">Services</a></li>
-                            <li><a href="faq.html">FAQ</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-            <li><a href="contact.html">Contact</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
         </div>
         <div class="footer-section">
@@ -113,150 +104,113 @@
 </footer>
 
 <script>
-document.getElementById('analyze-btn').addEventListener('click', async function(e) {
+document.getElementById('analyze-form').addEventListener('submit', function(e) {
     e.preventDefault();
     
-    let url = document.getElementById("website-url").value.trim().toLowerCase();
+    var input = document.getElementById('website-url');
+    var url = input.value.trim().toLowerCase();
+    
+    if (!url) {
+        alert('Please enter a website address');
+        return;
+    }
+    
     // Add https:// if missing
-    if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
         url = 'https://' + url;
     } else if (url.startsWith('http://')) {
         url = url.replace('http://', 'https://');
     }
-    // Handle non-www domains - add www only for www-less domains
-    const urlObj = new URL(url);
-    if (urlObj.hostname.match(/^[a-z0-9-]+\.[a-z]+$/i)) {
-        // domain like absa.co.za - no subdomain, add www
-        urlObj.hostname = 'www.' + urlObj.hostname;
+    
+    // Handle non-www domains
+    try {
+        var urlObj = new URL(url);
+        if (urlObj.hostname.match(/^[a-z0-9-]+\.[a-z]+$/i)) {
+            urlObj.hostname = 'www.' + urlObj.hostname;
+        }
+        url = urlObj.toString().replace(/\/$/, '');
+    } catch(err) {
+        // Continue with original URL
     }
-    url = urlObj.toString().replace(/\/$/, '');
-    const loading = document.getElementById('loading');
-    const results = document.getElementById('results');
-    const error = document.getElementById('error');
+    
+    var loading = document.getElementById('loading');
+    var results = document.getElementById('results');
+    var error = document.getElementById('error');
     
     loading.style.display = 'block';
     results.style.display = 'none';
     error.style.display = 'none';
     
-    try {
-        // Fetch the website using direct URL (will work for sites with CORS headers)
-        const response = await fetch(url, {
-            mode: 'cors',
-            redirect: 'follow'
-        });
-        
+    console.log('Analyzing:', url);
+    
+    // Fetch and analyze
+    fetch(url, { mode: 'cors', redirect: 'follow' })
+    .then(function(response) {
         if (!response.ok) {
-            throw new Error('Failed to fetch: ' + response.status);
+            throw new Error('Failed to fetch');
         }
-        
-        const data = {
-            contents: await response.text()
-        };
-        
-        // Parse the HTML
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(data.contents, 'text/html');
-        
-        // Calculate AIFR scores (simplified version)
-        const scores = calculateAIFR(doc, url);
-        
-        // Display results
+        return response.text();
+    })
+    .then(function(html) {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(html, 'text/html');
+        var scores = calculateAIFR(doc, url);
         displayResults(scores);
-        
-        // Log search - try to send to server (will fail gracefully if no server)
-        try {
-            fetch('/log-search', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({url: url, score: Math.round(total/6), timestamp: new Date().toISOString()})
-            }).catch(() => {}); // Silent fail
-        } catch (e) {}
-        
-        // Store in localStorage for retrieval
-        const searches = JSON.parse(localStorage.getItem('qail_searches') || '[]');
-        searches.unshift({url: url, score: Math.round(total/6), timestamp: new Date().toISOString()});
-        localStorage.setItem('qail_searches', JSON.stringify(searches.slice(0, 50));
-        
-        // Show recent searches section if not visible
-        showRecentSearches();
-        
         loading.style.display = 'none';
         results.style.display = 'block';
-    } catch (err) {
-        console.error('Primary fetch error:', err);
-        
-        // Try multiple fallbacks
-        const fallbacks = [
-            'https://api.allorigins.win/raw?url=',
-            'https://r.jina.ai/http://'
-        ];
-        
-        for (const proxy of fallbacks) {
-            try {
-                const proxyUrl = proxy + encodeURIComponent(url);
-                const pfResponse = await fetch(proxyUrl, { mode: 'cors' });
-                if (pfResponse.ok) {
-                    const data = { contents: await pfResponse.text() };
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(data.contents, 'text/html');
-                    const scores = calculateAIFR(doc, url);
-                    displayResults(scores);
-                    results.style.display = 'block';
-                    return;
-                }
-            } catch (e) {
-                console.error('Fallback ' + proxy + ' failed:', e);
-            }
-        }
-        
-        loading.style.display = 'none';
-        error.style.display = 'block';
-        return;
-    }
-        loading.style.display = 'none';
-        
-        loading.style.display = 'none';
-        error.style.display = 'block';
-    }
+    })
+    .catch(function(err) {
+        console.error('Fetch error:', err);
+        // Try fallback
+        fetch('https://r.jina.ai/http://' + url.replace('https://', ''), { mode: 'cors' })
+        .then(function(response) { return response.text(); })
+        .then(function(html) {
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(html, 'text/html');
+            var scores = calculateAIFR(doc, url);
+            displayResults(scores);
+            loading.style.display = 'none';
+            results.style.display = 'block';
+        })
+        .catch(function(fallbackErr) {
+            console.error('Fallback error:', fallbackErr);
+            loading.style.display = 'none';
+            error.style.display = 'block';
+        });
+    });
 });
 
 function calculateAIFR(doc, url) {
-    // Design Score
-    let design = 50;
+    var design = 50;
     if (doc.querySelector('style') || doc.querySelector('link[rel="stylesheet"]')) design += 20;
     if (doc.querySelector('h1')) design += 10;
     if (doc.querySelectorAll('h2, h3, h4').length > 3) design += 10;
     if (doc.querySelector('header') && doc.querySelector('footer')) design += 10;
     
-    // Mobile Score
-    let mobile = 60;
+    var mobile = 60;
     if (doc.querySelector('meta[name="viewport"]')) mobile += 25;
     if (doc.querySelectorAll('[style*="flex"]').length > 0) mobile += 15;
     
-    // Content Score  
-    let content = 40;
-    const text = doc.body.innerText;
+    var content = 40;
+    var text = doc.body.innerText;
     if (text.length > 500) content += 20;
     if (text.split(' ').length > 100) content += 20;
     if (doc.querySelectorAll('p').length > 3) content += 20;
     
-    // Contact Score
-    let contact = 30;
+    var contact = 30;
     if (doc.querySelector('a[href*="mailto"]') || doc.body.innerText.includes('@')) contact += 25;
     if (doc.body.innerText.toLowerCase().includes('contact')) contact += 20;
     if (doc.querySelector('address') || doc.querySelector('.contact')) contact += 25;
     
-    // SEO Score
-    let seo = 40;
+    var seo = 40;
     if (doc.querySelector('title') && doc.querySelector('title').innerText.length > 5) seo += 20;
     if (doc.querySelector('meta[name="description"]')) seo += 20;
     if (doc.querySelectorAll('h1, h2, h3').length > 2) seo += 20;
     
-    // Images Score
-    let images = 50;
+    var images = 50;
     if (doc.querySelectorAll('img').length > 0) {
         images += 20;
-        const imagesWithAlt = doc.querySelectorAll('img[alt]').length;
+        var imagesWithAlt = doc.querySelectorAll('img[alt]').length;
         if (imagesWithAlt > doc.querySelectorAll('img').length / 2) images += 10;
     }
     
@@ -271,8 +225,8 @@ function calculateAIFR(doc, url) {
 }
 
 function displayResults(scores) {
-    const scoreGrid = document.getElementById('score-grid');
-    const labels = {
+    var scoreGrid = document.getElementById('score-grid');
+    var labels = {
         design: 'Design & Structure',
         mobile: 'Mobile Ready',
         content: 'Content',
@@ -281,39 +235,27 @@ function displayResults(scores) {
         images: 'Images & Media'
     };
     
-    let html = '';
-    let total = 0;
+    var html = '';
+    var total = 0;
     
-    for (const [key, label] of Object.entries(labels)) {
-        const value = scores[key];
+    for (var key in labels) {
+        var value = scores[key];
         total += value;
         
-        let colorClass = 'score-low';
+        var colorClass = 'score-low';
         if (value >= 70) colorClass = 'score-high';
         else if (value >= 50) colorClass = 'score-medium';
         
-        html += `
-            <div class="score-card">
-                <h4>${label}</h4>
-                <div class="score-value">${value}</div>
-                <div class="score-bar">
-                    <div class="score-bar-fill ${colorClass}" style="width: ${value}%"></div>
-                </div>
-            </div>
-        `;
+        html += '<div class="score-card"><h4>' + labels[key] + '</h4><div class="score-value">' + value + '</div><div class="score-bar"><div class="score-bar-fill ' + colorClass + '" style="width: ' + value + '%"></div></div></div>';
     }
     
     scoreGrid.innerHTML = html;
     
-    // Website Analysis Score (general quality)
-    const websiteScore = Math.round(total / 6);
+    var websiteScore = Math.round(total / 6);
     document.getElementById('total-score').textContent = websiteScore;
-    
-    // AIFR Score (AI Friendliness - same calculation for now)
-    // Could be refined later to focus on AI-specific factors
     document.getElementById('aifr-score').textContent = websiteScore;
     
-    let message = '';
+    var message = '';
     if (websiteScore >= 80) message = 'Excellent! Your website is well optimized.';
     else if (websiteScore >= 60) message = 'Good. There are areas that can be improved.';
     else if (websiteScore >= 40) message = 'Moderate. We recommend improving your website.';
@@ -322,44 +264,15 @@ function displayResults(scores) {
     document.getElementById('score-message').textContent = message;
 }
 
-function showRecentSearches() {
-    const searches = JSON.parse(localStorage.getItem('qail_searches') || '[]');
-    const historySection = document.getElementById('search-history');
-    if (searches.length === 0) {
-        if (historySection) historySection.style.display = 'none';
-        return;
-    }
-    let html = '<h3>Recent Searches</h3><ul>';
-    searches.slice(0, 10).forEach(s => {
-        const date = new Date(s.timestamp).toLocaleString();
-        html += '<li><strong>' + s.url + '</strong> - ' + s.score + '/100 <span style="color:#888;font-size:0.8em;">' + date + '</span></li>';
-    });
-    html += '</ul>';
-    if (historySection) {
-        historySection.innerHTML = html;
-        historySection.style.display = 'block';
-    }
-}
-
-// Load recent searches on page load
-showRecentSearches();
-
 // Check for URL in query string
-const urlParams = new URLSearchParams(window.location.search);
-const urlParam = urlParams.get('url');
+var urlParams = new URLSearchParams(window.location.search);
+var urlParam = urlParams.get('url');
 if (urlParam) {
     document.getElementById('website-url').value = urlParam;
-    // Auto-trigger the analysis
     setTimeout(function() {
-        document.getElementById('analyze-btn').click();
+        document.getElementById('analyze-form').dispatchEvent(new Event('submit'));
     }, 100);
 }
-
-// Also handle form submission
-document.getElementById('analyze-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    document.getElementById('analyze-btn').click();
-});
 </script>
 </body>
 </html>

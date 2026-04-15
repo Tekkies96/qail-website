@@ -116,7 +116,7 @@
 document.getElementById('analyze-btn').addEventListener('click', async function(e) {
     e.preventDefault();
     
-    let url = document.getElementById('website-url').value.trim();
+    let url = document.getElementById("website-url").value.trim().toLowerCase();
     // Add https:// if missing
     if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
         url = 'https://' + url;

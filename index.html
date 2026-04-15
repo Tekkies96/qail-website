@@ -63,8 +63,8 @@
 
     <script>
     document.getElementById('home-analyze-form').addEventListener('submit', function(e) {
-        var input = document.getElementById('home-url-input');
-        var url = input.value.trim();
+        var input = document.getElementById("home-url-input");
+        var url = input.value.trim().toLowerCase();
         if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
             input.value = 'https://' + url;
         }

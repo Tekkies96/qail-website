@@ -162,6 +162,13 @@ nav {
     margin-bottom: 0.5rem;
 }
 
+.feature .price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--secondary);
+    margin-top: 1rem;
+}
+
 /* Preview Tool Section */
 .preview-tool {
     background: var(--white);

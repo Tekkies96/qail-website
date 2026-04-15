@@ -118,8 +118,6 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
     // Add https:// if missing
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
         url = 'https://' + url;
-    } else if (url.startsWith('http://')) {
-        url = url.replace('http://', 'https://');
     }
     
     // Handle non-www domains
@@ -141,10 +139,13 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
     results.style.display = 'none';
     error.style.display = 'none';
     
-    console.log('Analyzing:', url);
+    // Use jina.ai to fetch the website content
+    var domain = url.replace('https://', '').replace('http://', '').replace('www.', '');
+    var fetchUrl = 'https://r.jina.ai/http://' + domain;
     
-    // Fetch and analyze
-    fetch(url, { mode: 'no-cors', redirect: 'follow' })
+    console.log('Fetching:', fetchUrl);
+    
+    fetch(fetchUrl, { mode: 'cors' })
     .then(function(response) {
         if (!response.ok) {
             throw new Error('Failed to fetch');
@@ -160,24 +161,10 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
         results.style.display = 'block';
     })
     .catch(function(err) {
-        console.error('Fetch error:', err);
-        // Try fallback
-        fetch('https://r.jina.ai/http://' + url.replace('https://www.', '').replace('http://www.', ''), { mode: 'no-cors' })
-        .then(function(response) { return response.text(); })
-        .then(function(html) {
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(html, 'text/html');
-            var scores = calculateAIFR(doc, url);
-            displayResults(scores);
-            loading.style.display = 'none';
-            results.style.display = 'block';
-        })
-        .catch(function(fallbackErr) {
-            console.error('Fallback error:', fallbackErr);
-            loading.style.display = 'none';
-            error.style.display = 'block';
-            document.getElementById('error-message').textContent = 'Could not access this website. It may be blocking automated requests. Try another URL.';
-        });
+        console.error('Error:', err);
+        loading.style.display = 'none';
+        error.style.display = 'block';
+        document.getElementById('error-message').textContent = 'Could not access this website. Try another URL.';
     });
 });
 

@@ -55,7 +55,7 @@
         </div>
         
         <div id="error" class="error" style="display: none;">
-            <p>Sorry, something went wrong. Please try again.</p>
+            <p id="error-message">Sorry, something went wrong. Please try again.</p>
         </div>
     </section>
     
@@ -144,7 +144,7 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
     console.log('Analyzing:', url);
     
     // Fetch and analyze
-    fetch(url, { mode: 'cors', redirect: 'follow' })
+    fetch(url, { mode: 'no-cors', redirect: 'follow' })
     .then(function(response) {
         if (!response.ok) {
             throw new Error('Failed to fetch');
@@ -162,7 +162,7 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
     .catch(function(err) {
         console.error('Fetch error:', err);
         // Try fallback
-        fetch('https://r.jina.ai/http://' + url.replace('https://', ''), { mode: 'cors' })
+        fetch('https://r.jina.ai/http://' + url.replace('https://www.', '').replace('http://www.', ''), { mode: 'no-cors' })
         .then(function(response) { return response.text(); })
         .then(function(html) {
             var parser = new DOMParser();
@@ -176,6 +176,7 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
             console.error('Fallback error:', fallbackErr);
             loading.style.display = 'none';
             error.style.display = 'block';
+            document.getElementById('error-message').textContent = 'Could not access this website. It may be blocking automated requests. Try another URL.';
         });
     });
 });

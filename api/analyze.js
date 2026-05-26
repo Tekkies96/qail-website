@@ -2,7 +2,29 @@
 const fs = require('fs');
 const path = require('path');
 
+const TELEGRAM_BOT_TOKEN = '8810717882:AAHQRFrAsbjHjTXuSplUouUlR-ARLqm99Hg';
+const TELEGRAM_CHAT_ID = '1981991043';
 const LOG_FILE = process.env.VERCEL ? '/tmp/analyzed-urls.json' : '/Users/tekkies/.openclaw/workspace/qail-website/logs/analyzed-urls.json';
+
+async function sendTelegram(cleanUrl, success, errorMsg) {
+    const msg = success
+        ? `🌐 *QAIL Analysis*\n\n*URL:* ${cleanUrl}\n*Status:* ✅ Analyzed`
+        : `🌐 *QAIL Analysis*\n\n*URL:* ${cleanUrl}\n*Status:* ❌ ${errorMsg}`;
+
+    try {
+        await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: TELEGRAM_CHAT_ID,
+                text: msg,
+                parse_mode: 'Markdown'
+            })
+        });
+    } catch(e) {
+        console.error('Telegram send failed:', e.message);
+    }
+}
 
 function loadLogs() {
     try {
@@ -87,7 +109,10 @@ module.exports = async function handler(req, res) {
         clearTimeout(timeoutId);
         const html = await response.text();
 
-        if (process.env.VERCEL) logUrl(cleanUrl, true, null, response.status);
+        if (process.env.VERCEL) {
+            logUrl(cleanUrl, true, null, response.status);
+            sendTelegram(cleanUrl, true, null);
+        }
 
         return res.status(200).json({
             html,
@@ -100,7 +125,10 @@ module.exports = async function handler(req, res) {
         if (error.name === 'AbortError') {
             fetchError = 'Request timed out after 10 seconds';
         }
-        if (process.env.VERCEL) logUrl(cleanUrl, false, fetchError, null);
+        if (process.env.VERCEL) {
+            logUrl(cleanUrl, false, fetchError, null);
+            sendTelegram(cleanUrl, false, fetchError);
+        }
         return res.status(500).json({
             error: fetchError,
             code: error.code,

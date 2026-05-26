@@ -1,4 +1,44 @@
 // Vercel serverless function for website analysis
+const fs = require('fs');
+const path = require('path');
+
+const LOG_FILE = process.env.VERCEL ? '/tmp/analyzed-urls.json' : '/Users/tekkies/.openclaw/workspace/qail-website/logs/analyzed-urls.json';
+
+function loadLogs() {
+    try {
+        if (fs.existsSync(LOG_FILE)) {
+            return JSON.parse(fs.readFileSync(LOG_FILE, 'utf8'));
+        }
+    } catch(e) {}
+    return [];
+}
+
+function saveLogs(logs) {
+    try {
+        const dir = path.dirname(LOG_FILE);
+        if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+        fs.writeFileSync(LOG_FILE, JSON.stringify(logs, null, 2));
+    } catch(e) {
+        console.error('Log save failed:', e.message);
+    }
+}
+
+function logUrl(url, success, errorMsg, status) {
+    try {
+        const logs = loadLogs();
+        logs.unshift({
+            url,
+            success,
+            error: errorMsg || null,
+            statusCode: status || null,
+            timestamp: new Date().toISOString()
+        });
+        saveLogs(logs.slice(0, 1000));
+    } catch(e) {
+        console.error('Log write failed:', e.message);
+    }
+}
+
 module.exports = async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -6,6 +46,16 @@ module.exports = async function handler(req, res) {
 
     if (req.method === 'OPTIONS') {
         return res.status(200).send('');
+    }
+
+    // Logs/status endpoint
+    if (req.url.includes('/logs') || req.url.includes('/status')) {
+        try {
+            const logs = loadLogs();
+            return res.status(200).json({ logs: logs.slice(0, 200), total: logs.length });
+        } catch(e) {
+            return res.status(200).json({ logs: [], error: e.message });
+        }
     }
 
     const { url } = req.query;
@@ -18,12 +68,7 @@ module.exports = async function handler(req, res) {
     if (!cleanUrl.startsWith('http://') && !cleanUrl.startsWith('https://')) {
         cleanUrl = 'https://' + cleanUrl;
     }
-
-    // Strip trailing slash
     cleanUrl = cleanUrl.replace(/\/$/, '');
-
-    let html = '';
-    let fetchError = null;
 
     try {
         const controller = new AbortController();
@@ -40,8 +85,9 @@ module.exports = async function handler(req, res) {
         });
 
         clearTimeout(timeoutId);
+        const html = await response.text();
 
-        html = await response.text();
+        if (process.env.VERCEL) logUrl(cleanUrl, true, null, response.status);
 
         return res.status(200).json({
             html,
@@ -50,10 +96,11 @@ module.exports = async function handler(req, res) {
             ok: response.ok
         });
     } catch (error) {
-        fetchError = error.message;
+        let fetchError = error.message;
         if (error.name === 'AbortError') {
             fetchError = 'Request timed out after 10 seconds';
         }
+        if (process.env.VERCEL) logUrl(cleanUrl, false, fetchError, null);
         return res.status(500).json({
             error: fetchError,
             code: error.code,

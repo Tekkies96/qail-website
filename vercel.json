@@ -13,6 +13,8 @@
     }
   ],
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/analyze" }
+    { "source": "/api/logs", "destination": "/api/logs" },
+    { "source": "/api/status", "destination": "/api/status" },
+    { "source": "/api/analyze", "destination": "/api/analyze" }
   ]
 }

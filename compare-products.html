@@ -35,72 +35,68 @@
 </header>
 
 <main>
-    <section class="hero" style="padding: 4rem 2rem;">
-        <h1>Compare Products</h1>
-        <p>Upload product information and get instant AI-powered comparison.</p>
+    <section>
+        <div class="compare-hero">
+            <h1>Compare Products</h1>
+            <p>Upload product information and get instant AI-powered comparison.</p>
+        </div>
     </section>
 
     <section>
-        <div class="quote-container">
+        <div class="product-grid">
             <!-- Product 1 -->
-            <div class="quote-box" id="quote-box-1">
-                <div class="quote-header">
-                    <span class="quote-number">📦 Product 1</span>
-                    <button type="button" class="remove-quote" id="remove-1" onclick="removeProduct(1)" style="display: none;">✕ Remove</button>
+            <div class="product-card" id="product-card-1">
+                <div class="product-card-header">
+                    <span class="product-card-title">📦 Product 1</span>
+                    <button type="button" class="remove-quote" id="remove-1" onclick="removeProduct(1)" style="display: none;">✕</button>
                 </div>
-                <label class="file-drop-large" id="drop-1" for="file1">
-                    <div class="drop-content">
-                        <span class="drop-icon">🛍️</span>
-                        <p>Drag & drop product info here</p>
-                        <p class="drop-sub">or click to browse</p>
-                        <span class="supported">PDF, TXT, PNG, JPG</span>
-                    </div>
+                <label class="file-drop-zone" id="drop-1" for="file1">
+                    <span class="drop-icon">🛍️</span>
+                    <p>Drag & drop product info</p>
+                    <p class="drop-sub">or click to browse</p>
+                    <span class="supported">PDF, TXT, PNG, JPG</span>
                     <input type="file" id="file1" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.txt" onchange="handleFile(this, 1)">
                 </label>
-                <div class="file-preview-large" id="preview-1"></div>
-                <div class="extracted-data" id="extracted-1" style="display: none;"></div>
+                <div class="product-preview" id="preview-1"></div>
+                <div class="product-extracted" id="extracted-1"></div>
             </div>
 
             <!-- Product 2 -->
-            <div class="quote-box" id="quote-box-2">
-                <div class="quote-header">
-                    <span class="quote-number">📦 Product 2</span>
-                    <button type="button" class="remove-quote" id="remove-2" onclick="removeProduct(2)" style="display: none;">✕ Remove</button>
+            <div class="product-card" id="product-card-2">
+                <div class="product-card-header">
+                    <span class="product-card-title">📦 Product 2</span>
+                    <button type="button" class="remove-quote" id="remove-2" onclick="removeProduct(2)" style="display: none;">✕</button>
                 </div>
-                <label class="file-drop-large" id="drop-2" for="file2">
-                    <div class="drop-content">
-                        <span class="drop-icon">🛍️</span>
-                        <p>Drag & drop product info here</p>
-                        <p class="drop-sub">or click to browse</p>
-                        <span class="supported">PDF, TXT, PNG, JPG</span>
-                    </div>
+                <label class="file-drop-zone" id="drop-2" for="file2">
+                    <span class="drop-icon">🛍️</span>
+                    <p>Drag & drop product info</p>
+                    <p class="drop-sub">or click to browse</p>
+                    <span class="supported">PDF, TXT, PNG, JPG</span>
                     <input type="file" id="file2" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.txt" onchange="handleFile(this, 2)">
                 </label>
-                <div class="file-preview-large" id="preview-2"></div>
-                <div class="extracted-data" id="extracted-2" style="display: none;"></div>
+                <div class="product-preview" id="preview-2"></div>
+                <div class="product-extracted" id="extracted-2"></div>
             </div>
 
             <!-- Product 3 -->
-            <div class="quote-box" id="quote-box-3">
-                <div class="quote-header">
-                    <span class="quote-number">📦 Product 3</span>
-                    <button type="button" class="remove-quote" id="remove-3" onclick="removeProduct(3)" style="display: none;">✕ Remove</button>
+            <div class="product-card" id="product-card-3">
+                <div class="product-card-header">
+                    <span class="product-card-title">📦 Product 3</span>
+                    <button type="button" class="remove-quote" id="remove-3" onclick="removeProduct(3)" style="display: none;">✕</button>
                 </div>
-                <label class="file-drop-large" id="drop-3" for="file3">
-                    <div class="drop-content">
-                        <span class="drop-icon">🛍️</span>
-                        <p>Drag & drop product info here</p>
-                        <p class="drop-sub">or click to browse</p>
-                        <span class="supported">PDF, TXT, PNG, JPG</span>
-                    </div>
+                <label class="file-drop-zone" id="drop-3" for="file3">
+                    <span class="drop-icon">🛍️</span>
+                    <p>Drag & drop product info</p>
+                    <p class="drop-sub">or click to browse</p>
+                    <span class="supported">PDF, TXT, PNG, JPG</span>
                     <input type="file" id="file3" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.txt" onchange="handleFile(this, 3)">
                 </label>
-                <div class="file-preview-large" id="preview-3"></div>
-                <div class="extracted-data" id="extracted-3" style="display: none;"></div>
+                <div class="product-preview" id="preview-3"></div>
+                <div class="product-extracted" id="extracted-3"></div>
             </div>
         </div>
 
-        <div class="button-group">
+        <div class="button-group" style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
             <button type="button" class="btn btn-primary btn-compare" id="compare-btn" onclick="compareProducts()" disabled>📊 Compare Products</button>
             <button type="button" class="btn btn-secondary" onclick="clearAll()">🗑️ Clear All</button>
         </div>
@@ -117,55 +113,47 @@
 
     <!-- Results Section -->
     <section id="results" style="display: none;">
-        <h2>📊 Product Comparison</h2>
-        
-        <!-- Summary Cards -->
-        <div class="summary-grid" id="summary-cards"></div>
-        
-        <!-- Recommendation -->
-        <div class="recommendation-box" id="recommendation-box"></div>
-        
-        <!-- Detailed Comparison -->
-        <div class="comparison-table-section">
+        <div class="results-section">
+            <h2>📊 Product Comparison</h2>
+            
+            <!-- Summary Cards -->
+            <div class="summary-cards" id="summary-cards"></div>
+            
+            <!-- Recommendation -->
+            <div class="recommendation" id="recommendation-box"></div>
+            
+            <!-- Detailed Comparison -->
             <h3>📋 Side-by-Side Comparison</h3>
             <div id="comparison-table"></div>
-        </div>
-        
-        <!-- Specs Breakdown -->
-        <div class="items-breakdown" id="items-breakdown"></div>
-        
-        <!-- Pro Tips -->
-        <div class="pro-tips">
-            <h3>💡 Insights</h3>
-            <ul id="pro-tips-list"></ul>
-        </div>
-        
-        <!-- Contact CTA -->
-        <div class="contact-cta">
-            <h3>👍 Need Help Deciding?</h3>
-            <p>Contact us for expert product recommendation.</p>
-            <div class="contact-options">
-                <a href="mailto:info@qail.co.za" class="btn btn-primary">📧 Email Us</a>
-                <a href="contact.html" class="btn btn-secondary">📝 Contact Form</a>
+            
+            <!-- Features Breakdown -->
+            <div class="features-grid" id="items-breakdown"></div>
+            
+            <!-- Pro Tips -->
+            <div class="pro-tips">
+                <h3>💡 Insights</h3>
+                <ul id="pro-tips-list"></ul>
+            </div>
+            
+            <!-- Contact CTA -->
+            <div class="contact-cta">
+                <h3>👍 Need Help Deciding?</h3>
+                <p>Contact us for expert product recommendation.</p>
+                <div class="contact-options">
+                    <a href="mailto:info@qail.co.za" class="btn btn-primary">📧 Email Us</a>
+                    <a href="contact.html" class="btn btn-secondary">📝 Contact Form</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <section style="background: var(--white); padding: 3rem; border-radius: 12px; box-shadow: var(--shadow); margin-top: 2rem;">
+    <section class="how-it-works">
         <h2>💡 How It Works</h2>
-        <ul style="list-style: none; margin-top: 1.5rem;">
-            <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
-                <strong>📤 Upload:</strong> Drag & drop product info (specs sheet, image, or text file)
-            </li>
-            <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
-                <strong>🤖 AI Analysis:</strong> Our AI extracts specifications, features, and pricing
-            </li>
-            <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
-                <strong>📊 Compare:</strong> See side-by-side comparison of all products
-            </li>
-            <li style="padding: 0.75rem 0;">
-                <strong>💡 Get Recommendation:</strong> Receive expert recommendation on best value
-            </li>
+        <ul>
+            <li><strong>📤 Upload:</strong> Drag & drop product info (specs sheet, image, or text file)</li>
+            <li><strong>🤖 AI Analysis:</strong> Our AI extracts specifications, features, and pricing</li>
+            <li><strong>📊 Compare:</strong> See side-by-side comparison of all products</li>
+            <li><strong>💡 Get Recommendation:</strong> Receive expert recommendation on best value</li>
         </ul>
     </section>
 </main>
@@ -230,16 +218,15 @@ function showFilePreview(num, file) {
     const fileSize = (file.size / (1024 * 1024)).toFixed(2);
     const icon = getFileIcon(file.name);
     
-    preview.innerHTML = '<div class="file-card"><span class="file-icon-large">' + icon + '</span><div class="file-info"><span class="file-name-large">' + file.name + '</span><span class="file-size-large">' + fileSize + ' MB</span></div><button type="button" class="remove-file-btn" onclick="removeProduct(' + num + ')">✕</button></div>';
-    
-    drop.style.display = 'none';
+    preview.innerHTML = '<div style="display: flex; align-items: center; gap: 1rem; background: #f0fdf4; padding: 1rem; border-radius: 8px; border: 1px solid #bbf7d0;"><span style="font-size: 2rem;">' + icon + '</span><div style="flex: 1; min-width: 0;"><div style="font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + file.name + '</div><div style="font-size: 0.875rem; color: var(--gray);">' + fileSize + ' MB</div></div><button type="button" onclick="removeProduct(' + num + ')" style="background: #ef4444; color: white; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">✕</button></div>';
     preview.style.display = 'block';
+    drop.style.display = 'none';
     removeBtn.style.display = 'inline-block';
 }
 
 function showExtractedSection(num) {
     const extracted = document.getElementById('extracted-' + num);
-    extracted.innerHTML = '<div class="extracting"><span class="spinner-small"></span> Analyzing with AI...</div>';
+    extracted.innerHTML = '<div style="background: #f0f9ff; padding: 1rem; border-radius: 8px; text-align: center; color: var(--primary);"><span style="display: inline-block; width: 16px; height: 16px; border: 2px solid #f3f3f3; border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin-right: 0.5rem;"></span> Analyzing with AI...</div>';
     extracted.style.display = 'block';
 }
 
@@ -268,6 +255,7 @@ function removeProduct(num) {
     drop.style.display = 'flex';
     removeBtn.style.display = 'none';
     extracted.style.display = 'none';
+    extracted.innerHTML = '';
     
     updateCompareButton();
     document.getElementById('results').style.display = 'none';
@@ -389,15 +377,15 @@ function buildComparison() {
     const cheapest = lowestPrice !== null ? products.find(q => q.price === lowestPrice) : null;
     const mostFeatures = products.reduce((a, b) => (a.items?.length || 0) > (b.items?.length || 0) ? a : b);
     
-    let summaryHTML = '<div class="summary-grid">';
+    let summaryHTML = '<div class="summary-cards">';
     
     if (cheapest) {
         const saving = avgPrice > 0 ? Math.round(((avgPrice - lowestPrice) / avgPrice) * 100) : 0;
-        summaryHTML += '<div class="summary-card highlight"><h3>💰 Best Price</h3><div class="summary-value">' + (cheapest.provider || 'Product ' + cheapest.number) + '</div><div class="summary-detail">R' + lowestPrice.toLocaleString() + '</div>' + (saving > 0 ? '<div class="saving-badge">Save ' + saving + '%</div>' : '') + '</div>';
+        summaryHTML += '<div class="summary-card highlight"><h3>💰 Best Price</h3><div style="font-size: 1.5rem; font-weight: 800; margin: 0.5rem 0;">' + (cheapest.provider || 'Product ' + cheapest.number) + '</div><div>R' + lowestPrice.toLocaleString() + '</div>' + (saving > 0 ? '<div style="background: var(--secondary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; margin-top: 0.5rem; display: inline-block;">Save ' + saving + '%</div>' : '') + '</div>';
     }
     
     if (mostFeatures && mostFeatures.items && mostFeatures.items.length > 0) {
-        summaryHTML += '<div class="summary-card"><h3>📦 Most Features</h3><div class="summary-value">' + (mostFeatures.provider || 'Product ' + mostFeatures.number) + '</div><div class="summary-detail">' + mostFeatures.items.length + ' features</div></div>';
+        summaryHTML += '<div class="summary-card"><h3>📦 Most Features</h3><div style="font-size: 1.5rem; font-weight: 800; margin: 0.5rem 0;">' + (mostFeatures.provider || 'Product ' + mostFeatures.number) + '</div><div>' + mostFeatures.items.length + ' features</div></div>';
     }
     
     summaryHTML += '</div>';
@@ -420,39 +408,39 @@ function buildComparison() {
         recommendation = '📝 Upload products with more details for better comparisons.';
     }
     
-    document.getElementById('recommendation-box').innerHTML = '<h3>🎯 Our Recommendation</h3><p>' + recommendation + '</p>';
+    document.getElementById('recommendation-box').innerHTML = '<h3>🎯 Our Recommendation</h3><p style="font-size: 1.1rem; line-height: 1.6;">' + recommendation + '</p>';
     
     let tableHTML = '<table class="compare-table"><thead><tr><th>Feature</th>';
     products.forEach(p => { tableHTML += '<th>' + (p.provider || 'Product ' + p.number) + '</th>'; });
     tableHTML += '</tr></thead><tbody>';
     
-    tableHTML += '<tr class="price-row"><td>Price</td>';
+    tableHTML += '<tr style="background: #f8fafc;"><td style="font-weight: 600;">Price</td>';
     products.forEach(p => {
         const isLowest = p.price === lowestPrice;
-        tableHTML += '<td class="' + (isLowest ? 'lowest' : '') + '">' + (p.price ? 'R' + p.price.toLocaleString() : '-') + (isLowest ? '<span class="lowest-badge">Lowest</span>' : '') + '</td>';
+        tableHTML += '<td class="' + (isLowest ? 'lowest' : '') + '" style="font-weight: ' + (isLowest ? '700' : '400') + ';">' + (p.price ? 'R' + p.price.toLocaleString() : '-') + (isLowest ? '<span class="lowest-badge">Lowest</span>' : '') + '</td>';
     });
     tableHTML += '</tr>';
     
-    tableHTML += '<tr><td>Features</td>';
+    tableHTML += '<tr><td style="font-weight: 600;">Features</td>';
     products.forEach(p => { tableHTML += '<td>' + (p.items ? p.items.length + ' features' : '-') + '</td>'; });
     tableHTML += '</tr>';
     
-    tableHTML += '<tr><td>Specs</td>';
+    tableHTML += '<tr style="background: #f8fafc;"><td style="font-weight: 600;">Specs</td>';
     products.forEach(p => { tableHTML += '<td>' + (p.turnaround || '-') + '</td>'; });
     tableHTML += '</tr>';
     
     tableHTML += '</tbody></table>';
     document.getElementById('comparison-table').innerHTML = tableHTML;
     
-    let itemsHTML = '<h4>📋 Features Breakdown</h4><div class="items-grid">';
+    let itemsHTML = '<h3 style="margin: 2rem 0 1rem;">📋 Features Breakdown</h3><div class="features-grid">';
     products.forEach(p => {
-        itemsHTML += '<div class="items-column"><h5>' + (p.provider || 'Product ' + p.number) + '</h5>';
+        itemsHTML += '<div class="features-column"><h5>' + (p.provider || 'Product ' + p.number) + '</h5>';
         if (p.items && p.items.length > 0) {
             itemsHTML += '<ul>';
             p.items.forEach(item => { itemsHTML += '<li>' + item + '</li>'; });
             itemsHTML += '</ul>';
         } else {
-            itemsHTML += '<p class="no-items">No features found</p>';
+            itemsHTML += '<p style="color: var(--gray); font-style: italic; font-size: 0.875rem;">No features found</p>';
         }
         itemsHTML += '</div>';
     });
@@ -469,21 +457,662 @@ function buildComparison() {
 }
 </script>
 
-<style>
-.nav-links .active {
-    color: var(--primary);
-    font-weight: 700;
+/* Compare Products Page */
+.compare-hero {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+    text-align: center;
 }
 
-.quote-number {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--primary);
-}
-
-.drop-icon {
-    font-size: 3rem;
+.compare-hero h1 {
+    color: var(--dark);
+    font-size: 2rem;
     margin-bottom: 0.5rem;
+}
+
+.compare-hero p {
+    color: var(--gray);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.product-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.product-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.product-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.file-drop-zone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    background: var(--light);
+    cursor: pointer;
+    transition: all 0.3s;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.file-drop-zone:hover {
+    border-color: var(--primary);
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.file-drop-zone input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-drop-zone .drop-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.file-drop-zone p {
+    margin: 0;
+    color: var(--dark);
+    font-weight: 500;
+}
+
+.file-drop-zone .drop-sub {
+    font-size: 0.875rem;
+    color: var(--gray);
+    margin-top: 0.25rem;
+}
+
+.file-drop-zone .supported {
+    font-size: 0.75rem;
+    color: var(--gray);
+    margin-top: 0.75rem;
+}
+
+.product-preview {
+    display: none;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f0fdf4;
+    border-radius: 8px;
+    border: 1px solid #bbf7d0;
+}
+
+.product-extracted {
+    display: none;
+    margin-top: 1rem;
+}
+
+.btn-compare {
+    background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+    color: white;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+}
+
+.btn-compare:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--gray);
+    box-shadow: none;
+}
+
+.results-section {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin-top: 2rem;
+}
+
+.results-section h2 {
+    color: var(--dark);
+    margin-bottom: 1.5rem;
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.summary-card {
+    background: var(--light);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.summary-card.highlight {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+}
+
+.recommendation {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid #f59e0b;
+}
+
+.recommendation h3 {
+    color: #92400e;
+    margin-bottom: 0.5rem;
+}
+
+.compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+}
+
+.compare-table th, .compare-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.compare-table th {
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+}
+
+.compare-table tr:nth-child(even) {
+    background: var(--light);
+}
+
+.compare-table .lowest {
+    color: var(--secondary);
+    font-weight: 700;
+}
+
+.lowest-badge {
+    display: inline-block;
+    background: var(--secondary);
+    color: white;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.features-column {
+    background: var(--light);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.features-column h5 {
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary);
+}
+
+.features-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.features-column li {
+    padding: 0.35rem 0;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.875rem;
+}
+
+.features-column li:before {
+    content: "✓ ";
+    color: var(--secondary);
+}
+
+.pro-tips {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+}
+
+.pro-tips h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.pro-tips ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pro-tips li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.contact-cta {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.how-it-works {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin-top: 2rem;
+}
+
+.how-it-works h2 {
+    margin-bottom: 1.5rem;
+}
+
+.how-it-works ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.how-it-works li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.how-it-works li:last-child {
+    border-bottom: none;
+}
+
+.how-it-works strong {
+    color: var(--primary);
+    min-width: 80px;
+}
+
+/* Compare Products Page */
+.compare-hero {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.compare-hero h1 {
+    color: var(--dark);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.compare-hero p {
+    color: var(--gray);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.product-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.product-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.product-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.file-drop-zone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    background: var(--light);
+    cursor: pointer;
+    transition: all 0.3s;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.file-drop-zone:hover {
+    border-color: var(--primary);
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.file-drop-zone input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-drop-zone .drop-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.file-drop-zone p {
+    margin: 0;
+    color: var(--dark);
+    font-weight: 500;
+}
+
+.file-drop-zone .drop-sub {
+    font-size: 0.875rem;
+    color: var(--gray);
+    margin-top: 0.25rem;
+}
+
+.file-drop-zone .supported {
+    font-size: 0.75rem;
+    color: var(--gray);
+    margin-top: 0.75rem;
+}
+
+.product-preview {
+    display: none;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f0fdf4;
+    border-radius: 8px;
+    border: 1px solid #bbf7d0;
+}
+
+.product-extracted {
+    display: none;
+    margin-top: 1rem;
+}
+
+.btn-compare {
+    background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+    color: white;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+}
+
+.btn-compare:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--gray);
+    box-shadow: none;
+}
+
+.results-section {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin-top: 2rem;
+}
+
+.results-section h2 {
+    color: var(--dark);
+    margin-bottom: 1.5rem;
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.summary-card {
+    background: var(--light);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.summary-card.highlight {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+}
+
+.recommendation {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid #f59e0b;
+}
+
+.recommendation h3 {
+    color: #92400e;
+    margin-bottom: 0.5rem;
+}
+
+.compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+}
+
+.compare-table th, .compare-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.compare-table th {
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+}
+
+.compare-table tr:nth-child(even) {
+    background: var(--light);
+}
+
+.compare-table .lowest {
+    color: var(--secondary);
+    font-weight: 700;
+}
+
+.lowest-badge {
+    display: inline-block;
+    background: var(--secondary);
+    color: white;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.features-column {
+    background: var(--light);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.features-column h5 {
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary);
+}
+
+.features-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.features-column li {
+    padding: 0.35rem 0;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.875rem;
+}
+
+.features-column li:before {
+    content: "✓ ";
+    color: var(--secondary);
+}
+
+.pro-tips {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+}
+
+.pro-tips h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.pro-tips ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pro-tips li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.contact-cta {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.how-it-works {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin-top: 2rem;
+}
+
+.how-it-works h2 {
+    margin-bottom: 1.5rem;
+}
+
+.how-it-works ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.how-it-works li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.how-it-works li:last-child {
+    border-bottom: none;
+}
+
+.how-it-works strong {
+    color: var(--primary);
+    min-width: 80px;
+}
+
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .btn-compare {
+        width: 100%;
+    }
 }
 </style>
 </body>

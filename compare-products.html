@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Products - Quantum AI Labs</title>
+    <meta name="description" content="Compare products side-by-side. Upload product specs or images and get instant AI-powered comparison.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico">
+    <script async src="https://cdn.jsdelivr.net/npm/@vercel/analytics@1.4.4" defer></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HTJ3LT5K63"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HTJ3LT5K63');
+</script>
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo">Quantum AI Labs</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="analyze.html">Analyze</a></li>
+            <li><a href="compare-quotes.html">Compare Quotes</a></li>
+            <li><a href="compare-products.html" class="active">Compare Products</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section class="hero" style="padding: 4rem 2rem;">
+        <h1>Compare Products</h1>
+        <p>Upload product information and get instant AI-powered comparison.</p>
+    </section>
+
+    <section>
+        <div class="quote-container">
+            <!-- Product 1 -->
+            <div class="quote-box" id="quote-box-1">
+                <div class="quote-header">
+                    <span class="quote-number">📦 Product 1</span>
+                    <button type="button" class="remove-quote" id="remove-1" onclick="removeProduct(1)" style="display: none;">✕ Remove</button>
+                </div>
+                <label class="file-drop-large" id="drop-1" for="file1">
+                    <div class="drop-content">
+                        <span class="drop-icon">🛍️</span>
+                        <p>Drag & drop product info here</p>
+                        <p class="drop-sub">or click to browse</p>
+                        <span class="supported">PDF, TXT, PNG, JPG</span>
+                    </div>
+                    <input type="file" id="file1" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.txt" onchange="handleFile(this, 1)">
+                </label>
+                <div class="file-preview-large" id="preview-1"></div>
+                <div class="extracted-data" id="extracted-1" style="display: none;"></div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="quote-box" id="quote-box-2">
+                <div class="quote-header">
+                    <span class="quote-number">📦 Product 2</span>
+                    <button type="button" class="remove-quote" id="remove-2" onclick="removeProduct(2)" style="display: none;">✕ Remove</button>
+                </div>
+                <label class="file-drop-large" id="drop-2" for="file2">
+                    <div class="drop-content">
+                        <span class="drop-icon">🛍️</span>
+                        <p>Drag & drop product info here</p>
+                        <p class="drop-sub">or click to browse</p>
+                        <span class="supported">PDF, TXT, PNG, JPG</span>
+                    </div>
+                    <input type="file" id="file2" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.txt" onchange="handleFile(this, 2)">
+                </label>
+                <div class="file-preview-large" id="preview-2"></div>
+                <div class="extracted-data" id="extracted-2" style="display: none;"></div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="quote-box" id="quote-box-3">
+                <div class="quote-header">
+                    <span class="quote-number">📦 Product 3</span>
+                    <button type="button" class="remove-quote" id="remove-3" onclick="removeProduct(3)" style="display: none;">✕ Remove</button>
+                </div>
+                <label class="file-drop-large" id="drop-3" for="file3">
+                    <div class="drop-content">
+                        <span class="drop-icon">🛍️</span>
+                        <p>Drag & drop product info here</p>
+                        <p class="drop-sub">or click to browse</p>
+                        <span class="supported">PDF, TXT, PNG, JPG</span>
+                    </div>
+                    <input type="file" id="file3" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.txt" onchange="handleFile(this, 3)">
+                </label>
+                <div class="file-preview-large" id="preview-3"></div>
+                <div class="extracted-data" id="extracted-3" style="display: none;"></div>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button type="button" class="btn btn-primary btn-compare" id="compare-btn" onclick="compareProducts()" disabled>📊 Compare Products</button>
+            <button type="button" class="btn btn-secondary" onclick="clearAll()">🗑️ Clear All</button>
+        </div>
+    </section>
+
+    <!-- Loading Section -->
+    <section id="loading" style="display: none;">
+        <div class="loading-box">
+            <div class="spinner"></div>
+            <h3>🔍 AI is analyzing your products...</h3>
+            <p>This may take a few seconds</p>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" style="display: none;">
+        <h2>📊 Product Comparison</h2>
+        
+        <!-- Summary Cards -->
+        <div class="summary-grid" id="summary-cards"></div>
+        
+        <!-- Recommendation -->
+        <div class="recommendation-box" id="recommendation-box"></div>
+        
+        <!-- Detailed Comparison -->
+        <div class="comparison-table-section">
+            <h3>📋 Side-by-Side Comparison</h3>
+            <div id="comparison-table"></div>
+        </div>
+        
+        <!-- Specs Breakdown -->
+        <div class="items-breakdown" id="items-breakdown"></div>
+        
+        <!-- Pro Tips -->
+        <div class="pro-tips">
+            <h3>💡 Insights</h3>
+            <ul id="pro-tips-list"></ul>
+        </div>
+        
+        <!-- Contact CTA -->
+        <div class="contact-cta">
+            <h3>👍 Need Help Deciding?</h3>
+            <p>Contact us for expert product recommendation.</p>
+            <div class="contact-options">
+                <a href="mailto:info@qail.co.za" class="btn btn-primary">📧 Email Us</a>
+                <a href="contact.html" class="btn btn-secondary">📝 Contact Form</a>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--white); padding: 3rem; border-radius: 12px; box-shadow: var(--shadow); margin-top: 2rem;">
+        <h2>💡 How It Works</h2>
+        <ul style="list-style: none; margin-top: 1.5rem;">
+            <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>📤 Upload:</strong> Drag & drop product info (specs sheet, image, or text file)
+            </li>
+            <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>🤖 AI Analysis:</strong> Our AI extracts specifications, features, and pricing
+            </li>
+            <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>📊 Compare:</strong> See side-by-side comparison of all products
+            </li>
+            <li style="padding: 0.75rem 0;">
+                <strong>💡 Get Recommendation:</strong> Receive expert recommendation on best value
+            </li>
+        </ul>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Quantum AI Labs</h4>
+            <p>Quantum AI Labs - Your partner in website quality.</p>
+        </div>
+        <div class="footer-section">
+            <h4>Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="analyze.html">Analyze</a></li>
+                <li><a href="compare-quotes.html">Compare Quotes</a></li>
+                <li><a href="compare-products.html">Compare Products</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>Email: info@qail.co.za</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Quantum AI Labs. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+let uploadedFiles = {};
+let extractedData = {};
+const API_URL = 'https://certificate-logan-viewpicture-fioricet.trycloudflare.com/extract';
+
+function handleFile(input, num) {
+    const file = input.files[0];
+    if (file) {
+        processFile(file, num);
+    }
+}
+
+function processFile(file, num) {
+    if (file.size > 10 * 1024 * 1024) {
+        alert('File too large. Maximum size is 10MB.');
+        return;
+    }
+    
+    uploadedFiles[num] = file;
+    showFilePreview(num, file);
+    showExtractedSection(num);
+    updateCompareButton();
+}
+
+function showFilePreview(num, file) {
+    const preview = document.getElementById('preview-' + num);
+    const drop = document.getElementById('drop-' + num);
+    const removeBtn = document.getElementById('remove-' + num);
+    
+    const fileSize = (file.size / (1024 * 1024)).toFixed(2);
+    const icon = getFileIcon(file.name);
+    
+    preview.innerHTML = '<div class="file-card"><span class="file-icon-large">' + icon + '</span><div class="file-info"><span class="file-name-large">' + file.name + '</span><span class="file-size-large">' + fileSize + ' MB</span></div><button type="button" class="remove-file-btn" onclick="removeProduct(' + num + ')">✕</button></div>';
+    
+    drop.style.display = 'none';
+    preview.style.display = 'block';
+    removeBtn.style.display = 'inline-block';
+}
+
+function showExtractedSection(num) {
+    const extracted = document.getElementById('extracted-' + num);
+    extracted.innerHTML = '<div class="extracting"><span class="spinner-small"></span> Analyzing with AI...</div>';
+    extracted.style.display = 'block';
+}
+
+function getFileIcon(filename) {
+    const ext = filename.split('.').pop().toLowerCase();
+    if (ext === 'pdf') return '📕';
+    if (['doc', 'docx'].includes(ext)) return '📘';
+    if (['png', 'jpg', 'jpeg'].includes(ext)) return '🖼️';
+    if (ext === 'txt') return '📝';
+    return '📦';
+}
+
+function removeProduct(num) {
+    delete uploadedFiles[num];
+    delete extractedData[num];
+    
+    const preview = document.getElementById('preview-' + num);
+    const drop = document.getElementById('drop-' + num);
+    const removeBtn = document.getElementById('remove-' + num);
+    const fileInput = document.getElementById('file' + num);
+    const extracted = document.getElementById('extracted-' + num);
+    
+    fileInput.value = '';
+    preview.innerHTML = '';
+    preview.style.display = 'none';
+    drop.style.display = 'flex';
+    removeBtn.style.display = 'none';
+    extracted.style.display = 'none';
+    
+    updateCompareButton();
+    document.getElementById('results').style.display = 'none';
+}
+
+function clearAll() {
+    for (let i = 1; i <= 3; i++) {
+        removeProduct(i);
+    }
+    document.getElementById('results').style.display = 'none';
+}
+
+function updateCompareButton() {
+    const count = Object.keys(uploadedFiles).length;
+    const btn = document.getElementById('compare-btn');
+    
+    if (count >= 2) {
+        btn.disabled = false;
+        btn.textContent = '📊 Compare ' + count + ' Products';
+    } else {
+        btn.disabled = true;
+        btn.textContent = '📊 Compare (upload ' + (2 - count) + ' more)';
+    }
+}
+
+async function compareProducts() {
+    const files = Object.keys(uploadedFiles).map(num => uploadedFiles[num]);
+    
+    if (files.length < 2) {
+        alert('Please upload at least 2 products to compare.');
+        return;
+    }
+    
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('results').style.display = 'none';
+    
+    try {
+        const formData = new FormData();
+        files.forEach(file => {
+            formData.append('files', file);
+        });
+        
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!response.ok) {
+            throw new Error('API request failed');
+        }
+        
+        const result = await response.json();
+        
+        if (result.quotes) {
+            const nums = Object.keys(uploadedFiles);
+            result.quotes.forEach((product, idx) => {
+                if (nums[idx]) {
+                    extractedData[nums[idx]] = product.data;
+                    displayExtractedData(nums[idx], product.data);
+                }
+            });
+        }
+        
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('results').style.display = 'block';
+        buildComparison();
+        document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        
+    } catch (error) {
+        document.getElementById('loading').style.display = 'none';
+        alert('Error analyzing products: ' + error.message);
+    }
+}
+
+function displayExtractedData(num, data) {
+    const container = document.getElementById('extracted-' + num);
+    
+    if (data.error) {
+        container.innerHTML = '<div class="extract-error">❌ ' + data.error + '</div>';
+        return;
+    }
+    
+    let html = '<div class="extracted-info">';
+    html += '<h4>📋 Extracted Data</h4>';
+    
+    if (data.provider) {
+        html += '<div class="extract-item"><strong>Brand:</strong> ' + data.provider + '</div>';
+    }
+    if (data.price) {
+        html += '<div class="extract-item"><strong>Price:</strong> R' + data.price.toLocaleString() + '</div>';
+    }
+    if (data.items && data.items.length > 0) {
+        html += '<div class="extract-item"><strong>Features:</strong><ul>';
+        data.items.forEach(item => {
+            html += '<li>' + item + '</li>';
+        });
+        html += '</ul></div>';
+    }
+    if (data.turnaround) {
+        html += '<div class="extract-item"><strong>Specs:</strong> ' + data.turnaround + '</div>';
+    }
+    
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+function buildComparison() {
+    const products = Object.keys(extractedData).map(num => ({
+        number: num,
+        ...extractedData[num]
+    }));
+    
+    if (products.length < 2) return;
+    
+    const prices = products.filter(q => q.price).map(q => q.price);
+    const lowestPrice = prices.length > 0 ? Math.min.apply(null, prices) : null;
+    const avgPrice = prices.length > 0 ? prices.reduce((a, b) => a + b, 0) / prices.length : 0;
+    
+    const cheapest = lowestPrice !== null ? products.find(q => q.price === lowestPrice) : null;
+    const mostFeatures = products.reduce((a, b) => (a.items?.length || 0) > (b.items?.length || 0) ? a : b);
+    
+    let summaryHTML = '<div class="summary-grid">';
+    
+    if (cheapest) {
+        const saving = avgPrice > 0 ? Math.round(((avgPrice - lowestPrice) / avgPrice) * 100) : 0;
+        summaryHTML += '<div class="summary-card highlight"><h3>💰 Best Price</h3><div class="summary-value">' + (cheapest.provider || 'Product ' + cheapest.number) + '</div><div class="summary-detail">R' + lowestPrice.toLocaleString() + '</div>' + (saving > 0 ? '<div class="saving-badge">Save ' + saving + '%</div>' : '') + '</div>';
+    }
+    
+    if (mostFeatures && mostFeatures.items && mostFeatures.items.length > 0) {
+        summaryHTML += '<div class="summary-card"><h3>📦 Most Features</h3><div class="summary-value">' + (mostFeatures.provider || 'Product ' + mostFeatures.number) + '</div><div class="summary-detail">' + mostFeatures.items.length + ' features</div></div>';
+    }
+    
+    summaryHTML += '</div>';
+    document.getElementById('summary-cards').innerHTML = summaryHTML;
+    
+    let recommendation = '';
+    if (cheapest && mostFeatures && cheapest.number === mostFeatures.number) {
+        recommendation = '🏆 <strong>' + cheapest.provider + '</strong> is the clear winner! Best price AND most features.';
+    } else if (cheapest && mostFeatures) {
+        const priceDiff = cheapest.price && mostFeatures.price ? Math.round(((mostFeatures.price - cheapest.price) / mostFeatures.price) * 100) : 0;
+        
+        if (priceDiff < 25 && mostFeatures.items && mostFeatures.items.length > cheapest.items.length + 3) {
+            recommendation = '⚖️ <strong>' + mostFeatures.provider + '</strong> offers better value — ' + priceDiff + '% more for ' + (mostFeatures.items.length - (cheapest.items?.length || 0)) + ' extra features.';
+        } else {
+            recommendation = '💡 <strong>' + cheapest.provider + '</strong> has the lowest price.';
+        }
+    } else if (cheapest) {
+        recommendation = '💰 <strong>' + cheapest.provider + '</strong> has the best price at R' + lowestPrice.toLocaleString() + '.';
+    } else {
+        recommendation = '📝 Upload products with more details for better comparisons.';
+    }
+    
+    document.getElementById('recommendation-box').innerHTML = '<h3>🎯 Our Recommendation</h3><p>' + recommendation + '</p>';
+    
+    let tableHTML = '<table class="compare-table"><thead><tr><th>Feature</th>';
+    products.forEach(p => { tableHTML += '<th>' + (p.provider || 'Product ' + p.number) + '</th>'; });
+    tableHTML += '</tr></thead><tbody>';
+    
+    tableHTML += '<tr class="price-row"><td>Price</td>';
+    products.forEach(p => {
+        const isLowest = p.price === lowestPrice;
+        tableHTML += '<td class="' + (isLowest ? 'lowest' : '') + '">' + (p.price ? 'R' + p.price.toLocaleString() : '-') + (isLowest ? '<span class="lowest-badge">Lowest</span>' : '') + '</td>';
+    });
+    tableHTML += '</tr>';
+    
+    tableHTML += '<tr><td>Features</td>';
+    products.forEach(p => { tableHTML += '<td>' + (p.items ? p.items.length + ' features' : '-') + '</td>'; });
+    tableHTML += '</tr>';
+    
+    tableHTML += '<tr><td>Specs</td>';
+    products.forEach(p => { tableHTML += '<td>' + (p.turnaround || '-') + '</td>'; });
+    tableHTML += '</tr>';
+    
+    tableHTML += '</tbody></table>';
+    document.getElementById('comparison-table').innerHTML = tableHTML;
+    
+    let itemsHTML = '<h4>📋 Features Breakdown</h4><div class="items-grid">';
+    products.forEach(p => {
+        itemsHTML += '<div class="items-column"><h5>' + (p.provider || 'Product ' + p.number) + '</h5>';
+        if (p.items && p.items.length > 0) {
+            itemsHTML += '<ul>';
+            p.items.forEach(item => { itemsHTML += '<li>' + item + '</li>'; });
+            itemsHTML += '</ul>';
+        } else {
+            itemsHTML += '<p class="no-items">No features found</p>';
+        }
+        itemsHTML += '</div>';
+    });
+    itemsHTML += '</div>';
+    document.getElementById('items-breakdown').innerHTML = itemsHTML;
+    
+    let tips = [];
+    if (lowestPrice) {
+        tips.push('💰 Check if the cheapest option has all the features you need.');
+    }
+    tips.push('📧 Need expert advice? Contact us for personalized recommendation.');
+    
+    document.getElementById('pro-tips-list').innerHTML = tips.map(tip => '<li>' + tip + '</li>').join('');
+}
+</script>
+
+<style>
+.nav-links .active {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.quote-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.drop-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+</style>
+</body>
+</html>

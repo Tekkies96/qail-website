@@ -402,16 +402,54 @@ function updateComparison() {
 }
 
 function compareQuotes() {
-    updateComparison();
+    // Build quotesData from uploaded files even without manual details
+    quotesData = [];
     
-    if (quotesData.length >= 2) {
+    for (let i = 1; i <= 3; i++) {
+        if (uploadedFiles[i]) {
+            const provider = document.getElementById('provider' + i).value.trim();
+            const price = document.getElementById('price' + i).value;
+            const includes = document.getElementById('includes' + i).value.trim();
+            const time = document.getElementById('time' + i).value.trim();
+            
+            const items = includes ? includes.split('\n').map(function(s) { return s.trim().replace(/^[-•*]\s*/, ''); }).filter(function(s) { return s; }) : [];
+            
+            quotesData.push({
+                number: i,
+                fileName: uploadedFiles[i].name,
+                provider: provider || 'Quote ' + i,
+                price: price ? parseFloat(price) : null,
+                items: items,
+                itemCount: items.length,
+                time: time || 'Not specified'
+            });
+        }
+    }
+    
+    if (quotesData.length >= 1) {
+        document.getElementById('results').style.display = 'block';
+        renderComparison();
         document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
     } else {
-        alert('Please enter some details to compare, or upload at least 2 quotes.');
+        alert('Please upload at least 1 quote to compare.');
     }
 }
 
 function renderComparison() {
+    if (quotesData.length === 0) {
+        document.getElementById('summary-cards').innerHTML = '<p>No quotes uploaded yet.</p>';
+        return;
+    }
+    
+    if (quotesData.length === 1) {
+        document.getElementById('summary-cards').innerHTML = '<div class="single-quote"><h3>📎 ' + quotesData[0].provider + '</h3><p>Upload another quote to compare.</p></div>';
+        document.getElementById('recommendation-box').innerHTML = '<h3>🎯 Next Step</h3><p>Upload at least one more quote to see a comparison.</p>';
+        document.getElementById('comparison-table').innerHTML = '<p>Need at least 2 quotes for comparison.</p>';
+        document.getElementById('items-breakdown').innerHTML = '';
+        document.getElementById('pro-tips-list').innerHTML = '<li>📄 Upload your second quote to enable comparison</li>';
+        return;
+    }
+    
     const sorted = [...quotesData].sort(function(a, b) { return b.itemCount - a.itemCount; });
     const mostIncluded = sorted[0];
     
@@ -430,14 +468,20 @@ function renderComparison() {
     if (cheapest) {
         const saving = avgPrice > 0 ? Math.round(((avgPrice - lowestPrice) / avgPrice) * 100) : 0;
         summaryHTML += '<div class="summary-card highlight"><h3>💰 Best Price</h3><div class="summary-value">' + cheapest.provider + '</div><div class="summary-detail">R' + lowestPrice.toLocaleString() + '</div>' + (saving > 0 ? '<div class="saving-badge">Save ' + saving + '% vs average</div>' : '') + '</div>';
+    } else {
+        summaryHTML += '<div class="summary-card highlight"><h3>💰 Best Price</h3><div class="summary-value">-</div><div class="summary-detail">Enter prices above</div></div>';
     }
     
     if (mostIncluded && mostIncluded.itemCount > 0) {
         summaryHTML += '<div class="summary-card"><h3>📦 Most Included</h3><div class="summary-value">' + mostIncluded.provider + '</div><div class="summary-detail">' + mostIncluded.itemCount + ' items</div></div>';
+    } else {
+        summaryHTML += '<div class="summary-card"><h3>📦 Most Included</h3><div class="summary-value">-</div><div class="summary-detail">Add items above</div></div>';
     }
     
     if (fastest) {
         summaryHTML += '<div class="summary-card"><h3>⚡ Fastest</h3><div class="summary-value">' + fastest.provider + '</div><div class="summary-detail">' + fastest.time + '</div></div>';
+    } else {
+        summaryHTML += '<div class="summary-card"><h3>⚡ Fastest</h3><div class="summary-value">-</div><div class="summary-detail">Add times above</div></div>';
     }
     
     summaryHTML += '</div>';

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compare Quotes - Quantum AI Labs</title>
-    <meta name="description" content="Compare quotes for website analysis services. Get the best value for your AI-driven website analysis needs.">
+    <meta name="description" content="Compare quotes for website analysis services. Upload your quotes and get expert analysis.">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="favicon.ico">
     <script async src="https://cdn.jsdelivr.net/npm/@vercel/analytics@1.4.4" defer></script>
@@ -15,9 +15,9 @@
         <div class="logo">Quantum AI Labs</div>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
-            <li><a href="services.html">Services</a></li>
             <li><a href="analyze.html">Analyze</a></li>
             <li><a href="compare-quotes.html">Compare Quotes</a></li>
+            <li><a href="services.html">Services</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="faq.html">FAQ</a></li>
             <li><a href="contact.html">Contact</a></li>
@@ -28,7 +28,7 @@
 <main>
     <section class="hero" style="padding: 4rem 2rem;">
         <h1>Compare Quotes</h1>
-        <p>Upload or enter your quotes below. We'll compare them and give you a clear recommendation.</p>
+        <p>Attach your quotes below and we'll give you a detailed comparison summary.</p>
     </section>
 
     <section>
@@ -36,139 +36,167 @@
             <!-- Quote 1 -->
             <div class="quote-box" id="quote-box-1">
                 <div class="quote-header">
-                    <span class="quote-number">Quote 1</span>
-                    <button type="button" class="remove-quote" onclick="removeQuote(1)" style="display:none;">✕ Remove</button>
+                    <span class="quote-number">📎 Quote 1</span>
+                    <button type="button" class="remove-quote" id="remove-1" onclick="removeQuote(1)" style="display: none;">✕ Remove</button>
                 </div>
-                <div class="form-group">
-                    <label>Provider Name</label>
-                    <input type="text" id="provider1" placeholder="e.g. QAIL, Competitor A">
-                </div>
-                <div class="form-group">
-                    <label>Total Price (ZAR)</label>
-                    <input type="number" id="price1" placeholder="e.g. 500" min="0">
-                </div>
-                <div class="form-group">
-                    <label>What's Included</label>
-                    <textarea id="includes1" rows="6" placeholder="List what's included in this quote...&#10;- Design review&#10;- SEO audit&#10;- AIFR score&#10;- Mobile testing"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Turnaround Time</label>
-                    <input type="text" id="time1" placeholder="e.g. 24 hours">
-                </div>
-                <div class="form-group">
-                    <label>Attach Quote (optional)</label>
-                    <div class="file-drop" id="drop-1" ondrop="handleDrop(event, 1)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
-                        <p>📎 Drag & drop file here or <label for="file1" class="file-label">browse</label></p>
-                        <input type="file" id="file1" accept=".pdf,.doc,.docx,.png,.jpg" onchange="handleFile(this, 1)">
-                        <div class="file-preview" id="preview-1"></div>
+                <div class="file-drop-large" id="drop-1" ondrop="handleDrop(event, 1)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                    <div class="drop-content">
+                        <span class="drop-icon">📄</span>
+                        <p>Drag & drop your quote here</p>
+                        <p class="drop-sub">or click to browse</p>
+                        <span class="supported">PDF, DOC, DOCX, PNG, JPG</span>
                     </div>
+                    <input type="file" id="file1" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="handleFile(this, 1)">
                 </div>
+                <div class="file-preview-large" id="preview-1"></div>
             </div>
 
             <!-- Quote 2 -->
             <div class="quote-box" id="quote-box-2">
                 <div class="quote-header">
-                    <span class="quote-number">Quote 2</span>
-                    <button type="button" class="remove-quote" onclick="removeQuote(2)" style="display:none;">✕ Remove</button>
+                    <span class="quote-number">📎 Quote 2</span>
+                    <button type="button" class="remove-quote" id="remove-2" onclick="removeQuote(2)" style="display: none;">✕ Remove</button>
                 </div>
-                <div class="form-group">
-                    <label>Provider Name</label>
-                    <input type="text" id="provider2" placeholder="e.g. Competitor B">
-                </div>
-                <div class="form-group">
-                    <label>Total Price (ZAR)</label>
-                    <input type="number" id="price2" placeholder="e.g. 750" min="0">
-                </div>
-                <div class="form-group">
-                    <label>What's Included</label>
-                    <textarea id="includes2" rows="6" placeholder="List what's included in this quote...&#10;- Design review&#10;- SEO audit&#10;- AIFR score&#10;- Mobile testing"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Turnaround Time</label>
-                    <input type="text" id="time2" placeholder="e.g. 48 hours">
-                </div>
-                <div class="form-group">
-                    <label>Attach Quote (optional)</label>
-                    <div class="file-drop" id="drop-2" ondrop="handleDrop(event, 2)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
-                        <p>📎 Drag & drop file here or <label for="file2" class="file-label">browse</label></p>
-                        <input type="file" id="file2" accept=".pdf,.doc,.docx,.png,.jpg" onchange="handleFile(this, 2)">
-                        <div class="file-preview" id="preview-2"></div>
+                <div class="file-drop-large" id="drop-2" ondrop="handleDrop(event, 2)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                    <div class="drop-content">
+                        <span class="drop-icon">📄</span>
+                        <p>Drag & drop your quote here</p>
+                        <p class="drop-sub">or click to browse</p>
+                        <span class="supported">PDF, DOC, DOCX, PNG, JPG</span>
                     </div>
+                    <input type="file" id="file2" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="handleFile(this, 2)">
                 </div>
+                <div class="file-preview-large" id="preview-2"></div>
             </div>
 
             <!-- Quote 3 -->
             <div class="quote-box" id="quote-box-3">
                 <div class="quote-header">
-                    <span class="quote-number">Quote 3</span>
-                    <button type="button" class="remove-quote" onclick="removeQuote(3)" style="display:none;">✕ Remove</button>
+                    <span class="quote-number">📎 Quote 3</span>
+                    <button type="button" class="remove-quote" id="remove-3" onclick="removeQuote(3)" style="display: none;">✕ Remove</button>
                 </div>
-                <div class="form-group">
-                    <label>Provider Name</label>
-                    <input type="text" id="provider3" placeholder="e.g. Competitor C">
-                </div>
-                <div class="form-group">
-                    <label>Total Price (ZAR)</label>
-                    <input type="number" id="price3" placeholder="e.g. 600" min="0">
-                </div>
-                <div class="form-group">
-                    <label>What's Included</label>
-                    <textarea id="includes3" rows="6" placeholder="List what's included in this quote...&#10;- Design review&#10;- SEO audit&#10;- AIFR score&#10;- Mobile testing"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Turnaround Time</label>
-                    <input type="text" id="time3" placeholder="e.g. 72 hours">
-                </div>
-                <div class="form-group">
-                    <label>Attach Quote (optional)</label>
-                    <div class="file-drop" id="drop-3" ondrop="handleDrop(event, 3)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
-                        <p>📎 Drag & drop file here or <label for="file3" class="file-label">browse</label></p>
-                        <input type="file" id="file3" accept=".pdf,.doc,.docx,.png,.jpg" onchange="handleFile(this, 3)">
-                        <div class="file-preview" id="preview-3"></div>
+                <div class="file-drop-large" id="drop-3" ondrop="handleDrop(event, 3)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                    <div class="drop-content">
+                        <span class="drop-icon">📄</span>
+                        <p>Drag & drop your quote here</p>
+                        <p class="drop-sub">or click to browse</p>
+                        <span class="supported">PDF, DOC, DOCX, PNG, JPG</span>
                     </div>
+                    <input type="file" id="file3" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="handleFile(this, 3)">
                 </div>
+                <div class="file-preview-large" id="preview-3"></div>
             </div>
         </div>
 
         <div class="button-group">
-            <button type="button" class="btn btn-primary btn-compare" onclick="compareQuotes()">Compare Quotes</button>
-            <button type="button" class="btn btn-secondary" onclick="clearAll()">Clear All</button>
+            <button type="button" class="btn btn-primary btn-compare" id="compare-btn" onclick="compareQuotes()" disabled>📊 Compare Quotes</button>
+            <button type="button" class="btn btn-secondary" onclick="clearAll()">🗑️ Clear All</button>
         </div>
     </section>
 
     <!-- Results Section -->
     <section id="results" style="display: none;">
-        <h2>📊 Comparison Summary</h2>
-        <div id="summary"></div>
+        <h2>📋 Your Uploaded Quotes</h2>
+        <div id="uploaded-summary"></div>
         
-        <h2 style="margin-top: 3rem;">📋 Detailed Comparison</h2>
-        <div id="comparison-table"></div>
+        <div class="analysis-request">
+            <h2>🔍 Analysis Request</h2>
+            <p>We've received your <span id="quote-count">0</span> quote(s). To provide you with a detailed comparison, our team will need to review each document.</p>
+            
+            <div class="contact-options">
+                <div class="contact-card">
+                    <h3>📧 Email Us</h3>
+                    <p>Send your quotes to:</p>
+                    <a href="mailto:info@qail.co.za" class="btn btn-primary">info@qail.co.za</a>
+                </div>
+                
+                <div class="contact-card">
+                    <h3>📱 WhatsApp</h3>
+                    <p>Send quotes directly:</p>
+                    <a href="https://wa.me/27XXXXXXXXX" class="btn btn-primary">Message Us</a>
+                </div>
+                
+                <div class="contact-card">
+                    <h3>📝 Contact Form</h3>
+                    <p>Or use our contact form:</p>
+                    <a href="contact.html" class="btn btn-primary">Go to Contact</a>
+                </div>
+            </div>
+            
+            <div class="what-happens">
+                <h3>What happens next?</h3>
+                <ol>
+                    <li>📄 We receive your quotes via email or WhatsApp</li>
+                    <li>🔍 Our team analyzes each quote side-by-side</li>
+                    <li>📊 We create a detailed comparison with pricing, features, and value assessment</li>
+                    <li>💬 You'll receive our recommendation within 24 hours</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="summary-box">
+            <h3>🎯 What We Compare</h3>
+            <div class="comparison-features">
+                <div class="feature-item">
+                    <span class="feature-icon">💰</span>
+                    <div>
+                        <strong>Price Comparison</strong>
+                        <p>We'll highlight the best price and calculate your potential savings</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📦</span>
+                    <div>
+                        <strong>Features & Services</strong>
+                        <p>What's included in each quote - side by side comparison</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">⏱️</span>
+                    <div>
+                        <strong>Turnaround Time</strong>
+                        <p>Compare delivery times and availability</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📋</span>
+                    <div>
+                        <strong>Terms & Conditions</strong>
+                        <p>Highlighting any hidden fees or important clauses</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🏆</span>
+                    <div>
+                        <strong>Value Recommendation</strong>
+                        <p>Our expert opinion on which quote offers the best overall value</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section style="background: var(--white); padding: 3rem; border-radius: 12px; box-shadow: var(--shadow); margin-top: 2rem;">
-        <h2>💡 Tips for Comparing Quotes</h2>
+        <h2>💡 Why Use Our Comparison Service?</h2>
         <ul style="list-style: none; margin-top: 1.5rem;">
             <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
-                <strong>✅ Check what's included:</strong> Make sure both quotes cover the same scope. A cheaper quote might exclude important items.
+                <strong>🎯 Expert Analysis:</strong> We don't just compare numbers — we analyze the full picture including value, quality, and hidden costs.
             </li>
             <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
-                <strong>✅ Look at turnaround time:</strong> Faster isn't always better. Quality analysis takes time.
+                <strong>⏰ Save Time:</strong> No need to manually compare multiple PDFs. We do it for you in minutes.
             </li>
             <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
-                <strong>✅ Ask about revisions:</strong> Can you get follow-up questions answered? What's the revision policy?
-            </li>
-            <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
-                <strong>✅ Verify credentials:</strong> Check reviews, look at sample reports, and verify their methodology.
+                <strong>💰 Avoid Mistakes:</strong> We'll highlight if one quote is suspiciously cheap or missing critical features.
             </li>
             <li style="padding: 0.75rem 0;">
-                <strong>✅ Consider value, not just price:</strong> The cheapest isn't always the best. Factor in quality, support, and expertise.
+                <strong>🤝 Unbiased Opinion:</strong> We recommend what's best for you — not the most expensive or cheapest option.
             </li>
         </ul>
     </section>
 
     <section class="cta-section" style="text-align: center; margin-top: 3rem; padding: 3rem; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 12px; color: white;">
-        <h2 style="color: white;">Want us to analyze a competitor's quote?</h2>
-        <p style="margin: 1rem 0;">Send us the quote and we'll tell you if it's worth it. Simple as that.</p>
+        <h2 style="color: white;">Need a Quote Analysis Now?</h2>
+        <p style="margin: 1rem 0;">Upload your quotes and get our expert comparison within 24 hours.</p>
         <a href="contact.html" class="btn btn-primary" style="background: white; color: var(--primary);">Contact Us</a>
     </section>
 </main>
@@ -183,8 +211,9 @@
             <h4>Links</h4>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="services.html">Services</a></li>
                 <li><a href="analyze.html">Analyze</a></li>
+                <li><a href="compare-quotes.html">Compare Quotes</a></li>
+                <li><a href="services.html">Services</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="faq.html">FAQ</a></li>
                 <li><a href="contact.html">Contact</a></li>
@@ -201,7 +230,8 @@
 </footer>
 
 <script>
-// File handling
+let uploadedFiles = {};
+
 function handleDragOver(e) {
     e.preventDefault();
     e.currentTarget.classList.add('drag-over');
@@ -216,269 +246,145 @@ function handleDrop(e, num) {
     e.currentTarget.classList.remove('drag-over');
     const file = e.dataTransfer.files[0];
     if (file) {
-        document.getElementById('file' + num).files = e.dataTransfer.files;
-        showFilePreview(file, num);
+        processFile(file, num);
     }
 }
 
 function handleFile(input, num) {
     const file = input.files[0];
     if (file) {
-        showFilePreview(file, num);
+        processFile(file, num);
     }
 }
 
-function showFilePreview(file, num) {
+function processFile(file, num) {
+    const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/png', 'image/jpeg'];
+    
+    // Check file size (max 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+        alert('File too large. Maximum size is 10MB.');
+        return;
+    }
+    
+    uploadedFiles[num] = {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        file: file
+    };
+    
+    showFilePreview(num);
+    updateCompareButton();
+}
+
+function showFilePreview(num) {
+    const file = uploadedFiles[num];
+    if (!file) return;
+    
     const preview = document.getElementById('preview-' + num);
-    const fileSize = (file.size / 1024).toFixed(1);
+    const drop = document.getElementById('drop-' + num);
+    const removeBtn = document.getElementById('remove-' + num);
+    
+    const fileSize = (file.size / (1024 * 1024)).toFixed(2);
     const icon = getFileIcon(file.name);
+    
     preview.innerHTML = `
-        <div class="file-item">
-            <span class="file-icon">${icon}</span>
-            <span class="file-name">${file.name}</span>
-            <span class="file-size">${fileSize} KB</span>
-            <button type="button" class="remove-file" onclick="removeFile(${num})">✕</button>
+        <div class="file-card">
+            <span class="file-icon-large">${icon}</span>
+            <div class="file-info">
+                <span class="file-name-large">${file.name}</span>
+                <span class="file-size-large">${fileSize} MB</span>
+            </div>
+            <button type="button" class="remove-file-btn" onclick="removeQuote(${num})">✕</button>
         </div>
     `;
+    
+    drop.style.display = 'none';
     preview.style.display = 'block';
-    document.getElementById('drop-' + num).querySelector('p').style.display = 'none';
+    removeBtn.style.display = 'inline-block';
 }
 
 function getFileIcon(filename) {
     const ext = filename.split('.').pop().toLowerCase();
-    if (ext === 'pdf') return '📄';
-    if (['doc', 'docx'].includes(ext)) return '📝';
+    if (ext === 'pdf') return '📕';
+    if (['doc', 'docx'].includes(ext)) return '📘';
     if (['png', 'jpg', 'jpeg'].includes(ext)) return '🖼️';
     return '📎';
 }
 
-function removeFile(num) {
-    document.getElementById('file' + num).value = '';
+function removeQuote(num) {
+    delete uploadedFiles[num];
+    
     const preview = document.getElementById('preview-' + num);
+    const drop = document.getElementById('drop-' + num);
+    const removeBtn = document.getElementById('remove-' + num);
+    const fileInput = document.getElementById('file' + num);
+    
+    fileInput.value = '';
     preview.innerHTML = '';
     preview.style.display = 'none';
-    document.getElementById('drop-' + num).querySelector('p').style.display = 'block';
-}
-
-function removeQuote(num) {
-    document.getElementById('quote-box-' + num).style.display = 'none';
-    // Clear all fields
-    document.getElementById('provider' + num).value = '';
-    document.getElementById('price' + num).value = '';
-    document.getElementById('includes' + num).value = '';
-    document.getElementById('time' + num).value = '';
-    removeFile(num);
+    drop.style.display = 'flex';
+    removeBtn.style.display = 'none';
+    
+    updateCompareButton();
+    document.getElementById('results').style.display = 'none';
 }
 
 function clearAll() {
     for (let i = 1; i <= 3; i++) {
-        document.getElementById('quote-box-' + i).style.display = 'flex';
-        document.getElementById('provider' + i).value = '';
-        document.getElementById('price' + i).value = '';
-        document.getElementById('includes' + i).value = '';
-        document.getElementById('time' + i).value = '';
-        removeFile(i);
+        removeQuote(i);
     }
-    document.getElementById('results').style.display = 'none';
+}
+
+function updateCompareButton() {
+    const count = Object.keys(uploadedFiles).length;
+    const btn = document.getElementById('compare-btn');
+    
+    if (count >= 2) {
+        btn.disabled = false;
+        btn.textContent = `📊 Compare ${count} Quotes`;
+    } else {
+        btn.disabled = true;
+        btn.textContent = `📊 Compare Quotes (need ${2 - count} more)`;
+    }
 }
 
 function compareQuotes() {
-    const quotes = [];
-    let activeCount = 0;
+    const count = Object.keys(uploadedFiles).length;
     
-    for (let i = 1; i <= 3; i++) {
-        const provider = document.getElementById('provider' + i).value.trim();
-        const price = document.getElementById('price' + i).value;
-        const includes = document.getElementById('includes' + i).value.trim();
-        const time = document.getElementById('time' + i).value.trim();
-        
-        if (provider || price || includes) {
-            activeCount++;
-            quotes.push({
-                number: i,
-                provider: provider || 'Quote ' + i,
-                price: price ? parseFloat(price) : null,
-                includes: includes,
-                time: time || 'Not specified',
-                items: includes ? includes.split('\n').map(s => s.trim()).filter(s => s) : []
-            });
-        }
-    }
-    
-    if (quotes.length < 2) {
-        alert('Please fill in at least 2 quotes to compare.');
+    if (count < 2) {
+        alert('Please upload at least 2 quotes to compare.');
         return;
     }
     
-    // Generate summary
-    let summaryHTML = '<div class="summary-grid">';
+    // Build uploaded files summary
+    let summaryHTML = '<div class="uploaded-grid">';
     
-    // Find best price
-    const prices = quotes.filter(q => q.price !== null).map(q => q.price);
-    const lowestPrice = prices.length > 0 ? Math.min(...prices) : null;
-    const highestPrice = prices.length > 0 ? Math.max(...prices) : null;
-    
-    // Count items in each quote
-    quotes.forEach(q => {
-        q.itemCount = q.items.length;
-        q.itemsList = q.items.map(item => {
-            const cleaned = item.replace(/^[-•]\s*/, '').toLowerCase();
-            return cleaned;
-        });
-    });
-    
-    // Check what items are common across quotes
-    let commonItems = [];
-    if (quotes.length >= 2) {
-        const sets = quotes.map(q => new Set(q.itemsList));
-        commonItems = sets[0];
-        for (let i = 1; i < sets.length; i++) {
-            commonItems = new Set([...commonItems].filter(x => sets[i].has(x)));
-        }
-    }
-    
-    // Build recommendation
-    let recommendation = '';
-    let winner = null;
-    
-    if (lowestPrice) {
-        const cheapest = quotes.find(q => q.price === lowestPrice);
-        const others = quotes.filter(q => q.price !== lowestPrice);
-        const avgOthers = others.reduce((sum, q) => sum + (q.price || 0), 0) / others.length;
-        const saving = avgOthers - lowestPrice;
-        const savingPct = Math.round((saving / avgOthers) * 100);
-        
-        winner = cheapest;
-        
-        if (savingPct > 20) {
-            recommendation = `💰 <strong>${cheapest.provider}</strong> offers the best value at R${lowestPrice.toLocaleString()} — ${savingPct}% cheaper than average of competitors.`;
-        } else if (cheapest.itemCount >= (others[0]?.itemCount || 0)) {
-            recommendation = `⚖️ <strong>${cheapest.provider}</strong> is the best choice at R${lowestPrice.toLocaleString()}. Same or more features at lowest price.`;
-        } else {
-            recommendation = `📊 <strong>${cheapest.provider}</strong> has the lowest price (R${lowestPrice.toLocaleString()}), but consider what you're getting.`;
-        }
-    }
-    
-    // Summary cards
-    summaryHTML += `
-        <div class="summary-card highlight">
-            <h3>🏆 Best Price</h3>
-            <div class="summary-value">${winner ? winner.provider : 'N/A'}</div>
-            <div class="summary-detail">${winner && winner.price ? 'R' + winner.price.toLocaleString() : ''}</div>
-            ${winner && winner.price ? `<div class="saving-badge">Save ${savingPct}% vs average</div>` : ''}
-        </div>
-        
-        <div class="summary-card">
-            <h3>📋 Most Included</h3>
-            <div class="summary-value">${quotes.reduce((a, b) => a.itemCount > b.itemCount ? a : b).provider}</div>
-            <div class="summary-detail">${Math.max(...quotes.map(q => q.itemCount))} items included</div>
-        </div>
-        
-        <div class="summary-card">
-            <h3>⚡ Fastest</h3>
-            <div class="summary-value">${quotes.filter(q => q.time !== 'Not specified').sort((a, b) => {
-                const aTime = parseTime(a.time);
-                const bTime = parseTime(b.time);
-                return aTime - bTime;
-            })[0]?.provider || 'N/A'}</div>
-            <div class="summary-detail">${quotes.filter(q => q.time !== 'Not specified').sort((a, b) => parseTime(a.time) - parseTime(b.time))[0]?.time || ''}</div>
-        </div>
-    `;
-    
-    summaryHTML += '</div>';
-    
-    // Recommendation box
-    summaryHTML += `
-        <div class="recommendation-box">
-            <h3>🎯 Our Recommendation</h3>
-            <p>${recommendation}</p>
-            ${winner ? `<p class="winner-detail"><strong>${winner.provider}</strong> includes ${winner.itemCount} items${winner.time !== 'Not specified' ? ' with '+winner.time+' turnaround' : ''}.</p>` : ''}
-        </div>
-    `;
-    
-    // Items breakdown
-    if (commonItems.size > 0) {
+    Object.keys(uploadedFiles).forEach((num, index) => {
+        const file = uploadedFiles[num];
+        const icon = getFileIcon(file.name);
         summaryHTML += `
-            <div class="common-items">
-                <h3>📦 Common Across All Quotes</h3>
-                <div class="item-tags">
-                    ${[...commonItems].map(item => `<span class="item-tag">${capitalize(item)}</span>`).join('')}
-                </div>
+            <div class="uploaded-card">
+                <span class="uploaded-number">${index + 1}</span>
+                <span class="uploaded-icon">${icon}</span>
+                <span class="uploaded-name">${file.name}</span>
             </div>
         `;
-    }
-    
-    // Unique items per quote
-    summaryHTML += '<div class="unique-items-section"><h3>📝 Unique to Each Quote</h3>';
-    quotes.forEach(q => {
-        const unique = q.itemsList.filter(item => !commonItems.has(item));
-        if (unique.length > 0) {
-            summaryHTML += `
-                <div class="quote-unique">
-                    <h4>${q.provider}</h4>
-                    <div class="item-tags">
-                        ${unique.map(item => `<span class="item-tag unique">${capitalize(item)}</span>`).join('')}
-                    </div>
-                </div>
-            `;
-        }
     });
+    
     summaryHTML += '</div>';
     
-    document.getElementById('summary').innerHTML = summaryHTML;
-    
-    // Comparison table
-    let tableHTML = `
-        <table class="compare-table">
-            <thead>
-                <tr>
-                    <th>Feature</th>
-                    ${quotes.map(q => `<th>${q.provider}</th>`).join('')}
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="price-row">
-                    <td>Price</td>
-                    ${quotes.map(q => {
-                        const isLowest = q.price === lowestPrice;
-                        return `<td class="${isLowest ? 'lowest' : ''}">
-                            ${q.price ? 'R' + q.price.toLocaleString() : '-'}
-                            ${isLowest ? '<span class="lowest-badge">Lowest</span>' : ''}
-                        </td>`;
-                    }).join('')}
-                </tr>
-                <tr>
-                    <td>Turnaround</td>
-                    ${quotes.map(q => `<td>${q.time}</td>`).join('')}
-                </tr>
-                <tr>
-                    <td>Items Included</td>
-                    <td colspan="${quotes.length}"><strong>${quotes.reduce((a, b) => a.itemCount > b.itemCount ? a : b).provider}</strong> has the most (${Math.max(...quotes.map(q => q.itemCount))} items)</td>
-                </tr>
-            </tbody>
-        </table>
-    `;
-    
-    document.getElementById('comparison-table').innerHTML = tableHTML;
-    
+    document.getElementById('uploaded-summary').innerHTML = summaryHTML;
+    document.getElementById('quote-count').textContent = count;
     document.getElementById('results').style.display = 'block';
     document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-}
-
-function parseTime(timeStr) {
-    const match = timeStr.match(/(\d+)/);
-    return match ? parseInt(match[1]) : 999;
-}
-
-function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 </script>
 
 <style>
 .quote-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     margin-bottom: 2rem;
 }
@@ -489,7 +395,7 @@ function capitalize(str) {
     border-radius: 12px;
     box-shadow: var(--shadow);
     border: 2px solid transparent;
-    transition: border-color 0.3s;
+    transition: all 0.3s;
 }
 
 .quote-box:focus-within {
@@ -501,8 +407,6 @@ function capitalize(str) {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1.5rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid var(--primary);
 }
 
 .quote-number {
@@ -521,6 +425,121 @@ function capitalize(str) {
     font-size: 0.875rem;
 }
 
+/* Large file drop */
+.file-drop-large {
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    text-align: center;
+    background: #f8fafc;
+    transition: all 0.3s;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+}
+
+.file-drop-large:hover {
+    border-color: var(--primary);
+    background: #f0f9ff;
+}
+
+.file-drop-large.drag-over {
+    border-color: var(--primary);
+    background: #e0f2fe;
+    transform: scale(1.02);
+}
+
+.file-drop-large input[type="file"] {
+    display: none;
+}
+
+.drop-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.drop-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.drop-content p {
+    margin: 0;
+    color: var(--dark);
+    font-weight: 500;
+}
+
+.drop-sub {
+    color: var(--gray) !important;
+    font-weight: 400 !important;
+    font-size: 0.875rem;
+}
+
+.supported {
+    font-size: 0.75rem;
+    color: var(--gray);
+    margin-top: 0.5rem;
+}
+
+/* File preview */
+.file-preview-large {
+    display: none;
+    margin-top: 1rem;
+}
+
+.file-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #f0fdf4;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #bbf7d0;
+}
+
+.file-icon-large {
+    font-size: 2.5rem;
+}
+
+.file-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.file-name-large {
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.file-size-large {
+    font-size: 0.875rem;
+    color: var(--gray);
+}
+
+.remove-file-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: transform 0.2s;
+}
+
+.remove-file-btn:hover {
+    transform: scale(1.1);
+}
+
 .button-group {
     display: flex;
     gap: 1rem;
@@ -533,245 +552,159 @@ function capitalize(str) {
     font-size: 1.125rem;
 }
 
-/* File drop styling */
-.file-drop {
-    border: 2px dashed #cbd5e1;
-    border-radius: 8px;
-    padding: 2rem;
-    text-align: center;
-    background: #f8fafc;
-    transition: all 0.3s;
-    cursor: pointer;
+.btn-compare:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
-.file-drop:hover {
-    border-color: var(--primary);
-    background: #f0f9ff;
+/* Uploaded summary */
+.uploaded-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
-.file-drop.drag-over {
-    border-color: var(--primary);
-    background: #e0f2fe;
-}
-
-.file-drop input[type="file"] {
-    display: none;
-}
-
-.file-label {
-    color: var(--primary);
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-.file-preview {
-    margin-top: 1rem;
-    display: none;
-}
-
-.file-item {
+.uploaded-card {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    background: white;
-    padding: 0.75rem;
-    border-radius: 6px;
-    border: 1px solid #e2e8f0;
+    gap: 1rem;
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
 }
 
-.file-icon {
-    font-size: 1.5rem;
+.uploaded-number {
+    background: var(--primary);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
 }
 
-.file-name {
+.uploaded-icon {
+    font-size: 2rem;
+}
+
+.uploaded-name {
     flex: 1;
-    font-size: 0.875rem;
+    font-weight: 500;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.file-size {
+/* Analysis request section */
+.analysis-request {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    margin-top: 2rem;
+}
+
+.analysis-request h2 {
+    margin-bottom: 1rem;
+}
+
+.analysis-request > p {
     color: var(--gray);
-    font-size: 0.75rem;
-}
-
-.remove-file {
-    background: none;
-    border: none;
-    color: #ef4444;
-    cursor: pointer;
-    font-size: 1rem;
-}
-
-/* Summary styling */
-.summary-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
     margin-bottom: 2rem;
 }
 
-.summary-card {
-    background: var(--white);
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
+.contact-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.contact-card {
     text-align: center;
-}
-
-.summary-card.highlight {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    color: white;
-}
-
-.summary-card h3 {
-    font-size: 1rem;
-    margin-bottom: 0.75rem;
-    opacity: 0.9;
-}
-
-.summary-card.highlight h3 {
-    color: rgba(255,255,255,0.9);
-}
-
-.summary-value {
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-bottom: 0.25rem;
-}
-
-.summary-detail {
-    font-size: 0.875rem;
-    opacity: 0.8;
-}
-
-.saving-badge {
-    display: inline-block;
-    background: var(--secondary);
-    color: white;
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    margin-top: 0.5rem;
-}
-
-.recommendation-box {
-    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-    padding: 2rem;
-    border-radius: 12px;
-    margin-top: 2rem;
-    border-left: 4px solid #f59e0b;
-}
-
-.recommendation-box h3 {
-    color: #92400e;
-    margin-bottom: 1rem;
-}
-
-.recommendation-box p {
-    color: #78350f;
-    line-height: 1.6;
-}
-
-.winner-detail {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(146, 64, 14, 0.2);
-}
-
-.common-items {
-    background: var(--white);
     padding: 1.5rem;
-    border-radius: 12px;
-    margin-top: 1.5rem;
-    box-shadow: var(--shadow);
-}
-
-.common-items h3 {
-    margin-bottom: 1rem;
-}
-
-.item-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.item-tag {
-    background: #e0f2fe;
-    color: #0369a1;
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.875rem;
-}
-
-.item-tag.unique {
-    background: #f0fdf4;
-    color: #15803d;
-}
-
-.unique-items-section {
-    margin-top: 2rem;
-}
-
-.unique-items-section h3 {
-    margin-bottom: 1rem;
-}
-
-.quote-unique {
-    background: var(--white);
-    padding: 1rem;
+    background: var(--light);
     border-radius: 8px;
-    margin-bottom: 0.75rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-.quote-unique h4 {
-    color: var(--primary);
+.contact-card h3 {
     margin-bottom: 0.5rem;
 }
 
-/* Comparison Table */
-.compare-table {
-    width: 100%;
-    border-collapse: collapse;
+.contact-card p {
+    color: var(--gray);
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+}
+
+.what-happens {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+}
+
+.what-happens h3 {
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+.what-happens ol {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.what-happens li {
+    padding: 0.5rem 0;
+    color: var(--dark);
+}
+
+/* Summary box */
+.summary-box {
     background: var(--white);
+    padding: 2rem;
     border-radius: 12px;
-    overflow: hidden;
     box-shadow: var(--shadow);
+    margin-top: 2rem;
 }
 
-.compare-table th,
-.compare-table td {
+.summary-box h3 {
+    margin-bottom: 1.5rem;
+}
+
+.comparison-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.feature-item {
+    display: flex;
+    gap: 1rem;
     padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid #e2e8f0;
+    background: var(--light);
+    border-radius: 8px;
 }
 
-.compare-table th {
-    background: var(--primary);
-    color: white;
-    font-weight: 600;
+.feature-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
 }
 
-.compare-table .price-row {
-    background: #f8fafc;
+.feature-item strong {
+    display: block;
+    margin-bottom: 0.25rem;
 }
 
-.compare-table .lowest {
-    color: var(--secondary);
-    font-weight: 700;
-}
-
-.lowest-badge {
-    display: inline-block;
-    background: var(--secondary);
-    color: white;
-    padding: 0.125rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    margin-left: 0.5rem;
+.feature-item p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--gray);
 }
 
 @media (max-width: 768px) {
@@ -787,8 +720,9 @@ function capitalize(str) {
         width: 100%;
     }
     
-    .compare-table {
-        font-size: 0.875rem;
+    .file-drop-large {
+        min-height: 150px;
+        padding: 2rem 1rem;
     }
 }
 </style>

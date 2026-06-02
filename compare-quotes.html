@@ -349,14 +349,18 @@ function clearAll() {
 
 function updateCompareButton() {
     const count = Object.keys(uploadedFiles).length;
+    const detailsFilled = quotesData.filter(q => q.provider || q.price).length;
     const btn = document.getElementById('compare-btn');
     
-    if (count >= 2) {
+    if (detailsFilled >= 2) {
+        btn.disabled = false;
+        btn.textContent = '📊 Compare ' + detailsFilled + ' Quotes';
+    } else if (count >= 2) {
         btn.disabled = false;
         btn.textContent = '📊 Compare ' + count + ' Quotes';
     } else {
         btn.disabled = true;
-        btn.textContent = '📊 Compare Quotes (upload ' + (2 - count) + ' more)';
+        btn.textContent = '📊 Compare Quotes (add ' + Math.max(2 - count, 2 - detailsFilled) + ' more)';
     }
 }
 
@@ -371,7 +375,7 @@ function updateComparison() {
             const includes = document.getElementById('includes' + i).value.trim();
             const time = document.getElementById('time' + i).value.trim();
             
-            if (provider || price || includes) {
+            if (provider || price || includes || time) {
                 hasAnyData = true;
             }
             
@@ -389,7 +393,9 @@ function updateComparison() {
         }
     }
     
-    if (hasAnyData && quotesData.length >= 2) {
+    const count = Object.keys(uploadedFiles).length;
+    
+    if (count >= 2) {
         document.getElementById('results').style.display = 'block';
         renderComparison();
     }

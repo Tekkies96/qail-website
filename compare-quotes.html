@@ -28,7 +28,7 @@
 <main>
     <section class="hero" style="padding: 4rem 2rem;">
         <h1>Compare Quotes</h1>
-        <p>Attach your quotes below and we'll give you a detailed comparison summary.</p>
+        <p>Attach your quotes below and get an instant comparison summary.</p>
     </section>
 
     <section>
@@ -49,6 +49,26 @@
                     <input type="file" id="file1" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="handleFile(this, 1)">
                 </label>
                 <div class="file-preview-large" id="preview-1"></div>
+                
+                <div class="quote-details" id="details-1" style="display: none; margin-top: 1.5rem;">
+                    <h4>📝 Extract Details (optional)</h4>
+                    <div class="form-group">
+                        <label>Provider Name</label>
+                        <input type="text" id="provider1" placeholder="e.g. QAIL, Competitor A" oninput="updateComparison()">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Price (ZAR)</label>
+                        <input type="number" id="price1" placeholder="e.g. 500" min="0" oninput="updateComparison()">
+                    </div>
+                    <div class="form-group">
+                        <label>What's Included (one per line)</label>
+                        <textarea id="includes1" rows="4" placeholder="- Design review&#10;- SEO audit&#10;- AIFR score" oninput="updateComparison()"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Turnaround Time</label>
+                        <input type="text" id="time1" placeholder="e.g. 24 hours" oninput="updateComparison()">
+                    </div>
+                </div>
             </div>
 
             <!-- Quote 2 -->
@@ -67,6 +87,26 @@
                     <input type="file" id="file2" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="handleFile(this, 2)">
                 </label>
                 <div class="file-preview-large" id="preview-2"></div>
+                
+                <div class="quote-details" id="details-2" style="display: none; margin-top: 1.5rem;">
+                    <h4>📝 Extract Details (optional)</h4>
+                    <div class="form-group">
+                        <label>Provider Name</label>
+                        <input type="text" id="provider2" placeholder="e.g. Competitor B" oninput="updateComparison()">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Price (ZAR)</label>
+                        <input type="number" id="price2" placeholder="e.g. 750" min="0" oninput="updateComparison()">
+                    </div>
+                    <div class="form-group">
+                        <label>What's Included (one per line)</label>
+                        <textarea id="includes2" rows="4" placeholder="- Design review&#10;- SEO audit&#10;- AIFR score" oninput="updateComparison()"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Turnaround Time</label>
+                        <input type="text" id="time2" placeholder="e.g. 48 hours" oninput="updateComparison()">
+                    </div>
+                </div>
             </div>
 
             <!-- Quote 3 -->
@@ -85,6 +125,26 @@
                     <input type="file" id="file3" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="handleFile(this, 3)">
                 </label>
                 <div class="file-preview-large" id="preview-3"></div>
+                
+                <div class="quote-details" id="details-3" style="display: none; margin-top: 1.5rem;">
+                    <h4>📝 Extract Details (optional)</h4>
+                    <div class="form-group">
+                        <label>Provider Name</label>
+                        <input type="text" id="provider3" placeholder="e.g. Competitor C" oninput="updateComparison()">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Price (ZAR)</label>
+                        <input type="number" id="price3" placeholder="e.g. 600" min="0" oninput="updateComparison()">
+                    </div>
+                    <div class="form-group">
+                        <label>What's Included (one per line)</label>
+                        <textarea id="includes3" rows="4" placeholder="- Design review&#10;- SEO audit&#10;- AIFR score" oninput="updateComparison()"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Turnaround Time</label>
+                        <input type="text" id="time3" placeholder="e.g. 72 hours" oninput="updateComparison()">
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -94,84 +154,38 @@
         </div>
     </section>
 
-    <!-- Results Section -->
+    <!-- Results Section - LIVE COMPARISON -->
     <section id="results" style="display: none;">
-        <h2>📋 Your Uploaded Quotes</h2>
-        <div id="uploaded-summary"></div>
+        <h2>📊 Comparison Results</h2>
         
-        <div class="analysis-request">
-            <h2>🔍 Analysis Request</h2>
-            <p>We've received your <span id="quote-count">0</span> quote(s). To provide you with a detailed comparison, our team will need to review each document.</p>
-            
-            <div class="contact-options">
-                <div class="contact-card">
-                    <h3>📧 Email Us</h3>
-                    <p>Send your quotes to:</p>
-                    <a href="mailto:info@qail.co.za" class="btn btn-primary">info@qail.co.za</a>
-                </div>
-                
-                <div class="contact-card">
-                    <h3>📱 WhatsApp</h3>
-                    <p>Send quotes directly:</p>
-                    <a href="https://wa.me/27XXXXXXXXX" class="btn btn-primary">Message Us</a>
-                </div>
-                
-                <div class="contact-card">
-                    <h3>📝 Contact Form</h3>
-                    <p>Or use our contact form:</p>
-                    <a href="contact.html" class="btn btn-primary">Go to Contact</a>
-                </div>
-            </div>
-            
-            <div class="what-happens">
-                <h3>What happens next?</h3>
-                <ol>
-                    <li>📄 We receive your quotes via email or WhatsApp</li>
-                    <li>🔍 Our team analyzes each quote side-by-side</li>
-                    <li>📊 We create a detailed comparison with pricing, features, and value assessment</li>
-                    <li>💬 You'll receive our recommendation within 24 hours</li>
-                </ol>
-            </div>
+        <!-- Summary Cards -->
+        <div class="summary-grid" id="summary-cards"></div>
+        
+        <!-- Recommendation -->
+        <div class="recommendation-box" id="recommendation-box"></div>
+        
+        <!-- Detailed Table -->
+        <div class="comparison-table-section">
+            <h3>📋 Detailed Side-by-Side Comparison</h3>
+            <div id="comparison-table"></div>
         </div>
         
-        <div class="summary-box">
-            <h3>🎯 What We Compare</h3>
-            <div class="comparison-features">
-                <div class="feature-item">
-                    <span class="feature-icon">💰</span>
-                    <div>
-                        <strong>Price Comparison</strong>
-                        <p>We'll highlight the best price and calculate your potential savings</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">📦</span>
-                    <div>
-                        <strong>Features & Services</strong>
-                        <p>What's included in each quote - side by side comparison</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">⏱️</span>
-                    <div>
-                        <strong>Turnaround Time</strong>
-                        <p>Compare delivery times and availability</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">📋</span>
-                    <div>
-                        <strong>Terms & Conditions</strong>
-                        <p>Highlighting any hidden fees or important clauses</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">🏆</span>
-                    <div>
-                        <strong>Value Recommendation</strong>
-                        <p>Our expert opinion on which quote offers the best overall value</p>
-                    </div>
-                </div>
+        <!-- What's Included Breakdown -->
+        <div class="items-breakdown" id="items-breakdown"></div>
+        
+        <!-- Pro Tips -->
+        <div class="pro-tips">
+            <h3>💡 Pro Tips</h3>
+            <ul id="pro-tips-list"></ul>
+        </div>
+        
+        <!-- Contact CTA -->
+        <div class="contact-cta">
+            <h3>👍 Need a Deeper Analysis?</h3>
+            <p>If you have actual quote documents, upload them and we'll do a full manual analysis with recommendations.</p>
+            <div class="contact-options">
+                <a href="mailto:info@qail.co.za" class="btn btn-primary">📧 Email Us</a>
+                <a href="contact.html" class="btn btn-secondary">📝 Contact Form</a>
             </div>
         </div>
     </section>
@@ -192,12 +206,6 @@
                 <strong>🤝 Unbiased Opinion:</strong> We recommend what's best for you — not the most expensive or cheapest option.
             </li>
         </ul>
-    </section>
-
-    <section class="cta-section" style="text-align: center; margin-top: 3rem; padding: 3rem; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 12px; color: white;">
-        <h2 style="color: white;">Need a Quote Analysis Now?</h2>
-        <p style="margin: 1rem 0;">Upload your quotes and get our expert comparison within 24 hours.</p>
-        <a href="contact.html" class="btn btn-primary" style="background: white; color: var(--primary);">Contact Us</a>
     </section>
 </main>
 
@@ -231,6 +239,7 @@
 
 <script>
 let uploadedFiles = {};
+let quotesData = [];
 
 function handleDragOver(e) {
     e.preventDefault();
@@ -258,9 +267,6 @@ function handleFile(input, num) {
 }
 
 function processFile(file, num) {
-    const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/png', 'image/jpeg'];
-    
-    // Check file size (max 10MB)
     if (file.size > 10 * 1024 * 1024) {
         alert('File too large. Maximum size is 10MB.');
         return;
@@ -274,7 +280,9 @@ function processFile(file, num) {
     };
     
     showFilePreview(num);
+    showDetails(num);
     updateCompareButton();
+    updateComparison();
 }
 
 function showFilePreview(num) {
@@ -288,20 +296,16 @@ function showFilePreview(num) {
     const fileSize = (file.size / (1024 * 1024)).toFixed(2);
     const icon = getFileIcon(file.name);
     
-    preview.innerHTML = `
-        <div class="file-card">
-            <span class="file-icon-large">${icon}</span>
-            <div class="file-info">
-                <span class="file-name-large">${file.name}</span>
-                <span class="file-size-large">${fileSize} MB</span>
-            </div>
-            <button type="button" class="remove-file-btn" onclick="removeQuote(${num})">✕</button>
-        </div>
-    `;
+    preview.innerHTML = '<div class="file-card"><span class="file-icon-large">' + icon + '</span><div class="file-info"><span class="file-name-large">' + file.name + '</span><span class="file-size-large">' + fileSize + ' MB</span></div><button type="button" class="remove-file-btn" onclick="removeQuote(' + num + ')">✕</button></div>';
     
     drop.style.display = 'none';
     preview.style.display = 'block';
     removeBtn.style.display = 'inline-block';
+}
+
+function showDetails(num) {
+    const details = document.getElementById('details-' + num);
+    details.style.display = 'block';
 }
 
 function getFileIcon(filename) {
@@ -319,12 +323,19 @@ function removeQuote(num) {
     const drop = document.getElementById('drop-' + num);
     const removeBtn = document.getElementById('remove-' + num);
     const fileInput = document.getElementById('file' + num);
+    const details = document.getElementById('details-' + num);
     
     fileInput.value = '';
     preview.innerHTML = '';
     preview.style.display = 'none';
     drop.style.display = 'flex';
     removeBtn.style.display = 'none';
+    details.style.display = 'none';
+    
+    document.getElementById('provider' + num).value = '';
+    document.getElementById('price' + num).value = '';
+    document.getElementById('includes' + num).value = '';
+    document.getElementById('time' + num).value = '';
     
     updateCompareButton();
     document.getElementById('results').style.display = 'none';
@@ -342,49 +353,174 @@ function updateCompareButton() {
     
     if (count >= 2) {
         btn.disabled = false;
-        btn.textContent = `📊 Compare ${count} Quotes`;
+        btn.textContent = '📊 Compare ' + count + ' Quotes';
     } else {
         btn.disabled = true;
-        btn.textContent = `📊 Compare Quotes (need ${2 - count} more)`;
+        btn.textContent = '📊 Compare Quotes (upload ' + (2 - count) + ' more)';
+    }
+}
+
+function updateComparison() {
+    quotesData = [];
+    let hasAnyData = false;
+    
+    for (let i = 1; i <= 3; i++) {
+        if (uploadedFiles[i]) {
+            const provider = document.getElementById('provider' + i).value.trim();
+            const price = document.getElementById('price' + i).value;
+            const includes = document.getElementById('includes' + i).value.trim();
+            const time = document.getElementById('time' + i).value.trim();
+            
+            if (provider || price || includes) {
+                hasAnyData = true;
+            }
+            
+            const items = includes ? includes.split('\n').map(function(s) { return s.trim().replace(/^[-•*]\s*/, ''); }).filter(function(s) { return s; }) : [];
+            
+            quotesData.push({
+                number: i,
+                fileName: uploadedFiles[i].name,
+                provider: provider || 'Quote ' + i,
+                price: price ? parseFloat(price) : null,
+                items: items,
+                itemCount: items.length,
+                time: time || 'Not specified'
+            });
+        }
+    }
+    
+    if (hasAnyData && quotesData.length >= 2) {
+        document.getElementById('results').style.display = 'block';
+        renderComparison();
     }
 }
 
 function compareQuotes() {
-    const count = Object.keys(uploadedFiles).length;
+    updateComparison();
     
-    if (count < 2) {
-        alert('Please upload at least 2 quotes to compare.');
-        return;
+    if (quotesData.length >= 2) {
+        document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+    } else {
+        alert('Please enter some details to compare, or upload at least 2 quotes.');
+    }
+}
+
+function renderComparison() {
+    const sorted = [...quotesData].sort(function(a, b) { return b.itemCount - a.itemCount; });
+    const mostIncluded = sorted[0];
+    
+    const prices = quotesData.filter(function(q) { return q.price !== null; }).map(function(q) { return q.price; });
+    const lowestPrice = prices.length > 0 ? Math.min.apply(null, prices) : null;
+    const highestPrice = prices.length > 0 ? Math.max.apply(null, prices) : null;
+    const avgPrice = prices.length > 0 ? prices.reduce(function(a, b) { return a + b; }, 0) / prices.length : 0;
+    
+    const cheapest = lowestPrice !== null ? quotesData.find(function(q) { return q.price === lowestPrice; }) : null;
+    
+    const withTime = quotesData.filter(function(q) { return q.time !== 'Not specified'; });
+    const fastest = withTime.length > 0 ? withTime.sort(function(a, b) { return parseTime(a.time) - parseTime(b.time); })[0] : null;
+    
+    let summaryHTML = '<div class="summary-grid">';
+    
+    if (cheapest) {
+        const saving = avgPrice > 0 ? Math.round(((avgPrice - lowestPrice) / avgPrice) * 100) : 0;
+        summaryHTML += '<div class="summary-card highlight"><h3>💰 Best Price</h3><div class="summary-value">' + cheapest.provider + '</div><div class="summary-detail">R' + lowestPrice.toLocaleString() + '</div>' + (saving > 0 ? '<div class="saving-badge">Save ' + saving + '% vs average</div>' : '') + '</div>';
     }
     
-    // Build uploaded files summary
-    let summaryHTML = '<div class="uploaded-grid">';
+    if (mostIncluded && mostIncluded.itemCount > 0) {
+        summaryHTML += '<div class="summary-card"><h3>📦 Most Included</h3><div class="summary-value">' + mostIncluded.provider + '</div><div class="summary-detail">' + mostIncluded.itemCount + ' items</div></div>';
+    }
     
-    Object.keys(uploadedFiles).forEach((num, index) => {
-        const file = uploadedFiles[num];
-        const icon = getFileIcon(file.name);
-        summaryHTML += `
-            <div class="uploaded-card">
-                <span class="uploaded-number">${index + 1}</span>
-                <span class="uploaded-icon">${icon}</span>
-                <span class="uploaded-name">${file.name}</span>
-            </div>
-        `;
-    });
+    if (fastest) {
+        summaryHTML += '<div class="summary-card"><h3>⚡ Fastest</h3><div class="summary-value">' + fastest.provider + '</div><div class="summary-detail">' + fastest.time + '</div></div>';
+    }
     
     summaryHTML += '</div>';
+    document.getElementById('summary-cards').innerHTML = summaryHTML;
     
-    document.getElementById('uploaded-summary').innerHTML = summaryHTML;
-    document.getElementById('quote-count').textContent = count;
-    document.getElementById('results').style.display = 'block';
-    document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+    let recommendation = '';
+    if (cheapest && mostIncluded && cheapest.number === mostIncluded.number) {
+        recommendation = '🏆 <strong>' + cheapest.provider + '</strong> is the clear winner! Best price AND most included.';
+    } else if (cheapest && mostIncluded) {
+        const priceDiff = cheapest.price && mostIncluded.price ? Math.round(((mostIncluded.price - cheapest.price) / mostIncluded.price) * 100) : 0;
+        
+        if (priceDiff < 15 && mostIncluded.itemCount > cheapest.itemCount + 2) {
+            recommendation = '⚖️ <strong>' + mostIncluded.provider + '</strong> offers better value — only ' + priceDiff + '% more for ' + (mostIncluded.itemCount - cheapest.itemCount) + ' extra items.';
+        } else {
+            recommendation = '💡 <strong>' + cheapest.provider + '</strong> has the lowest price. Consider if the extra items from <strong>' + mostIncluded.provider + '</strong> are worth the premium.';
+        }
+    } else if (cheapest) {
+        recommendation = '💰 <strong>' + cheapest.provider + '</strong> has the best price. Fill in more details to get better comparisons.';
+    } else {
+        recommendation = '📝 Enter details from your quotes above to get a proper comparison.';
+    }
+    
+    document.getElementById('recommendation-box').innerHTML = '<h3>🎯 Our Recommendation</h3><p>' + recommendation + '</p>';
+    
+    let tableHTML = '<table class="compare-table"><thead><tr><th>Feature</th>';
+    quotesData.forEach(function(q) { tableHTML += '<th>' + q.provider + '</th>'; });
+    tableHTML += '</tr></thead><tbody><tr class="price-row"><td>Price</td>';
+    quotesData.forEach(function(q) {
+        const isLowest = q.price === lowestPrice;
+        tableHTML += '<td class="' + (isLowest ? 'lowest' : '') + '">' + (q.price ? 'R' + q.price.toLocaleString() : '-') + (isLowest ? '<span class="lowest-badge">Lowest</span>' : '') + '</td>';
+    });
+    tableHTML += '</tr><tr><td>Items Included</td>';
+    quotesData.forEach(function(q) { tableHTML += '<td>' + q.itemCount + ' items</td>'; });
+    tableHTML += '</tr><tr><td>Turnaround</td>';
+    quotesData.forEach(function(q) { tableHTML += '<td>' + q.time + '</td>'; });
+    tableHTML += '</tr></tbody></table>';
+    document.getElementById('comparison-table').innerHTML = tableHTML;
+    
+    let itemsHTML = '<h4>What\'s Included</h4><div class="items-grid">';
+    quotesData.forEach(function(q) {
+        itemsHTML += '<div class="items-column"><h5>' + q.provider + '</h5>';
+        if (q.items.length > 0) {
+            itemsHTML += '<ul>';
+            q.items.forEach(function(item) { itemsHTML += '<li>' + item + '</li>'; });
+            itemsHTML += '</ul>';
+        } else {
+            itemsHTML += '<p class="no-items">No items listed</p>';
+        }
+        itemsHTML += '</div>';
+    });
+    itemsHTML += '</div>';
+    document.getElementById('items-breakdown').innerHTML = itemsHTML;
+    
+    let tips = [];
+    
+    if (lowestPrice && highestPrice && highestPrice - lowestPrice > 500) {
+        tips.push('💰 There\'s a R' + (highestPrice - lowestPrice).toLocaleString() + ' difference between the cheapest and most expensive quote. Check what\'s causing the price gap.');
+    }
+    
+    if (mostIncluded && mostIncluded.itemCount > 0) {
+        const avgItems = quotesData.reduce(function(sum, q) { return sum + q.itemCount; }, 0) / quotesData.length;
+        quotesData.forEach(function(q) {
+            if (q.itemCount < avgItems - 1) {
+                tips.push('⚠️ ' + q.provider + ' has fewer items than average. Check if they\'re missing something important.');
+            }
+        });
+    }
+    
+    if (fastest && fastest.time.indexOf('24') !== -1) {
+        tips.push('⚡ ' + fastest.provider + ' offers 24-hour turnaround — the fastest option.');
+    }
+    
+    tips.push('📧 Want a thorough analysis? Email your actual quote documents to info@qail.co.za and we\'ll give you expert advice.');
+    
+    let tipsHTML = '';
+    tips.forEach(function(tip) { tipsHTML += '<li>' + tip + '</li>'; });
+    document.getElementById('pro-tips-list').innerHTML = tipsHTML;
+}
+
+function parseTime(timeStr) {
+    const match = timeStr.match(/(\d+)/);
+    return match ? parseInt(match[1]) : 999;
 }
 </script>
 
 <style>
 .quote-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
     margin-bottom: 2rem;
 }
@@ -425,7 +561,17 @@ function compareQuotes() {
     font-size: 0.875rem;
 }
 
-/* Large file drop */
+.quote-details {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.quote-details h4 {
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
 .file-drop-large {
     border: 2px dashed #cbd5e1;
     border-radius: 12px;
@@ -492,7 +638,6 @@ function compareQuotes() {
     margin-top: 0.5rem;
 }
 
-/* File preview */
 .file-preview-large {
     display: none;
     margin-top: 1rem;
@@ -564,154 +709,233 @@ function compareQuotes() {
     cursor: not-allowed;
 }
 
-/* Uploaded summary */
-.uploaded-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.uploaded-card {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background: var(--white);
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: var(--shadow);
-}
-
-.uploaded-number {
-    background: var(--primary);
-    color: white;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    flex-shrink: 0;
-}
-
-.uploaded-icon {
-    font-size: 2rem;
-}
-
-.uploaded-name {
-    flex: 1;
-    font-weight: 500;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-/* Analysis request section */
-.analysis-request {
+#results {
     background: var(--white);
     padding: 2rem;
     border-radius: 12px;
     box-shadow: var(--shadow);
-    margin-top: 2rem;
+    margin-top: 3rem;
 }
 
-.analysis-request h2 {
-    margin-bottom: 1rem;
-}
-
-.analysis-request > p {
-    color: var(--gray);
+#results h2 {
     margin-bottom: 2rem;
+    color: var(--primary);
 }
 
-.contact-options {
+.summary-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.summary-card {
+    background: var(--light);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 2px solid transparent;
+}
+
+.summary-card.highlight {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+}
+
+.summary-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    opacity: 0.9;
+}
+
+.summary-card.highlight h3 {
+    color: rgba(255,255,255,0.9);
+}
+
+.summary-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+}
+
+.summary-detail {
+    font-size: 0.875rem;
+    opacity: 0.8;
+}
+
+.saving-badge {
+    display: inline-block;
+    background: var(--secondary);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.recommendation-box {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    border-left: 4px solid #f59e0b;
+}
+
+.recommendation-box h3 {
+    color: #92400e;
+    margin-bottom: 1rem;
+}
+
+.recommendation-box p {
+    color: #78350f;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.comparison-table-section {
     margin: 2rem 0;
 }
 
-.contact-card {
-    text-align: center;
-    padding: 1.5rem;
+.comparison-table-section h3 {
+    margin-bottom: 1rem;
+}
+
+.compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.compare-table th,
+.compare-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.compare-table th {
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+}
+
+.compare-table .price-row {
+    background: #f8fafc;
+}
+
+.compare-table .lowest {
+    color: var(--secondary);
+    font-weight: 700;
+}
+
+.lowest-badge {
+    display: inline-block;
+    background: var(--secondary);
+    color: white;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+}
+
+.items-breakdown {
+    margin: 2rem 0;
+}
+
+.items-breakdown h4 {
+    margin-bottom: 1rem;
+}
+
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.items-column {
     background: var(--light);
+    padding: 1rem;
     border-radius: 8px;
 }
 
-.contact-card h3 {
-    margin-bottom: 0.5rem;
+.items-column h5 {
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary);
 }
 
-.contact-card p {
-    color: var(--gray);
-    margin-bottom: 1rem;
+.items-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.items-column li {
+    padding: 0.35rem 0;
+    border-bottom: 1px solid #e2e8f0;
     font-size: 0.875rem;
 }
 
-.what-happens {
+.items-column li:before {
+    content: "✓ ";
+    color: var(--secondary);
+}
+
+.no-items {
+    color: var(--gray);
+    font-style: italic;
+    font-size: 0.875rem;
+}
+
+.pro-tips {
     background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
     padding: 1.5rem;
     border-radius: 8px;
-    margin-top: 2rem;
+    margin: 2rem 0;
 }
 
-.what-happens h3 {
+.pro-tips h3 {
     margin-bottom: 1rem;
     color: var(--primary);
 }
 
-.what-happens ol {
+.pro-tips ul {
+    list-style: none;
+    padding: 0;
     margin: 0;
-    padding-left: 1.5rem;
 }
 
-.what-happens li {
+.pro-tips li {
     padding: 0.5rem 0;
-    color: var(--dark);
+    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
 }
 
-/* Summary box */
-.summary-box {
+.contact-cta {
     background: var(--white);
     padding: 2rem;
     border-radius: 12px;
     box-shadow: var(--shadow);
+    text-align: center;
     margin-top: 2rem;
 }
 
-.summary-box h3 {
+.contact-cta h3 {
+    margin-bottom: 0.5rem;
+}
+
+.contact-cta p {
+    color: var(--gray);
     margin-bottom: 1.5rem;
 }
 
-.comparison-features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;
-}
-
-.feature-item {
+.contact-cta .contact-options {
     display: flex;
     gap: 1rem;
-    padding: 1rem;
-    background: var(--light);
-    border-radius: 8px;
-}
-
-.feature-icon {
-    font-size: 2rem;
-    flex-shrink: 0;
-}
-
-.feature-item strong {
-    display: block;
-    margin-bottom: 0.25rem;
-}
-
-.feature-item p {
-    margin: 0;
-    font-size: 0.875rem;
-    color: var(--gray);
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 @media (max-width: 768px) {

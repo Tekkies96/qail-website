@@ -28,7 +28,7 @@
 <main>
     <section class="hero" style="padding: 4rem 2rem;">
         <h1>Compare Quotes</h1>
-        <p>Attach your quotes below and get an instant comparison summary.</p>
+        <p>Upload your quote documents and get instant AI-powered analysis.</p>
     </section>
 
     <section>
@@ -44,31 +44,12 @@
                         <span class="drop-icon">📄</span>
                         <p>Drag & drop your quote here</p>
                         <p class="drop-sub">or click to browse</p>
-                        <span class="supported">PDF, DOC, DOCX, PNG, JPG</span>
+                        <span class="supported">PDF, TXT, DOC, PNG, JPG</span>
                     </div>
-                    <input type="file" id="file1" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="handleFile(this, 1)">
+                    <input type="file" id="file1" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.txt" onchange="handleFile(this, 1)">
                 </label>
                 <div class="file-preview-large" id="preview-1"></div>
-                
-                <div class="quote-details" id="details-1" style="display: none; margin-top: 1.5rem;">
-                    <h4>📝 Extract Details (optional)</h4>
-                    <div class="form-group">
-                        <label>Provider Name</label>
-                        <input type="text" id="provider1" placeholder="e.g. QAIL, Competitor A" oninput="updateComparison()">
-                    </div>
-                    <div class="form-group">
-                        <label>Total Price (ZAR)</label>
-                        <input type="number" id="price1" placeholder="e.g. 500" min="0" oninput="updateComparison()">
-                    </div>
-                    <div class="form-group">
-                        <label>What's Included (one per line)</label>
-                        <textarea id="includes1" rows="4" placeholder="- Design review&#10;- SEO audit&#10;- AIFR score" oninput="updateComparison()"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Turnaround Time</label>
-                        <input type="text" id="time1" placeholder="e.g. 24 hours" oninput="updateComparison()">
-                    </div>
-                </div>
+                <div class="extracted-data" id="extracted-1" style="display: none;"></div>
             </div>
 
             <!-- Quote 2 -->
@@ -82,31 +63,12 @@
                         <span class="drop-icon">📄</span>
                         <p>Drag & drop your quote here</p>
                         <p class="drop-sub">or click to browse</p>
-                        <span class="supported">PDF, DOC, DOCX, PNG, JPG</span>
+                        <span class="supported">PDF, TXT, DOC, PNG, JPG</span>
                     </div>
-                    <input type="file" id="file2" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="handleFile(this, 2)">
+                    <input type="file" id="file2" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.txt" onchange="handleFile(this, 2)">
                 </label>
                 <div class="file-preview-large" id="preview-2"></div>
-                
-                <div class="quote-details" id="details-2" style="display: none; margin-top: 1.5rem;">
-                    <h4>📝 Extract Details (optional)</h4>
-                    <div class="form-group">
-                        <label>Provider Name</label>
-                        <input type="text" id="provider2" placeholder="e.g. Competitor B" oninput="updateComparison()">
-                    </div>
-                    <div class="form-group">
-                        <label>Total Price (ZAR)</label>
-                        <input type="number" id="price2" placeholder="e.g. 750" min="0" oninput="updateComparison()">
-                    </div>
-                    <div class="form-group">
-                        <label>What's Included (one per line)</label>
-                        <textarea id="includes2" rows="4" placeholder="- Design review&#10;- SEO audit&#10;- AIFR score" oninput="updateComparison()"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Turnaround Time</label>
-                        <input type="text" id="time2" placeholder="e.g. 48 hours" oninput="updateComparison()">
-                    </div>
-                </div>
+                <div class="extracted-data" id="extracted-2" style="display: none;"></div>
             </div>
 
             <!-- Quote 3 -->
@@ -120,43 +82,33 @@
                         <span class="drop-icon">📄</span>
                         <p>Drag & drop your quote here</p>
                         <p class="drop-sub">or click to browse</p>
-                        <span class="supported">PDF, DOC, DOCX, PNG, JPG</span>
+                        <span class="supported">PDF, TXT, DOC, PNG, JPG</span>
                     </div>
-                    <input type="file" id="file3" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="handleFile(this, 3)">
+                    <input type="file" id="file3" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.txt" onchange="handleFile(this, 3)">
                 </label>
                 <div class="file-preview-large" id="preview-3"></div>
-                
-                <div class="quote-details" id="details-3" style="display: none; margin-top: 1.5rem;">
-                    <h4>📝 Extract Details (optional)</h4>
-                    <div class="form-group">
-                        <label>Provider Name</label>
-                        <input type="text" id="provider3" placeholder="e.g. Competitor C" oninput="updateComparison()">
-                    </div>
-                    <div class="form-group">
-                        <label>Total Price (ZAR)</label>
-                        <input type="number" id="price3" placeholder="e.g. 600" min="0" oninput="updateComparison()">
-                    </div>
-                    <div class="form-group">
-                        <label>What's Included (one per line)</label>
-                        <textarea id="includes3" rows="4" placeholder="- Design review&#10;- SEO audit&#10;- AIFR score" oninput="updateComparison()"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Turnaround Time</label>
-                        <input type="text" id="time3" placeholder="e.g. 72 hours" oninput="updateComparison()">
-                    </div>
-                </div>
+                <div class="extracted-data" id="extracted-3" style="display: none;"></div>
             </div>
         </div>
 
         <div class="button-group">
-            <button type="button" class="btn btn-primary btn-compare" id="compare-btn" onclick="compareQuotes()" disabled>📊 Compare Quotes</button>
+            <button type="button" class="btn btn-primary btn-compare" id="compare-btn" onclick="compareQuotes()" disabled>📊 Analyze & Compare</button>
             <button type="button" class="btn btn-secondary" onclick="clearAll()">🗑️ Clear All</button>
         </div>
     </section>
 
-    <!-- Results Section - LIVE COMPARISON -->
+    <!-- Loading Section -->
+    <section id="loading" style="display: none;">
+        <div class="loading-box">
+            <div class="spinner"></div>
+            <h3>🔍 AI is analyzing your quotes...</h3>
+            <p>This may take a few seconds</p>
+        </div>
+    </section>
+
+    <!-- Results Section -->
     <section id="results" style="display: none;">
-        <h2>📊 Comparison Results</h2>
+        <h2>📊 Analysis Results</h2>
         
         <!-- Summary Cards -->
         <div class="summary-grid" id="summary-cards"></div>
@@ -164,25 +116,25 @@
         <!-- Recommendation -->
         <div class="recommendation-box" id="recommendation-box"></div>
         
-        <!-- Detailed Table -->
+        <!-- Detailed Comparison -->
         <div class="comparison-table-section">
-            <h3>📋 Detailed Side-by-Side Comparison</h3>
+            <h3>📋 Side-by-Side Comparison</h3>
             <div id="comparison-table"></div>
         </div>
         
-        <!-- What's Included Breakdown -->
+        <!-- Items Breakdown -->
         <div class="items-breakdown" id="items-breakdown"></div>
         
         <!-- Pro Tips -->
         <div class="pro-tips">
-            <h3>💡 Pro Tips</h3>
+            <h3>💡 Insights</h3>
             <ul id="pro-tips-list"></ul>
         </div>
         
         <!-- Contact CTA -->
         <div class="contact-cta">
-            <h3>👍 Need a Deeper Analysis?</h3>
-            <p>If you have actual quote documents, upload them and we'll do a full manual analysis with recommendations.</p>
+            <h3>👍 Need Deeper Analysis?</h3>
+            <p>For complex quotes or multiple documents, contact us for detailed review.</p>
             <div class="contact-options">
                 <a href="mailto:info@qail.co.za" class="btn btn-primary">📧 Email Us</a>
                 <a href="contact.html" class="btn btn-secondary">📝 Contact Form</a>
@@ -191,19 +143,19 @@
     </section>
 
     <section style="background: var(--white); padding: 3rem; border-radius: 12px; box-shadow: var(--shadow); margin-top: 2rem;">
-        <h2>💡 Why Use Our Comparison Service?</h2>
+        <h2>💡 How It Works</h2>
         <ul style="list-style: none; margin-top: 1.5rem;">
             <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
-                <strong>🎯 Expert Analysis:</strong> We don't just compare numbers — we analyze the full picture including value, quality, and hidden costs.
+                <strong>📤 Upload:</strong> Drag & drop your quote documents (PDF, images, or text files)
             </li>
             <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
-                <strong>⏰ Save Time:</strong> No need to manually compare multiple PDFs. We do it for you in minutes.
+                <strong>🤖 AI Analysis:</strong> Our AI reads and extracts key information from each quote
             </li>
             <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
-                <strong>💰 Avoid Mistakes:</strong> We'll highlight if one quote is suspiciously cheap or missing critical features.
+                <strong>📊 Compare:</strong> See side-by-side comparison of price, items, and turnaround
             </li>
             <li style="padding: 0.75rem 0;">
-                <strong>🤝 Unbiased Opinion:</strong> We recommend what's best for you — not the most expensive or cheapest option.
+                <strong>💡 Get Recommendation:</strong> Receive expert recommendation on which quote offers best value
             </li>
         </ul>
     </section>
@@ -239,7 +191,8 @@
 
 <script>
 let uploadedFiles = {};
-let quotesData = [];
+let extractedData = {};
+const API_URL = 'http://100.93.250.92:8000/extract';
 
 function handleDragOver(e) {
     e.preventDefault();
@@ -272,23 +225,13 @@ function processFile(file, num) {
         return;
     }
     
-    uploadedFiles[num] = {
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        file: file
-    };
-    
-    showFilePreview(num);
-    showDetails(num);
+    uploadedFiles[num] = file;
+    showFilePreview(num, file);
+    showExtractedSection(num);
     updateCompareButton();
-    updateComparison();
 }
 
-function showFilePreview(num) {
-    const file = uploadedFiles[num];
-    if (!file) return;
-    
+function showFilePreview(num, file) {
     const preview = document.getElementById('preview-' + num);
     const drop = document.getElementById('drop-' + num);
     const removeBtn = document.getElementById('remove-' + num);
@@ -303,9 +246,10 @@ function showFilePreview(num) {
     removeBtn.style.display = 'inline-block';
 }
 
-function showDetails(num) {
-    const details = document.getElementById('details-' + num);
-    details.style.display = 'block';
+function showExtractedSection(num) {
+    const extracted = document.getElementById('extracted-' + num);
+    extracted.innerHTML = '<div class="extracting"><span class="spinner-small"></span> Analyzing with AI...</div>';
+    extracted.style.display = 'block';
 }
 
 function getFileIcon(filename) {
@@ -313,29 +257,26 @@ function getFileIcon(filename) {
     if (ext === 'pdf') return '📕';
     if (['doc', 'docx'].includes(ext)) return '📘';
     if (['png', 'jpg', 'jpeg'].includes(ext)) return '🖼️';
+    if (ext === 'txt') return '📝';
     return '📎';
 }
 
 function removeQuote(num) {
     delete uploadedFiles[num];
+    delete extractedData[num];
     
     const preview = document.getElementById('preview-' + num);
     const drop = document.getElementById('drop-' + num);
     const removeBtn = document.getElementById('remove-' + num);
     const fileInput = document.getElementById('file' + num);
-    const details = document.getElementById('details-' + num);
+    const extracted = document.getElementById('extracted-' + num);
     
     fileInput.value = '';
     preview.innerHTML = '';
     preview.style.display = 'none';
     drop.style.display = 'flex';
     removeBtn.style.display = 'none';
-    details.style.display = 'none';
-    
-    document.getElementById('provider' + num).value = '';
-    document.getElementById('price' + num).value = '';
-    document.getElementById('includes' + num).value = '';
-    document.getElementById('time' + num).value = '';
+    extracted.style.display = 'none';
     
     updateCompareButton();
     document.getElementById('results').style.display = 'none';
@@ -345,281 +286,306 @@ function clearAll() {
     for (let i = 1; i <= 3; i++) {
         removeQuote(i);
     }
+    document.getElementById('results').style.display = 'none';
 }
 
 function updateCompareButton() {
     const count = Object.keys(uploadedFiles).length;
-    const detailsFilled = quotesData.filter(q => q.provider || q.price).length;
     const btn = document.getElementById('compare-btn');
     
-    if (detailsFilled >= 2) {
+    if (count >= 2) {
         btn.disabled = false;
-        btn.textContent = '📊 Compare ' + detailsFilled + ' Quotes';
-    } else if (count >= 2) {
-        btn.disabled = false;
-        btn.textContent = '📊 Compare ' + count + ' Quotes';
+        btn.textContent = '📊 Analyze & Compare ' + count + ' Quotes';
     } else {
         btn.disabled = true;
-        btn.textContent = '📊 Compare Quotes (add ' + Math.max(2 - count, 2 - detailsFilled) + ' more)';
+        btn.textContent = '📊 Analyze & Compare (upload ' + (2 - count) + ' more)';
     }
 }
 
-function updateComparison() {
-    quotesData = [];
-    let hasAnyData = false;
+async function compareQuotes() {
+    const files = Object.keys(uploadedFiles).map(num => uploadedFiles[num]);
     
-    for (let i = 1; i <= 3; i++) {
-        if (uploadedFiles[i]) {
-            const provider = document.getElementById('provider' + i).value.trim();
-            const price = document.getElementById('price' + i).value;
-            const includes = document.getElementById('includes' + i).value.trim();
-            const time = document.getElementById('time' + i).value.trim();
-            
-            if (provider || price || includes || time) {
-                hasAnyData = true;
-            }
-            
-            const items = includes ? includes.split('\n').map(function(s) { return s.trim().replace(/^[-•*]\s*/, ''); }).filter(function(s) { return s; }) : [];
-            
-            quotesData.push({
-                number: i,
-                fileName: uploadedFiles[i].name,
-                provider: provider || 'Quote ' + i,
-                price: price ? parseFloat(price) : null,
-                items: items,
-                itemCount: items.length,
-                time: time || 'Not specified'
+    if (files.length < 2) {
+        alert('Please upload at least 2 quotes to compare.');
+        return;
+    }
+    
+    // Show loading
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('results').style.display = 'none';
+    
+    try {
+        const formData = new FormData();
+        files.forEach(file => {
+            formData.append('files', file);
+        });
+        
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!response.ok) {
+            throw new Error('API request failed');
+        }
+        
+        const result = await response.json();
+        
+        // Store extracted data
+        if (result.quotes) {
+            const nums = Object.keys(uploadedFiles);
+            result.quotes.forEach((quote, idx) => {
+                if (nums[idx]) {
+                    extractedData[nums[idx]] = quote.data;
+                    displayExtractedData(nums[idx], quote.data);
+                }
             });
         }
-    }
-    
-    const count = Object.keys(uploadedFiles).length;
-    
-    if (count >= 2) {
+        
+        // Hide loading, show results
+        document.getElementById('loading').style.display = 'none';
         document.getElementById('results').style.display = 'block';
-        renderComparison();
-    }
-}
-
-function compareQuotes() {
-    // Build quotesData from uploaded files even without manual details
-    quotesData = [];
-    
-    for (let i = 1; i <= 3; i++) {
-        if (uploadedFiles[i]) {
-            const provider = document.getElementById('provider' + i).value.trim();
-            const price = document.getElementById('price' + i).value;
-            const includes = document.getElementById('includes' + i).value.trim();
-            const time = document.getElementById('time' + i).value.trim();
-            
-            const items = includes ? includes.split('\n').map(function(s) { return s.trim().replace(/^[-•*]\s*/, ''); }).filter(function(s) { return s; }) : [];
-            
-            quotesData.push({
-                number: i,
-                fileName: uploadedFiles[i].name,
-                provider: provider || 'Quote ' + i,
-                price: price ? parseFloat(price) : null,
-                items: items,
-                itemCount: items.length,
-                time: time || 'Not specified'
-            });
-        }
-    }
-    
-    if (quotesData.length >= 1) {
-        document.getElementById('results').style.display = 'block';
-        renderComparison();
+        
+        // Build comparison from extracted data
+        buildComparison();
+        
+        // Scroll to results
         document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-    } else {
-        alert('Please upload at least 1 quote to compare.');
+        
+    } catch (error) {
+        document.getElementById('loading').style.display = 'none';
+        alert('Error analyzing quotes: ' + error.message + '\n\nMake sure the API server is running on Pacman.');
     }
 }
 
-function renderComparison() {
-    if (quotesData.length === 0) {
-        document.getElementById('summary-cards').innerHTML = '<p>No quotes uploaded yet.</p>';
+function displayExtractedData(num, data) {
+    const container = document.getElementById('extracted-' + num);
+    
+    if (data.error) {
+        container.innerHTML = '<div class="extract-error">❌ ' + data.error + '</div>';
         return;
     }
     
-    if (quotesData.length === 1) {
-        document.getElementById('summary-cards').innerHTML = '<div class="single-quote"><h3>📎 ' + quotesData[0].provider + '</h3><p>Upload another quote to compare.</p></div>';
-        document.getElementById('recommendation-box').innerHTML = '<h3>🎯 Next Step</h3><p>Upload at least one more quote to see a comparison.</p>';
-        document.getElementById('comparison-table').innerHTML = '<p>Need at least 2 quotes for comparison.</p>';
-        document.getElementById('items-breakdown').innerHTML = '';
-        document.getElementById('pro-tips-list').innerHTML = '<li>📄 Upload your second quote to enable comparison</li>';
-        return;
+    let html = '<div class="extracted-info">';
+    html += '<h4>📋 Extracted Data</h4>';
+    
+    if (data.provider) {
+        html += '<div class="extract-item"><strong>Provider:</strong> ' + data.provider + '</div>';
+    }
+    if (data.price) {
+        html += '<div class="extract-item"><strong>Price:</strong> R' + data.price.toLocaleString() + '</div>';
+    }
+    if (data.items && data.items.length > 0) {
+        html += '<div class="extract-item"><strong>Includes:</strong><ul>';
+        data.items.forEach(item => {
+            html += '<li>' + item + '</li>';
+        });
+        html += '</ul></div>';
+    }
+    if (data.turnaround) {
+        html += '<div class="extract-item"><strong>Turnaround:</strong> ' + data.turnaround + '</div>';
     }
     
-    const sorted = [...quotesData].sort(function(a, b) { return b.itemCount - a.itemCount; });
-    const mostIncluded = sorted[0];
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+function buildComparison() {
+    const quotes = Object.keys(extractedData).map(num => ({
+        number: num,
+        ...extractedData[num]
+    }));
     
-    const prices = quotesData.filter(function(q) { return q.price !== null; }).map(function(q) { return q.price; });
+    if (quotes.length < 2) return;
+    
+    // Summary cards
+    const prices = quotes.filter(q => q.price).map(q => q.price);
     const lowestPrice = prices.length > 0 ? Math.min.apply(null, prices) : null;
     const highestPrice = prices.length > 0 ? Math.max.apply(null, prices) : null;
-    const avgPrice = prices.length > 0 ? prices.reduce(function(a, b) { return a + b; }, 0) / prices.length : 0;
+    const avgPrice = prices.length > 0 ? prices.reduce((a, b) => a + b, 0) / prices.length : 0;
     
-    const cheapest = lowestPrice !== null ? quotesData.find(function(q) { return q.price === lowestPrice; }) : null;
-    
-    const withTime = quotesData.filter(function(q) { return q.time !== 'Not specified'; });
-    const fastest = withTime.length > 0 ? withTime.sort(function(a, b) { return parseTime(a.time) - parseTime(b.time); })[0] : null;
+    const cheapest = lowestPrice !== null ? quotes.find(q => q.price === lowestPrice) : null;
+    const mostIncluded = quotes.reduce((a, b) => (a.items?.length || 0) > (b.items?.length || 0) ? a : b);
     
     let summaryHTML = '<div class="summary-grid">';
     
     if (cheapest) {
         const saving = avgPrice > 0 ? Math.round(((avgPrice - lowestPrice) / avgPrice) * 100) : 0;
-        summaryHTML += '<div class="summary-card highlight"><h3>💰 Best Price</h3><div class="summary-value">' + cheapest.provider + '</div><div class="summary-detail">R' + lowestPrice.toLocaleString() + '</div>' + (saving > 0 ? '<div class="saving-badge">Save ' + saving + '% vs average</div>' : '') + '</div>';
-    } else {
-        summaryHTML += '<div class="summary-card highlight"><h3>💰 Best Price</h3><div class="summary-value">-</div><div class="summary-detail">Enter prices above</div></div>';
+        summaryHTML += '<div class="summary-card highlight"><h3>💰 Best Price</h3><div class="summary-value">' + (cheapest.provider || 'Quote ' + cheapest.number) + '</div><div class="summary-detail">R' + lowestPrice.toLocaleString() + '</div>' + (saving > 0 ? '<div class="saving-badge">Save ' + saving + '%</div>' : '') + '</div>';
     }
     
-    if (mostIncluded && mostIncluded.itemCount > 0) {
-        summaryHTML += '<div class="summary-card"><h3>📦 Most Included</h3><div class="summary-value">' + mostIncluded.provider + '</div><div class="summary-detail">' + mostIncluded.itemCount + ' items</div></div>';
-    } else {
-        summaryHTML += '<div class="summary-card"><h3>📦 Most Included</h3><div class="summary-value">-</div><div class="summary-detail">Add items above</div></div>';
-    }
-    
-    if (fastest) {
-        summaryHTML += '<div class="summary-card"><h3>⚡ Fastest</h3><div class="summary-value">' + fastest.provider + '</div><div class="summary-detail">' + fastest.time + '</div></div>';
-    } else {
-        summaryHTML += '<div class="summary-card"><h3>⚡ Fastest</h3><div class="summary-value">-</div><div class="summary-detail">Add times above</div></div>';
+    if (mostIncluded && mostIncluded.items && mostIncluded.items.length > 0) {
+        summaryHTML += '<div class="summary-card"><h3>📦 Most Items</h3><div class="summary-value">' + (mostIncluded.provider || 'Quote ' + mostIncluded.number) + '</div><div class="summary-detail">' + mostIncluded.items.length + ' items</div></div>';
     }
     
     summaryHTML += '</div>';
     document.getElementById('summary-cards').innerHTML = summaryHTML;
     
+    // Recommendation
     let recommendation = '';
     if (cheapest && mostIncluded && cheapest.number === mostIncluded.number) {
         recommendation = '🏆 <strong>' + cheapest.provider + '</strong> is the clear winner! Best price AND most included.';
     } else if (cheapest && mostIncluded) {
         const priceDiff = cheapest.price && mostIncluded.price ? Math.round(((mostIncluded.price - cheapest.price) / mostIncluded.price) * 100) : 0;
         
-        if (priceDiff < 15 && mostIncluded.itemCount > cheapest.itemCount + 2) {
-            recommendation = '⚖️ <strong>' + mostIncluded.provider + '</strong> offers better value — only ' + priceDiff + '% more for ' + (mostIncluded.itemCount - cheapest.itemCount) + ' extra items.';
+        if (priceDiff < 20 && mostIncluded.items && mostIncluded.items.length > cheapest.items.length + 2) {
+            recommendation = '⚖️ <strong>' + mostIncluded.provider + '</strong> offers better value — only ' + priceDiff + '% more for ' + (mostIncluded.items.length - (cheapest.items?.length || 0)) + ' extra items.';
         } else {
             recommendation = '💡 <strong>' + cheapest.provider + '</strong> has the lowest price. Consider if the extra items from <strong>' + mostIncluded.provider + '</strong> are worth the premium.';
         }
     } else if (cheapest) {
-        recommendation = '💰 <strong>' + cheapest.provider + '</strong> has the best price. Fill in more details to get better comparisons.';
+        recommendation = '💰 <strong>' + cheapest.provider + '</strong> has the best price at R' + lowestPrice.toLocaleString() + '.';
     } else {
-        recommendation = '📝 Enter details from your quotes above to get a proper comparison.';
+        recommendation = '📝 Upload quotes with more details to get better comparisons.';
     }
     
     document.getElementById('recommendation-box').innerHTML = '<h3>🎯 Our Recommendation</h3><p>' + recommendation + '</p>';
     
+    // Comparison table
     let tableHTML = '<table class="compare-table"><thead><tr><th>Feature</th>';
-    quotesData.forEach(function(q) { tableHTML += '<th>' + q.provider + '</th>'; });
-    tableHTML += '</tr></thead><tbody><tr class="price-row"><td>Price</td>';
-    quotesData.forEach(function(q) {
+    quotes.forEach(q => { tableHTML += '<th>' + (q.provider || 'Quote ' + q.number) + '</th>'; });
+    tableHTML += '</tr></thead><tbody>';
+    
+    tableHTML += '<tr class="price-row"><td>Price</td>';
+    quotes.forEach(q => {
         const isLowest = q.price === lowestPrice;
         tableHTML += '<td class="' + (isLowest ? 'lowest' : '') + '">' + (q.price ? 'R' + q.price.toLocaleString() : '-') + (isLowest ? '<span class="lowest-badge">Lowest</span>' : '') + '</td>';
     });
-    tableHTML += '</tr><tr><td>Items Included</td>';
-    quotesData.forEach(function(q) { tableHTML += '<td>' + q.itemCount + ' items</td>'; });
-    tableHTML += '</tr><tr><td>Turnaround</td>';
-    quotesData.forEach(function(q) { tableHTML += '<td>' + q.time + '</td>'; });
-    tableHTML += '</tr></tbody></table>';
+    tableHTML += '</tr>';
+    
+    tableHTML += '<tr><td>Items</td>';
+    quotes.forEach(q => { tableHTML += '<td>' + (q.items ? q.items.length + ' items' : '-') + '</td>'; });
+    tableHTML += '</tr>';
+    
+    tableHTML += '<tr><td>Turnaround</td>';
+    quotes.forEach(q => { tableHTML += '<td>' + (q.turnaround || '-') + '</td>'; });
+    tableHTML += '</tr>';
+    
+    tableHTML += '</tbody></table>';
     document.getElementById('comparison-table').innerHTML = tableHTML;
     
-    let itemsHTML = '<h4>What\'s Included</h4><div class="items-grid">';
-    quotesData.forEach(function(q) {
-        itemsHTML += '<div class="items-column"><h5>' + q.provider + '</h5>';
-        if (q.items.length > 0) {
+    // Items breakdown
+    let itemsHTML = '<h4>📋 What\'s Included</h4><div class="items-grid">';
+    quotes.forEach(q => {
+        itemsHTML += '<div class="items-column"><h5>' + (q.provider || 'Quote ' + q.number) + '</h5>';
+        if (q.items && q.items.length > 0) {
             itemsHTML += '<ul>';
-            q.items.forEach(function(item) { itemsHTML += '<li>' + item + '</li>'; });
+            q.items.forEach(item => { itemsHTML += '<li>' + item + '</li>'; });
             itemsHTML += '</ul>';
         } else {
-            itemsHTML += '<p class="no-items">No items listed</p>';
+            itemsHTML += '<p class="no-items">No items found</p>';
         }
         itemsHTML += '</div>';
     });
     itemsHTML += '</div>';
     document.getElementById('items-breakdown').innerHTML = itemsHTML;
     
+    // Pro tips
     let tips = [];
     
     if (lowestPrice && highestPrice && highestPrice - lowestPrice > 500) {
-        tips.push('💰 There\'s a R' + (highestPrice - lowestPrice).toLocaleString() + ' difference between the cheapest and most expensive quote. Check what\'s causing the price gap.');
+        tips.push('💰 There\'s a R' + (highestPrice - lowestPrice).toLocaleString() + ' difference between the cheapest and most expensive quote.');
     }
     
-    if (mostIncluded && mostIncluded.itemCount > 0) {
-        const avgItems = quotesData.reduce(function(sum, q) { return sum + q.itemCount; }, 0) / quotesData.length;
-        quotesData.forEach(function(q) {
-            if (q.itemCount < avgItems - 1) {
-                tips.push('⚠️ ' + q.provider + ' has fewer items than average. Check if they\'re missing something important.');
+    if (mostIncluded.items && mostIncluded.items.length > 0) {
+        const avgItems = quotes.reduce((sum, q) => sum + (q.items?.length || 0), 0) / quotes.length;
+        quotes.forEach(q => {
+            if (q.items && q.items.length < avgItems - 1) {
+                tips.push('⚠️ ' + q.provider + ' has fewer items than average. Check if they\'re missing important features.');
             }
         });
     }
     
-    if (fastest && fastest.time.indexOf('24') !== -1) {
-        tips.push('⚡ ' + fastest.provider + ' offers 24-hour turnaround — the fastest option.');
-    }
+    tips.push('📧 Want a thorough analysis? Contact us for detailed review of your quotes.');
     
-    tips.push('📧 Want a thorough analysis? Email your actual quote documents to info@qail.co.za and we\'ll give you expert advice.');
-    
-    let tipsHTML = '';
-    tips.forEach(function(tip) { tipsHTML += '<li>' + tip + '</li>'; });
-    document.getElementById('pro-tips-list').innerHTML = tipsHTML;
-}
-
-function parseTime(timeStr) {
-    const match = timeStr.match(/(\d+)/);
-    return match ? parseInt(match[1]) : 999;
+    document.getElementById('pro-tips-list').innerHTML = tips.map(tip => '<li>' + tip + '</li>').join('');
 }
 </script>
 
 <style>
-.quote-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
-
-.quote-box {
+.loading-box {
     background: var(--white);
-    padding: 2rem;
+    padding: 3rem;
     border-radius: 12px;
     box-shadow: var(--shadow);
-    border: 2px solid transparent;
-    transition: all 0.3s;
+    text-align: center;
+    margin: 2rem 0;
 }
 
-.quote-box:focus-within {
-    border-color: var(--primary);
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
 }
 
-.quote-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
+.spinner-small {
+    display: inline-block;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid var(--primary);
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+    margin-right: 0.5rem;
+    vertical-align: middle;
 }
 
-.quote-number {
-    font-size: 1.25rem;
-    font-weight: 700;
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.extracted-data {
+    margin-top: 1rem;
+}
+
+.extracting {
+    background: #f0f9ff;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
     color: var(--primary);
 }
 
-.remove-quote {
-    background: #ef4444;
-    color: white;
-    border: none;
-    padding: 0.25rem 0.75rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.875rem;
+.extract-error {
+    background: #fef2f2;
+    padding: 1rem;
+    border-radius: 8px;
+    color: #dc2626;
 }
 
-.quote-details {
-    border-top: 1px solid #e2e8f0;
-    padding-top: 1.5rem;
-    margin-top: 1.5rem;
+.extracted-info {
+    background: #f0fdf4;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #bbf7d0;
 }
 
-.quote-details h4 {
-    margin-bottom: 1rem;
-    color: var(--primary);
+.extracted-info h4 {
+    margin-bottom: 0.75rem;
+    color: #15803d;
+}
+
+.extract-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #dcfce7;
+}
+
+.extract-item:last-child {
+    border-bottom: none;
+}
+
+.extract-item ul {
+    margin: 0.5rem 0 0 1.5rem;
+    padding: 0;
+}
+
+.extract-item li {
+    padding: 0.25rem 0;
 }
 
 .file-drop-large {
@@ -640,12 +606,6 @@ function parseTime(timeStr) {
 .file-drop-large:hover {
     border-color: var(--primary);
     background: #f0f9ff;
-}
-
-.file-drop-large.drag-over {
-    border-color: var(--primary);
-    background: #e0f2fe;
-    transform: scale(1.02);
 }
 
 .file-drop-large input[type="file"] {
@@ -735,11 +695,43 @@ function parseTime(timeStr) {
     border-radius: 50%;
     cursor: pointer;
     font-size: 1rem;
-    transition: transform 0.2s;
 }
 
-.remove-file-btn:hover {
-    transform: scale(1.1);
+.remove-quote {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+.quote-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.quote-box {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.quote-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.quote-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
 }
 
 .button-group {
@@ -784,7 +776,6 @@ function parseTime(timeStr) {
     padding: 1.5rem;
     border-radius: 12px;
     text-align: center;
-    border: 2px solid transparent;
 }
 
 .summary-card.highlight {
@@ -999,11 +990,6 @@ function parseTime(timeStr) {
     
     .btn-compare {
         width: 100%;
-    }
-    
-    .file-drop-large {
-        min-height: 150px;
-        padding: 2rem 1rem;
     }
 }
 </style>

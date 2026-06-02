@@ -39,7 +39,7 @@
                     <span class="quote-number">📎 Quote 1</span>
                     <button type="button" class="remove-quote" id="remove-1" onclick="removeQuote(1)" style="display: none;">✕ Remove</button>
                 </div>
-                <div class="file-drop-large" id="drop-1" ondrop="handleDrop(event, 1)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                <label class="file-drop-large" id="drop-1" for="file1">
                     <div class="drop-content">
                         <span class="drop-icon">📄</span>
                         <p>Drag & drop your quote here</p>
@@ -47,7 +47,7 @@
                         <span class="supported">PDF, DOC, DOCX, PNG, JPG</span>
                     </div>
                     <input type="file" id="file1" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="handleFile(this, 1)">
-                </div>
+                </label>
                 <div class="file-preview-large" id="preview-1"></div>
             </div>
 
@@ -57,7 +57,7 @@
                     <span class="quote-number">📎 Quote 2</span>
                     <button type="button" class="remove-quote" id="remove-2" onclick="removeQuote(2)" style="display: none;">✕ Remove</button>
                 </div>
-                <div class="file-drop-large" id="drop-2" ondrop="handleDrop(event, 2)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                <label class="file-drop-large" id="drop-2" for="file2">
                     <div class="drop-content">
                         <span class="drop-icon">📄</span>
                         <p>Drag & drop your quote here</p>
@@ -65,7 +65,7 @@
                         <span class="supported">PDF, DOC, DOCX, PNG, JPG</span>
                     </div>
                     <input type="file" id="file2" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="handleFile(this, 2)">
-                </div>
+                </label>
                 <div class="file-preview-large" id="preview-2"></div>
             </div>
 
@@ -75,7 +75,7 @@
                     <span class="quote-number">📎 Quote 3</span>
                     <button type="button" class="remove-quote" id="remove-3" onclick="removeQuote(3)" style="display: none;">✕ Remove</button>
                 </div>
-                <div class="file-drop-large" id="drop-3" ondrop="handleDrop(event, 3)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                <label class="file-drop-large" id="drop-3" for="file3">
                     <div class="drop-content">
                         <span class="drop-icon">📄</span>
                         <p>Drag & drop your quote here</p>
@@ -83,7 +83,7 @@
                         <span class="supported">PDF, DOC, DOCX, PNG, JPG</span>
                     </div>
                     <input type="file" id="file3" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="handleFile(this, 3)">
-                </div>
+                </label>
                 <div class="file-preview-large" id="preview-3"></div>
             </div>
         </div>
@@ -438,6 +438,7 @@ function compareQuotes() {
     align-items: center;
     justify-content: center;
     min-height: 200px;
+    position: relative;
 }
 
 .file-drop-large:hover {
@@ -452,7 +453,13 @@ function compareQuotes() {
 }
 
 .file-drop-large input[type="file"] {
-    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
 }
 
 .drop-content {

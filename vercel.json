@@ -14,6 +14,9 @@
   ],
   "rewrites": [
     { "source": "/api/analyze", "destination": "/api/analyze" },
-    { "source": "/api/logs", "destination": "/api/logs" }
+    { "source": "/api/logs", "destination": "/api/logs" },
+    { "source": "/api/payfast-checkout", "destination": "/api/payfast-checkout" },
+    { "source": "/api/payfast-notify", "destination": "/api/payfast-notify" },
+    { "source": "/api/report-download", "destination": "/api/report-download" }
   ]
 }

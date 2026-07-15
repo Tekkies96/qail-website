@@ -13,10 +13,16 @@ module.exports = async function handler(req, res) {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const { website_url, email, name, package_type } = req.body;
+    let { website_url, email, name, package_type } = req.body;
 
     if (!website_url || !email || !package_type) {
         return res.status(400).json({ error: 'Missing required fields: website_url, email, package_type' });
+    }
+
+    // Normalize URL - add https:// if missing
+    website_url = website_url.trim().toLowerCase();
+    if (!website_url.startsWith('http://') && !website_url.startsWith('https://')) {
+        website_url = 'https://' + website_url;
     }
 
     // Determine amount based on package

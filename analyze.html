@@ -198,85 +198,120 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
 });
 
 function calculateAIFR(doc, url) {
-    var design = 50;
-    if (doc.querySelector('style') || doc.querySelector('link[rel="stylesheet"]')) design += 20;
-    if (doc.querySelector('h1')) design += 10;
-    if (doc.querySelectorAll('h2, h3, h4').length > 3) design += 10;
-    if (doc.querySelector('header') && doc.querySelector('footer')) design += 10;
+    // AIFR criteria matching the official AIFR tool
+    var jsonLd = 0;
+    var jsonLdBlocks = doc.querySelectorAll('script[type="application/ld+json"]');
+    if (jsonLdBlocks.length > 0) jsonLd = 15;
     
-    var mobile = 60;
-    if (doc.querySelector('meta[name="viewport"]')) mobile += 25;
-    if (doc.querySelectorAll('[style*="flex"]').length > 0) mobile += 15;
+    var openGraph = 0;
+    if (doc.querySelector('meta[property="og:title"]') && 
+        doc.querySelector('meta[property="og:description"]') &&
+        doc.querySelector('meta[property="og:image"]')) openGraph = 15;
+    else if (doc.querySelector('meta[property^="og:"]')) openGraph = 7;
     
-    var content = 40;
-    var text = doc.body.innerText;
-    if (text.length > 500) content += 20;
-    if (text.split(' ').length > 100) content += 20;
-    if (doc.querySelectorAll('p').length > 3) content += 20;
+    var twitter = 0;
+    var twitterTags = 0;
+    ['twitter:card', 'twitter:title', 'twitter:description', 'twitter:image'].forEach(function(tag) {
+        if (doc.querySelector('meta[name="' + tag + '"]') || doc.querySelector('meta[property="' + tag + '"]')) twitterTags++;
+    });
+    if (twitterTags >= 3) twitter = 10;
+    else if (twitterTags > 0) twitter = Math.round((twitterTags / 3) * 10);
     
-    var contact = 30;
-    if (doc.querySelector('a[href*="mailto"]') || doc.body.innerText.includes('@')) contact += 25;
-    if (doc.body.innerText.toLowerCase().includes('contact')) contact += 20;
-    if (doc.querySelector('address') || doc.querySelector('.contact')) contact += 25;
+    var semantic = 0;
+    var semanticTags = ['header', 'nav', 'main', 'article', 'section', 'footer'];
+    var semanticCount = semanticTags.filter(function(t) { return doc.querySelector(t); }).length;
+    if (semanticCount >= 5) semantic = 15;
+    else if (semanticCount >= 3) semantic = 10;
+    else if (semanticCount >= 1) semantic = 5;
     
-    var seo = 40;
-    if (doc.querySelector('title') && doc.querySelector('title').innerText.length > 5) seo += 20;
-    if (doc.querySelector('meta[name="description"]')) seo += 20;
-    if (doc.querySelectorAll('h1, h2, h3').length > 2) seo += 20;
+    var schema = 0;
+    var schemaTypes = ['Organization', 'WebSite', 'Product', 'LocalBusiness', 'Service', 'Restaurant', 'Event'];
+    var htmlStr = doc.head.innerHTML;
+    schemaTypes.forEach(function(type) {
+        if (htmlStr.includes('"@type":"' + type) || htmlStr.includes('"@type": "' + type)) schema = 10;
+    });
     
-    var images = 50;
-    if (doc.querySelectorAll('img').length > 0) {
-        images += 20;
-        var imagesWithAlt = doc.querySelectorAll('img[alt]').length;
-        if (imagesWithAlt > doc.querySelectorAll('img').length / 2) images += 10;
+    var canonical = 0;
+    if (doc.querySelector('link[rel="canonical"]')) {
+        var canonicalHref = doc.querySelector('link[rel="canonical"]').href;
+        if (canonicalHref && canonicalHref.length > 0) canonical = 10;
     }
     
+    var metaDesc = 0;
+    var metaDescEl = doc.querySelector('meta[name="description"]');
+    if (metaDescEl && metaDescEl.content && metaDescEl.content.length > 20) metaDesc = 10;
+    
+    var title = 0;
+    var titleEl = doc.querySelector('title');
+    if (titleEl && titleEl.innerText && titleEl.innerText.length > 5) title = 5;
+    
     return {
-        design: Math.min(100, design),
-        mobile: Math.min(100, mobile),
-        content: Math.min(100, content),
-        contact: Math.min(100, contact),
-        seo: Math.min(100, seo),
-        images: Math.min(100, images)
+        jsonLd: jsonLd,
+        openGraph: openGraph,
+        twitter: twitter,
+        semantic: semantic,
+        schema: schema,
+        canonical: canonical,
+        metaDesc: metaDesc,
+        title: title
     };
 }
 
 function displayResults(scores) {
     var scoreGrid = document.getElementById('score-grid');
     var labels = {
-        design: 'Design & Structure',
-        mobile: 'Mobile Ready',
-        content: 'Content',
-        contact: 'Contact Info',
-        seo: 'SEO',
-        images: 'Images & Media'
+        jsonLd: 'JSON-LD Structured Data',
+        openGraph: 'Open Graph Tags',
+        twitter: 'Twitter Cards',
+        semantic: 'Semantic HTML5',
+        schema: 'Schema.org Types',
+        canonical: 'Canonical URL',
+        metaDesc: 'Meta Description',
+        title: 'Title Tag'
+    };
+    
+    var weights = {
+        jsonLd: 15,
+        openGraph: 15,
+        twitter: 10,
+        semantic: 15,
+        schema: 10,
+        canonical: 10,
+        metaDesc: 10,
+        title: 5
     };
     
     var html = '';
     var total = 0;
+    var maxTotal = 0;
     
     for (var key in labels) {
         var value = scores[key];
+        var weight = weights[key];
+        var percentage = weight > 0 ? (value / weight) * 100 : 0;
         total += value;
+        maxTotal += weight;
         
         var colorClass = 'score-low';
-        if (value >= 70) colorClass = 'score-high';
-        else if (value >= 50) colorClass = 'score-medium';
+        if (percentage >= 70) colorClass = 'score-high';
+        else if (percentage >= 40) colorClass = 'score-medium';
         
-        html += '<div class="score-card"><h4>' + labels[key] + '</h4><div class="score-value">' + value + '</div><div class="score-bar"><div class="score-bar-fill ' + colorClass + '" style="width: ' + value + '%"></div></div></div>';
+        var statusIcon = value > 0 ? '✓' : '✗';
+        html += '<div class="score-card"><h4>' + statusIcon + ' ' + labels[key] + ' <span style="color:#999;font-size:0.8em;">(' + weight + ')</span></h4><div class="score-value">' + value + '/' + weight + '</div><div class="score-bar"><div class="score-bar-fill ' + colorClass + '" style="width: ' + percentage + '%"></div></div></div>';
     }
     
     scoreGrid.innerHTML = html;
     
-    var websiteScore = Math.round(total / 6);
+    var websiteScore = Math.round((total / maxTotal) * 100);
     document.getElementById('total-score').textContent = websiteScore;
     document.getElementById('aifr-score').textContent = websiteScore;
     
     var message = '';
-    if (websiteScore >= 80) message = 'Excellent! Your website is well optimized.';
-    else if (websiteScore >= 60) message = 'Good. There are areas that can be improved.';
-    else if (websiteScore >= 40) message = 'Moderate. We recommend improving your website.';
-    else message = 'Critical. Contact us for a full analysis.';
+    if (websiteScore >= 90) message = 'World-class! Your website is AI-optimized.';
+    else if (websiteScore >= 75) message = 'Good. Your website works well with AI and search engines.';
+    else if (websiteScore >= 60) message = 'Average. Some improvements needed for AI visibility.';
+    else if (websiteScore >= 40) message = 'Poor. AI and search engines struggle to read your site.';
+    else message = 'Critical. Your website is nearly invisible to AI.';
     
     document.getElementById('score-message').textContent = message;
 }

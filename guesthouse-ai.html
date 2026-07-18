@@ -413,55 +413,31 @@
                     <h2>What facilities do you offer?</h2>
                     <p>Select all that apply to your guesthouse.</p>
 
-                    <div class="checkbox-grid">
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="facilities" value="wifi">
-                            <span>📶 Free WiFi</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="facilities" value="pool">
-                            <span>🏊 Pool</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="facilities" value="braai">
-                            <span>🔥 Braai / BBQ</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="facilities" value="parking">
-                            <span>🚗 Free Parking</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="facilities" value="kitchen">
-                            <span>🍳 Self-catering Kitchen</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="facilities" value="ac">
-                            <span>❄️ Air Conditioning</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="facilities" value="tv">
-                            <span>📺 DSTV / TV</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="facilities" value="beach">
-                            <span>🏖️ Close to Beach</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="facilities" value="pets">
-                            <span>🐕 Pet-friendly</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="facilities" value="smoking">
-                            <span>🚬 Smoking Allowed</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="facilities" value="garden">
-                            <span>🌳 Garden</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="facilities" value="golfcart">
-                            <span>🛷 Golf Cart Available</span>
-                        </label>
+                    <!-- Facilities Multi-Select Dropdown -->
+                    <div class="form-group">
+                        <label for="facilities-search">What facilities do you offer?</label>
+                        <p style="font-size: 0.85rem; color: #94a3b8; margin: 0.5rem 0 1rem;">Click to open the list. Select all that apply. Use the search box to filter.</p>
+                        
+                        <div class="multi-select" id="facilities-select">
+                            <!-- Selected tags -->
+                            <div class="multi-select-tags" id="facilities-tags"></div>
+                            
+                            <!-- Dropdown toggle -->
+                            <button type="button" class="multi-select-toggle" id="facilities-toggle" onclick="toggleFacilitiesDropdown()">
+                                Select facilities <span class="multi-select-arrow">▼</span>
+                            </button>
+                            
+                            <!-- Dropdown panel -->
+                            <div class="multi-select-dropdown" id="facilities-dropdown">
+                                <input type="text" class="multi-select-search" id="facilities-search" placeholder="Search facilities..." oninput="filterFacilities()">
+                                <div class="multi-select-options" id="facilities-options">
+                                    <!-- Populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Hidden inputs for form submission -->
+                        <div id="facilities-hidden-inputs"></div>
                     </div>
 
                     <div class="form-group" style="margin-top: 1.5rem;">

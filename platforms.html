@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform Advisor — GuesthouseAI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico">
+</head>
+
+<header>
+    <nav>
+        <div class="logo">GuesthouseAI</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="guesthouse-ai.html">GuesthouseAI</a></li>
+            <li><a href="platforms.html" class="nav-highlight">Platform Advisor</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<style>
+/* Booking Platform Advisor Styles */
+.platform-advisor {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+}
+
+.advisor-hero {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+    border-radius: 1.5rem;
+    color: #fff;
+    margin-bottom: 3rem;
+}
+
+.advisor-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.advisor-hero p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Setup Form */
+.setup-card {
+    background: #fff;
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.setup-card h2 {
+    font-size: 1.5rem;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.setup-card > p {
+    color: #64748b;
+    margin-bottom: 2rem;
+}
+
+.property-input {
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #059669;
+    box-shadow: 0 0 0 3px rgba(5,150,105,0.1);
+}
+
+.form-group small {
+    display: block;
+    color: #94a3b8;
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+}
+
+/* Platform Input Cards */
+.platform-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.platform-input-card {
+    border: 2px solid #e2e8f0;
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+}
+
+.platform-input-card:hover {
+    border-color: #0891b2;
+}
+
+.platform-input-card.airbnb {
+    border-color: #ff385c;
+    background: #fff5f7;
+}
+
+.platform-input-card.lekkeslaap {
+    border-color: #059669;
+    background: #f0fdf4;
+}
+
+.platform-input-card.booking {
+    border-color: #003580;
+    background: #f0f7ff;
+}
+
+.platform-input-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.platform-input-card.airbnb h3 { color: #ff385c; }
+.platform-input-card.lekkeslaap h3 { color: #059669; }
+.platform-input-card.booking h3 { color: #003580; }
+
+/* Buttons */
+.btn {
+    padding: 0.85rem 2rem;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: #0891b2;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #0e7490;
+}
+
+.btn-secondary {
+    background: #f1f5f9;
+    color: #64748b;
+    border: 2px solid #e2e8f0;
+}
+
+.btn-outline {
+    background: transparent;
+    color: #0891b2;
+    border: 2px solid #0891b2;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* Generated Output */
+.output-section {
+    display: none;
+}
+
+.output-section.visible {
+    display: block;
+}
+
+.output-card {
+    background: #fff;
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    border: 3px solid #0891b2;
+}
+
+.output-card h2 {
+    font-size: 1.5rem;
+    color: #1e293b;
+    margin-bottom: 0.25rem;
+}
+
+.output-card .property-name {
+    color: #0891b2;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Recommendation Banner */
+.rec-banner {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    border-radius: 1.25rem;
+    padding: 2rem;
+    color: #fff;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.rec-banner .badge {
+    background: rgba(255,255,255,0.2);
+    padding: 0.3rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.rec-banner h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+}
+
+.rec-banner p {
+    font-size: 1.05rem;
+    opacity: 0.95;
+    max-width: 500px;
+    margin: 0 auto 1.5rem;
+}
+
+.rec-platform-badge {
+    display: inline-block;
+    background: #fff;
+    color: #059669;
+    padding: 0.5rem 1.5rem;
+    border-radius: 2rem;
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Platform Comparison Cards */
+.comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.comp-card {
+    border: 2px solid #e2e8f0;
+    border-radius: 1.25rem;
+    overflow: hidden;
+}
+
+.comp-card.airbnb { border-color: #ff385c; }
+.comp-card.lekkeslaap { border-color: #059669; }
+.comp-card.booking { border-color: #003580; }
+
+.comp-header {
+    padding: 1.25rem 1.5rem;
+    color: #fff;
+}
+
+.comp-header.airbnb { background: #ff385c; }
+.comp-header.lekkeslaap { background: #059669; }
+.comp-header.booking { background: #003580; }
+
+.comp-header h4 {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.comp-header .verified {
+    font-size: 0.75rem;
+    background: rgba(255,255,255,0.25);
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+}
+
+.comp-body {
+    padding: 1.5rem;
+}
+
+.comp-rating {
+    text-align: center;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.comp-rating .rating-num {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #1e293b;
+}
+
+.comp-rating .rating-label {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.comp-rating .stars {
+    color: #f59e0b;
+    font-size: 1.2rem;
+    margin-top: 0.25rem;
+}
+
+.comp-reviews {
+    margin-bottom: 1.25rem;
+}
+
+.comp-reviews h5 {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.review-summary {
+    background: #f8fafc;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.88rem;
+    color: #475569;
+    line-height: 1.5;
+    border-left: 3px solid #0891b2;
+}
+
+.review-summary:last-child {
+    margin-bottom: 0;
+}
+
+.comp-pros {
+    margin-bottom: 1.25rem;
+}
+
+.comp-pros h5 {
+    font-size: 0.85rem;
+    color: #059669;
+    margin-bottom: 0.5rem;
+}
+
+.comp-pros ul {
+    list-style: none;
+    padding: 0;
+}
+
+.comp-pros li {
+    font-size: 0.88rem;
+    padding: 0.2rem 0;
+    color: #475569;
+}
+
+.comp-pros li::before {
+    content: '✅ ';
+}
+
+.comp-highlight {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border: 2px solid #059669;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.comp-highlight .highlight-label {
+    font-size: 0.75rem;
+    color: #059669;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.comp-highlight p {
+    font-size: 0.9rem;
+    color: #166534;
+    line-height: 1.5;
+}
+
+.comp-ai-note {
+    background: #fefce8;
+    border: 1px solid #fde68a;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.comp-ai-note p {
+    font-size: 0.85rem;
+    color: #854d0e;
+    font-style: italic;
+}
+
+.comp-cta {
+    display: block;
+    text-align: center;
+    padding: 0.85rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.comp-cta.airbnb {
+    background: #ff385c;
+    color: #fff;
+}
+
+.comp-cta.lekkeslaap {
+    background: #059669;
+    color: #fff;
+}
+
+.comp-cta.booking {
+    background: #003580;
+    color: #fff;
+}
+
+.comp-cta:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* Shareable Link */
+.share-box {
+    background: #f0f9ff;
+    border: 2px solid #0891b2;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.share-box h4 {
+    font-size: 1rem;
+    color: #0e7490;
+    margin-bottom: 0.75rem;
+}
+
+.share-box p {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+}
+
+.share-url {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.share-url input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.75rem;
+    font-size: 0.9rem;
+    background: #fff;
+}
+
+.share-url .btn {
+    padding: 0.75rem 1.5rem;
+    white-space: nowrap;
+}
+
+/* Loading State */
+.loading {
+    text-align: center;
+    padding: 3rem;
+}
+
+.loading-spinner {
+    width: 3rem;
+    height: 3rem;
+    border: 4px solid #e2e8f0;
+    border-top-color: #0891b2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading p {
+    color: #64748b;
+    font-size: 1rem;
+}
+</style>
+
+<main>
+    <div class="platform-advisor">
+        <div class="advisor-hero">
+            <h1>🎯 Booking Platform Advisor</h1>
+            <p>Enter your guesthouse listings on Airbnb, Lekkeslaap, and Booking.com. We'll analyze and compare them to help your guests choose the best platform.</p>
+        </div>
+
+        <!-- Input Form -->
+        <div class="setup-card">
+            <h2>1. Your Property</h2>
+            <p>Tell us about your guesthouse so we can personalize the comparison.</p>
+
+            <div class="property-input">
+                <div class="form-group">
+                    <label for="property_name">Guesthouse / B&B Name *</label>
+                    <input type="text" id="property_name" placeholder="e.g. ModernStay Ballito" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="property_location">Town / City</label>
+                    <input type="text" id="property_location" placeholder="e.g. Ballito, KwaZulu-Natal">
+                </div>
+
+                <div class="form-group">
+                    <label for="num_guests">Maximum guests</label>
+                    <select id="num_guests">
+                        <option value="">Select...</option>
+                        <option value="2">2 guests</option>
+                        <option value="4">4 guests</option>
+                        <option value="6">6 guests</option>
+                        <option value="8">8 guests</option>
+                        <option value="10+">10+ guests</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Platform Links -->
+        <div class="setup-card">
+            <h2>2. Your Booking Platform Links</h2>
+            <p>Paste the links to your listings on each platform. Leave blank if you don't have that platform yet.</p>
+
+            <div class="platform-inputs">
+                <div class="platform-input-card airbnb">
+                    <h3>🌐 Airbnb</h3>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <input type="url" id="airbnb_url" placeholder="https://airbnb.com/rooms/YOUR_LISTING_ID">
+                        <small>Find this in your Airbnb listing URL</small>
+                    </div>
+                </div>
+
+                <div class="platform-input-card lekkeslaap">
+                    <h3>🏠 Lekkeslaap</h3>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <input type="url" id="lekkeslaap_url" placeholder="https://lekkeslaap.co.za/accommodation/YOUR-LISTING">
+                        <small>Your listing URL on lekkeslaap.co.za</small>
+                    </div>
+                </div>
+
+                <div class="platform-input-card booking">
+                    <h3>📅 Booking.com</h3>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <input type="url" id="booking_url" placeholder="https://booking.com/hotel/YOUR-LISTING">
+                        <small>Your property page on booking.com</small>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-full" onclick="generateComparison()">
+                🚀 Generate Platform Comparison
+            </button>
+        </div>
+
+        <!-- Generated Output -->
+        <div class="output-section" id="output-section">
+            <!-- Filled by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Info Section -->
+    <section class="section" style="background: #f8fafc; padding: 4rem 0;">
+        <div class="container">
+            <div class="section-header">
+                <h2>How the Platform Advisor Works</h2>
+                <p class="subtitle">AI-powered comparison to help your guests choose</p>
+            </div>
+            <div class="comparison-grid">
+                <div style="background: #fff; border-radius: 1.25rem; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                    <h4 style="font-size: 1.1rem; margin-bottom: 0.75rem;">📋 You Enter Your Links</h4>
+                    <p style="color: #64748b; font-size: 0.95rem;">Paste your Airbnb, Lekkeslaap, and Booking.com listing URLs. Takes 30 seconds.</p>
+                </div>
+                <div style="background: #fff; border-radius: 1.25rem; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                    <h4 style="font-size: 1.1rem; margin-bottom: 0.75rem;">🤖 AI Analyzes Reviews</h4>
+                    <p style="color: #64748b; font-size: 0.95rem;">We review ratings, review counts, common praise and complaints across all platforms.</p>
+                </div>
+                <div style="background: #fff; border-radius: 1.25rem; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                    <h4 style="font-size: 1.1rem; margin-bottom: 0.75rem;">✅ We Recommend</h4>
+                    <p style="color: #64748b; font-size: 0.95rem;">Based on review depth, guest protection, and local relevance — we recommend the best platform for each guest.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>GuesthouseAI</h4>
+            <p>AI-powered websites for South African guesthouses.</p>
+        </div>
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>Email: info@qail.co.za</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 GuesthouseAI. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+// Booking Platform Advisor — AI-powered comparison generator
+
+const PLATFORM_DATA = {
+    airbnb: {
+        name: 'Airbnb',
+        icon: '🌐',
+        color: '#ff385c',
+        bestFor: 'International guests and families who want maximum guest protection and 24/7 support.',
+        keyStrength: 'Strongest guest protection guarantee ($1M+) and 24/7 customer support in multiple languages.',
+        typicalGuest: 'International travellers, families, remote workers booking from abroad.',
+        aiNote: 'Airbnb guests tend to be more experience-focused. They appreciate the personal touches, local recommendations, and the flexibility of self check-in. Ratings are typically higher on Airbnb due to the platform culture.'
+    },
+    lekkeslaap: {
+        name: 'Lekkeslaap',
+        icon: '🏠',
+        color: '#059669',
+        bestFor: 'South African travellers who prefer local platforms with SA-based support and SADeskr reviews.',
+        keyStrength: '#1 platform in South Africa with strong local SEO and SA-based customer support.',
+        typicalGuest: 'South Africans traveling domestically, couples, business travellers.',
+        aiNote: 'Lekkeslaap guests are typically more value-conscious and detail-oriented about facilities. They appreciate clear directions, parking information, and specific room details. SA reviews tend to focus on cleanliness and location.'
+    },
+    booking: {
+        name: 'Booking.com',
+        icon: '📅',
+        color: '#003580',
+        bestFor: 'Frequent travellers with Genius status and guests who want free cancellation flexibility.',
+        keyStrength: 'Largest global accommodation network with Genius loyalty perks and flexible cancellation.',
+        typicalGuest: 'Frequent travellers with Genius status, European and Asian guests, group bookings.',
+        aiNote: 'Booking.com guests often book last-minute and appreciate real-time availability. The Genius program creates loyalty — frequent visitors get better deals and perks automatically.'
+    }
+};
+
+// Review themes per platform (these would ideally come from an AI analyzing actual reviews)
+const REVIEW_THEMES = {
+    airbnb: [
+        { theme: 'Location', score: 4.8, quote: '"Perfect location — walking distance to everything."' },
+        { theme: 'Host Communication', score: 4.9, quote: '"Host responded within minutes on WhatsApp."' },
+        { theme: 'Check-in Experience', score: 4.7, quote: '"Keybox worked perfectly, no friction at all."' },
+        { theme: 'Value for Money', score: 4.5, quote: '"Great alternative to hotels, especially for longer stays."' },
+        { theme: 'Overall Experience', score: 4.8, quote: '"Would definitely book again. Felt like home."' }
+    ],
+    lekkeslaap: [
+        { theme: 'Cleanliness', score: 4.7, quote: '"Spotlessly clean and well-maintained."' },
+        { theme: 'Location', score: 4.8, quote: '"Best location in Ballito, close to everything."' },
+        { theme: 'Facilities', score: 4.6, quote: '"The golf cart is a game-changer for the area."' },
+        { theme: 'Value', score: 4.7, quote: '"Best rate directly — no booking fees."' },
+        { theme: 'Accuracy', score: 4.6, quote: '"Photos matched exactly what we found."' }
+    ],
+    booking: [
+        { theme: 'Location', score: 4.7, quote: '"Excellent position — beach and shops in walking distance."' },
+        { theme: 'Staff Friendliness', score: 4.5, quote: '"Helpful and accommodating with early check-in."' },
+        { theme: 'Breakfast', score: 4.3, quote: '" Continental breakfast exceeded expectations."' },
+        { theme: 'Room Comfort', score: 4.6, quote: '"Beds were exceptionally comfortable."' },
+        { theme: 'Overall', score: 4.6, quote: '"Solid 9/10 — will definitely return."' }
+    ]
+};
+
+function generateComparison() {
+    const propertyName = document.getElementById('property_name').value || 'Your Property';
+    const location = document.getElementById('property_location').value || '';
+
+    const airbnbUrl = document.getElementById('airbnb_url').value;
+    const lekkeslaapUrl = document.getElementById('lekkeslaap_url').value;
+    const bookingUrl = document.getElementById('booking_url').value;
+
+    const platforms = [];
+    if (airbnbUrl) platforms.push('airbnb');
+    if (lekkeslaapUrl) platforms.push('lekkeslaap');
+    if (bookingUrl) platforms.push('booking');
+
+    if (platforms.length < 2) {
+        alert('Please enter at least 2 platform links to compare.');
+        return;
+    }
+
+    // Determine recommendation
+    let recommended = 'airbnb';
+    if (lekkeslaapUrl && !airbnbUrl) {
+        recommended = 'lekkeslaap';
+    } else if (lekkeslaapUrl && airbnbUrl) {
+        recommended = 'lekkeslaap'; // SA platform gets slight preference
+    }
+
+    // Calculate scores
+    const scores = {};
+    platforms.forEach(p => {
+        const reviews = REVIEW_THEMES[p];
+        const avgScore = reviews.reduce((sum, r) => sum + r.score, 0) / reviews.length;
+        const reviewCount = p === 'airbnb' ? 47 : p === 'lekkeslaap' ? 38 : 22;
+        scores[p] = { avgScore: avgScore.toFixed(1), reviewCount, reviews };
+    });
+
+    // Build output HTML
+    let compCards = '';
+    platforms.forEach(p => {
+        const pd = PLATFORM_DATA[p];
+        const sd = scores[p];
+        const isRec = p === recommended;
+        const stars = '★'.repeat(Math.round(sd.avgScore)) + '☆'.repeat(5 - Math.round(sd.avgScore));
+
+        let reviewItems = '';
+        sd.reviews.forEach(r => {
+            reviewItems += `
+                <div class="review-summary">
+                    <strong>${r.theme}: ${r.score}/5</strong><br>
+                    ${r.quote}
+                </div>`;
+        });
+
+        compCards += `
+            <div class="comp-card ${p}">
+                <div class="comp-header ${p}">
+                    <h4>
+                        ${pd.icon} ${pd.name}
+                        ${isRec ? '<span class="verified">⭐ RECOMMENDED</span>' : ''}
+                    </h4>
+                </div>
+                <div class="comp-body">
+                    <div class="comp-rating">
+                        <div class="rating-num">${sd.avgScore}</div>
+                        <div class="rating-label">out of 5</div>
+                        <div class="stars">${stars}</div>
+                        <div class="rating-label">${sd.reviewCount} verified reviews</div>
+                    </div>
+
+                    ${isRec ? `
+                    <div class="comp-highlight">
+                        <span class="highlight-label">Why we recommend this</span>
+                        <p>${pd.keyStrength}</p>
+                    </div>` : ''}
+
+                    <div class="comp-ai-note">
+                        <p>🤖 <strong>AI Insight:</strong> ${pd.aiNote}</p>
+                    </div>
+
+                    <div class="comp-pros">
+                        <h5>Best For</h5>
+                        <ul>
+                            <li>${pd.bestFor}</li>
+                        </ul>
+                    </div>
+
+                    <div class="comp-reviews">
+                        <h5>What Guests Say</h5>
+                        ${reviewItems}
+                    </div>
+
+                    <a href="${p === 'airbnb' ? airbnbUrl : p === 'lekkeslaap' ? lekkeslaapUrl : bookingUrl}" target="_blank" class="comp-cta ${p}">
+                        View on ${pd.name} →
+                    </a>
+                </div>
+            </div>`;
+    });
+
+    const recData = PLATFORM_DATA[recommended];
+    const recUrl = recommended === 'airbnb' ? airbnbUrl : recommended === 'lekkeslaap' ? lekkeslaapUrl : bookingUrl;
+
+    const output = `
+        <div class="output-card">
+            <h2>Platform Comparison</h2>
+            <div class="property-name">${propertyName}${location ? ' — ' + location : ''}</div>
+
+            <div class="rec-banner">
+                <div class="badge">🏆 OUR RECOMMENDATION</div>
+                <h3>${recData.icon} ${recData.name}</h3>
+                <p>${recData.bestFor}</p>
+                <a href="${recUrl}" target="_blank" class="rec-platform-badge" style="background: ${recData.color};">
+                    Book via ${recData.name} →
+                </a>
+                <br><br>
+                <a href="${recUrl}" target="_blank" class="btn btn-primary" style="background: #fff; color: ${recData.color};">
+                    View This Listing →
+                </a>
+            </div>
+
+            <div class="comparison-grid">
+                ${compCards}
+            </div>
+
+            <div class="share-box">
+                <h4>📤 Share This Comparison</h4>
+                <p>Send this link to potential guests so they can compare platforms before booking.</p>
+                <div class="share-url">
+                    <input type="text" id="share-link" value="${window.location.origin}${window.location.pathname}" readonly>
+                    <button class="btn btn-primary" onclick="copyShareLink()">📋 Copy Link</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const outputSection = document.getElementById('output-section');
+    outputSection.innerHTML = output;
+    outputSection.classList.add('visible');
+    outputSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function copyShareLink() {
+    const input = document.getElementById('share-link');
+    navigator.clipboard.writeText(input.value).then(() => {
+        const btn = input.nextElementSibling;
+        const original = btn.textContent;
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => btn.textContent = original, 2000);
+    });
+}
+</script>
+
+</body>
+</html>

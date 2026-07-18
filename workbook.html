@@ -721,7 +721,7 @@
             status.style.display = 'block';
             
             // Call our API to fetch and analyze the listing
-            fetch('/api/fetch-listing', {
+            fetch('http://100.93.250.92:5051/fetch', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url })

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GuesthouseAI — AI-Powered Websites for South African Guesthouses</title>
-    <meta name="description" content="Build a professional guesthouse website in 48 hours. AI-powered, mobile-responsive, WhatsApp booking button included. Starting at R1,500.">
+    <title>GuesthouseAI — AI Websites for South African Guesthouses</title>
+    <meta name="description" content="Build a professional guesthouse website in 48 hours. AI-powered, mobile-responsive, starting at R1,500.">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="favicon.ico">
 </head>
@@ -18,241 +18,627 @@
 </script>
 <header>
     <nav>
-        <div class="logo">Quantum AI Labs</div>
+        <div class="logo">GuesthouseAI</div>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
-            <li><a href="analyze.html">Analyze</a></li>
-            <li><a href="compare-quotes.html">Compare Quotes</a></li>
-            <li><a href="compare-products.html">Compare Products</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-            <li><a href="contact.html">Contact</a></li>
             <li><a href="guesthouse-ai.html" class="nav-highlight">GuesthouseAI</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>
 </header>
 
+<style>
+/* Form Styles */
+.intake-page {
+    max-width: 700px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+}
+
+/* Progress Bar */
+.progress-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    position: relative;
+}
+.progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #e2e8f0;
+    transform: translateY(-50%);
+    z-index: 0;
+}
+.progress-step {
+    position: relative;
+    z-index: 1;
+    background: #f8fafc;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: 3px solid #e2e8f0;
+    color: #94a3b8;
+    transition: all 0.3s;
+}
+.progress-step.active {
+    border-color: #059669;
+    color: #059669;
+    background: #f0fdf4;
+}
+.progress-step.completed {
+    border-color: #059669;
+    background: #059669;
+    color: #fff;
+}
+
+/* Form Card */
+.form-card {
+    background: #fff;
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.form-step {
+    display: none;
+}
+.form-step.active {
+    display: block;
+}
+
+.form-step h2 {
+    font-size: 1.8rem;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+.form-step p {
+    color: #64748b;
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+}
+
+/* Inputs */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="url"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    background: #fff;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #059669;
+    box-shadow: 0 0 0 3px rgba(5,150,105,0.1);
+}
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Checkboxes */
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.checkbox-item:hover {
+    border-color: #059669;
+}
+.checkbox-item input {
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: #059669;
+}
+.checkbox-item span {
+    font-size: 0.95rem;
+    color: #374151;
+}
+
+/* Price Selector */
+.price-selector {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.price-option {
+    flex: 1;
+    min-width: 140px;
+    padding: 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.75rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.price-option:hover {
+    border-color: #059669;
+}
+.price-option input {
+    display: none;
+}
+.price-option.selected {
+    border-color: #059669;
+    background: #f0fdf4;
+}
+.price-option h4 {
+    font-size: 1rem;
+    color: #1e293b;
+    margin-bottom: 0.25rem;
+}
+.price-option .price {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #059669;
+}
+.price-option .desc {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 0.25rem;
+}
+
+/* File Upload */
+.upload-area {
+    border: 2px dashed #cbd5e1;
+    border-radius: 1rem;
+    padding: 2.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #f8fafc;
+}
+.upload-area:hover {
+    border-color: #059669;
+    background: #f0fdf4;
+}
+.upload-area input {
+    display: none;
+}
+.upload-area .icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+.upload-area .text {
+    color: #64748b;
+    font-size: 0.95rem;
+}
+.upload-area .text strong {
+    color: #059669;
+}
+
+/* Buttons */
+.btn-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+.btn {
+    padding: 0.85rem 2rem;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+.btn-primary {
+    background: #059669;
+    color: #fff;
+}
+.btn-primary:hover {
+    background: #047857;
+}
+.btn-secondary {
+    background: #f1f5f9;
+    color: #64748b;
+    border: 2px solid #e2e8f0;
+}
+.btn-secondary:hover {
+    border-color: #059669;
+    color: #059669;
+}
+.btn-full {
+    width: 100%;
+}
+
+/* Success State */
+.success-card {
+    text-align: center;
+    padding: 3rem 2rem;
+}
+.success-card .icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+.success-card h2 {
+    font-size: 1.8rem;
+    color: #059669;
+    margin-bottom: 1rem;
+}
+.success-card p {
+    color: #64748b;
+    font-size: 1.1rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+.confirmation-number {
+    background: #f0fdf4;
+    border: 2px solid #059669;
+    border-radius: 0.75rem;
+    padding: 1rem 2rem;
+    display: inline-block;
+    margin: 1.5rem 0;
+}
+.confirmation-number .label {
+    font-size: 0.8rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.confirmation-number .number {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #059669;
+    font-family: monospace;
+}
+
+/* Photo Preview */
+.photo-previews {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+.photo-preview {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    border: 2px solid #e2e8f0;
+}
+</style>
+
 <main>
-    <!-- Hero Section -->
-    <section class="hero" style="background: linear-gradient(135deg, #059669 0%, #047857 100%);">
-        <h1>Your Guesthouse Website, Built by AI in 48 Hours</h1>
-        <p>Professional, mobile-responsive websites for South African guesthouses. No coding required. Starting at R1,500.</p>
-        <div class="hero-buttons">
-            <a href="#start" class="btn btn-primary" style="background: #fbbf24; color: #1e293b;">Start Building — Free Consultation</a>
-            <a href="#how-it-works" class="btn btn-secondary" style="border-color: #fff; color: #fff;">See How It Works</a>
+    <div class="intake-page">
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-step active" data-step="1">1</div>
+            <div class="progress-step" data-step="2">2</div>
+            <div class="progress-step" data-step="3">3</div>
+            <div class="progress-step" data-step="4">4</div>
         </div>
-    </section>
 
-    <!-- What You Get -->
-    <section class="features">
-        <h2 style="text-align: center; margin-bottom: 3rem;">Everything Your Guesthouse Website Needs</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto;">
-            <div class="feature">
-                <h3>🌐 5-Page Website</h3>
-                <p>Home, About, Rooms, Gallery, and Contact pages — professionally designed and mobile-first.</p>
-            </div>
-            <div class="feature">
-                <h3>📱 Mobile Responsive</h3>
-                <p>Looks perfect on phones, tablets, and desktops. 60%+ of guests browse on mobile — we build for that.</p>
-            </div>
-            <div class="feature">
-                <h3>💬 WhatsApp Booking</h3>
-                <p>Fixed WhatsApp button on every page. Guests tap and message you directly — no more missed enquiries.</p>
-            </div>
-            <div class="feature">
-                <h3>📍 Google Maps</h3>
-                <p>Your address embedded with directions. Guests find you easily, whether arriving by car or rideshare.</p>
-            </div>
-            <div class="feature">
-                <h3>⭐ Social Links</h3>
-                <p>Facebook, Instagram, Airbnb, and Lekkeslaap links. Direct guests to your booking platforms.</p>
-            </div>
-            <div class="feature">
-                <h3>🚀 Fast Loading</h3>
-                <p>Static HTML — no heavy frameworks. Loads instantly, even on slower connections in rural areas.</p>
-            </div>
-        </div>
-    </section>
+        <form id="intake-form">
+            <!-- Step 1: Property Details -->
+            <div class="form-step active" data-step="1">
+                <div class="form-card">
+                    <h2>Tell us about your guesthouse</h2>
+                    <p>Let's start with the basics.</p>
 
-    <!-- Pricing -->
-    <section style="background: #f0fdf4; padding: 4rem 2rem;">
-        <h2 style="text-align: center; margin-bottom: 3rem;">Simple, Transparent Pricing</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto;">
-            <div style="background: #fff; border-radius: 1.5rem; padding: 2.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
-                <h3 style="font-size: 1.5rem; color: #64748b; margin-bottom: 0.5rem;">Starter</h3>
-                <p style="font-size: 2.5rem; font-weight: 900; color: #1e293b; margin-bottom: 1.5rem;">R1,500</p>
-                <p style="color: #64748b; margin-bottom: 1.5rem;">One-time payment</p>
-                <ul style="list-style: none; padding: 0; margin-bottom: 2rem;">
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">✅ 3 Pages: Home, About, Contact</li>
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">✅ Mobile responsive</li>
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">✅ WhatsApp booking button</li>
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">✅ Social media links</li>
-                    <li style="padding: 0.5rem 0;">✅ 1 round of revisions</li>
-                </ul>
-                <a href="#start" style="display: block; text-align: center; background: #64748b; color: #fff; padding: 1rem; border-radius: 1rem; text-decoration: none; font-weight: 700;">Get Started</a>
-            </div>
-            <div style="background: #fff; border-radius: 1.5rem; padding: 2.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 3px solid #059669;">
-                <div style="background: #059669; color: #fff; padding: 0.3rem 1rem; border-radius: 2rem; display: inline-block; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem;">MOST POPULAR</div>
-                <h3 style="font-size: 1.5rem; color: #059669; margin-bottom: 0.5rem;">Standard</h3>
-                <p style="font-size: 2.5rem; font-weight: 900; color: #1e293b; margin-bottom: 1.5rem;">R2,500</p>
-                <p style="color: #64748b; margin-bottom: 1.5rem;">One-time payment</p>
-                <ul style="list-style: none; padding: 0; margin-bottom: 2rem;">
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">✅ 5 Pages: + Rooms, Gallery</li>
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">✅ Mobile responsive</li>
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">✅ WhatsApp booking button</li>
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">✅ Google Maps integration</li>
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">✅ Social media links</li>
-                    <li style="padding: 0.5rem 0;">✅ 2 rounds of revisions</li>
-                </ul>
-                <a href="#start" style="display: block; text-align: center; background: #059669; color: #fff; padding: 1rem; border-radius: 1rem; text-decoration: none; font-weight: 700;">Get Started</a>
-            </div>
-            <div style="background: #fff; border-radius: 1.5rem; padding: 2.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
-                <h3 style="font-size: 1.5rem; color: #64748b; margin-bottom: 0.5rem;">Premium</h3>
-                <p style="font-size: 2.5rem; font-weight: 900; color: #1e293b; margin-bottom: 1.5rem;">R4,500+</p>
-                <p style="color: #64748b; margin-bottom: 1.5rem;">Custom quote</p>
-                <ul style="list-style: none; padding: 0; margin-bottom: 2rem;">
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">✅ 7+ Pages: + Reviews, FAQ, Blog</li>
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">✅ Everything in Standard</li>
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">✅ AI Concierge chatbot</li>
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">✅ Photo gallery with lightbox</li>
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">✅ Review section</li>
-                    <li style="padding: 0.5rem 0;">✅ 3 rounds of revisions</li>
-                </ul>
-                <a href="#start" style="display: block; text-align: center; background: #1e293b; color: #fff; padding: 1rem; border-radius: 1rem; text-decoration: none; font-weight: 700;">Contact Us</a>
-            </div>
-        </div>
-        <p style="text-align: center; margin-top: 2rem; color: #64748b; font-size: 0.9rem;">
-            Hosting not included. We guide you through free Cloudflare Pages setup.<br>
-            Domain registration (e.g. yourguesthouse.co.za) ~R99/year — we can help you register.
-        </p>
-    </section>
+                    <div class="form-group">
+                        <label for="property_name">Guesthouse or B&B name *</label>
+                        <input type="text" id="property_name" name="property_name" placeholder="e.g. ModernStay Ballito" required>
+                    </div>
 
-    <!-- How It Works -->
-    <section id="how-it-works" class="features">
-        <h2 style="text-align: center; margin-bottom: 3rem;">How It Works</h2>
-        <div style="max-width: 800px; margin: 0 auto;">
-            <div style="display: flex; gap: 2rem; margin-bottom: 2rem; align-items: flex-start;">
-                <div style="background: #059669; color: #fff; width: 4rem; height: 4rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; flex-shrink: 0;">1</div>
-                <div>
-                    <h3 style="margin-bottom: 0.5rem;">Chat with us on WhatsApp</h3>
-                    <p style="color: #64748b;">Send us a message with your guesthouse name, location, room types, and photos. We'll guide you through a short set of questions — takes about 10 minutes.</p>
+                    <div class="form-group">
+                        <label for="location">Town / City *</label>
+                        <input type="text" id="location" name="location" placeholder="e.g. Ballito, KwaZulu-Natal" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Street address</label>
+                        <input type="text" id="address" name="address" placeholder="e.g. 13 Kiribati, Ballito">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="num_rooms">How many rooms / units? *</label>
+                        <select id="num_rooms" name="num_rooms" required>
+                            <option value="">Select...</option>
+                            <option value="1">1 room</option>
+                            <option value="2">2 rooms</option>
+                            <option value="3">3 rooms</option>
+                            <option value="4">4 rooms</option>
+                            <option value="5">5 rooms</option>
+                            <option value="6-10">6-10 rooms</option>
+                            <option value="10+">10+ rooms</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price_range">Price range per night (ZAR)</label>
+                        <select id="price_range" name="price_range">
+                            <option value="">Select...</option>
+                            <option value="500-800">R500 - R800</option>
+                            <option value="800-1200">R800 - R1,200</option>
+                            <option value="1200-1800">R1,200 - R1,800</option>
+                            <option value="1800-2500">R1,800 - R2,500</option>
+                            <option value="2500+">R2,500+</option>
+                        </select>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-full" onclick="nextStep(1)">Next: Facilities →</button>
+                    </div>
                 </div>
             </div>
-            <div style="display: flex; gap: 2rem; margin-bottom: 2rem; align-items: flex-start;">
-                <div style="background: #059669; color: #fff; width: 4rem; height: 4rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; flex-shrink: 0;">2</div>
-                <div>
-                    <h3 style="margin-bottom: 0.5rem;">AI builds your website</h3>
-                    <p style="color: #64748b;">Our AI generates a professional, mobile-responsive website using your information. No templates — each site is unique to your property.</p>
+
+            <!-- Step 2: Facilities -->
+            <div class="form-step" data-step="2">
+                <div class="form-card">
+                    <h2>What facilities do you offer?</h2>
+                    <p>Select all that apply to your guesthouse.</p>
+
+                    <div class="checkbox-grid">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="facilities" value="wifi">
+                            <span>📶 Free WiFi</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="facilities" value="pool">
+                            <span>🏊 Pool</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="facilities" value="braai">
+                            <span>🔥 Braai / BBQ</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="facilities" value="parking">
+                            <span>🚗 Free Parking</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="facilities" value="kitchen">
+                            <span>🍳 Self-catering Kitchen</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="facilities" value="ac">
+                            <span>❄️ Air Conditioning</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="facilities" value="tv">
+                            <span>📺 DSTV / TV</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="facilities" value="beach">
+                            <span>🏖️ Close to Beach</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="facilities" value="pets">
+                            <span>🐕 Pet-friendly</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="facilities" value="smoking">
+                            <span>🚬 Smoking Allowed</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="facilities" value="garden">
+                            <span>🌳 Garden</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="facilities" value="golfcart">
+                            <span>🛷 Golf Cart Available</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 1.5rem;">
+                        <label for="checkin">Check-in time</label>
+                        <input type="text" id="checkin" name="checkin" placeholder="e.g. 14:00">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="checkout">Check-out time</label>
+                        <input type="text" id="checkout" name="checkout" placeholder="e.g. 10:00">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="specials">Any special features or attractions nearby?</label>
+                        <textarea id="specials" name="specials" placeholder="e.g. 5 min from Ballito beach, near restaurants and shops"></textarea>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(2)">← Back</button>
+                        <button type="button" class="btn btn-primary btn-full" onclick="nextStep(2)">Next: Contact →</button>
+                    </div>
                 </div>
             </div>
-            <div style="display: flex; gap: 2rem; margin-bottom: 2rem; align-items: flex-start;">
-                <div style="background: #059669; color: #fff; width: 4rem; height: 4rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; flex-shrink: 0;">3</div>
-                <div>
-                    <h3 style="margin-bottom: 0.5rem;">Review and request changes</h3>
-                    <p style="color: #64748b;">We send you a preview link. You review the site and request any changes — included in your package.</p>
+
+            <!-- Step 3: Contact -->
+            <div class="form-step" data-step="3">
+                <div class="form-card">
+                    <h2>How do we contact you?</h2>
+                    <p>We'll send your website preview to this email.</p>
+
+                    <div class="form-group">
+                        <label for="contact_name">Your name *</label>
+                        <input type="text" id="contact_name" name="contact_name" placeholder="e.g. Jannie Venter" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact_email">Email address *</label>
+                        <input type="email" id="contact_email" name="contact_email" placeholder="e.g. jannie@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact_phone">WhatsApp or phone number</label>
+                        <input type="tel" id="contact_phone" name="contact_phone" placeholder="e.g. 082 123 4567">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="website_url">Current website (if any)</label>
+                        <input type="url" id="website_url" name="website_url" placeholder="https://yourcurrentwebsite.co.za">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="domain_interest">Interested in a custom domain? (e.g. modernstay.co.za)</label>
+                        <input type="text" id="domain_interest" name="domain_interest" placeholder="e.g. myguesthouse.co.za">
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(3)">← Back</button>
+                        <button type="button" class="btn btn-primary btn-full" onclick="nextStep(3)">Next: Photos →</button>
+                    </div>
                 </div>
             </div>
-            <div style="display: flex; gap: 2rem; margin-bottom: 2rem; align-items: flex-start;">
-                <div style="background: #059669; color: #fff; width: 4rem; height: 4rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; flex-shrink: 0;">4</div>
-                <div>
-                    <h3 style="margin-bottom: 0.5rem;">We publish and guide you</h3>
-                    <p style="color: #64748b;">We help you set up free hosting on Cloudflare Pages. Your site goes live with your own domain. We send you the link and explain everything.</p>
+
+            <!-- Step 4: Photos -->
+            <div class="form-step" data-step="4">
+                <div class="form-card">
+                    <h2>Add your photos</h2>
+                    <p>Optional — but a website with real photos converts much better.</p>
+
+                    <div class="form-group">
+                        <label for="photo_links">Photo links (Airbnb, Google Drive, Dropbox, or direct URLs)</label>
+                        <textarea id="photo_links" name="photo_links" placeholder="Paste links to your photos here, e.g.:
+https://airbnb.com/rooms/123456/photos/789
+https://drive.google.com/..."></textarea>
+                    </div>
+
+                    <div class="upload-area" id="upload-area" onclick="document.getElementById('photo-upload').click()">
+                        <input type="file" id="photo-upload" name="photo_upload" multiple accept="image/*">
+                        <div class="icon">📷</div>
+                        <div class="text">
+                            <strong>Click to upload photos</strong><br>
+                            JPG, PNG up to 10MB each
+                        </div>
+                    </div>
+
+                    <div class="photo-previews" id="photo-previews"></div>
+
+                    <div class="form-group" style="margin-top: 1.5rem;">
+                        <label for="notes">Anything else we should know?</label>
+                        <textarea id="notes" name="notes" placeholder="e.g. We have a separate cottage, specific room features, target market..."></textarea>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(4)">← Back</button>
+                        <button type="submit" class="btn btn-primary btn-full">🚀 Submit — Build My Website</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- FAQ -->
-    <section class="faq">
-        <h2 style="text-align: center; margin-bottom: 3rem;">Frequently Asked Questions</h2>
+            <!-- Success Step -->
+            <div class="form-step" data-step="success">
+                <div class="form-card">
+                    <div class="success-card">
+                        <div class="icon">✅</div>
+                        <h2>Application Received!</h2>
+                        <p>We've received your guesthouse details. We'll review your information and have a website preview ready within 48 hours.</p>
+                        <div class="confirmation-number">
+                            <div class="label">Reference</div>
+                            <div class="number" id="ref-number">GHA-000001</div>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #94a3b8; margin-top: 1rem;">A copy has been sent to your email. We'll notify you once your preview is ready.</p>
+                        <a href="guesthouse-ai.html" class="btn btn-secondary" style="margin-top: 1.5rem;">Submit Another Property</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
-        <div class="faq-item">
-            <h3>How long does it take?</h3>
-            <p>Most websites are built within 48 hours of receiving your information. Complex properties with many room types may take 3–5 days.</p>
-        </div>
-
-        <div class="faq-item">
-            <h3>Do I need to know how to code?</h3>
-            <p>Not at all. You answer a few questions via WhatsApp — we handle the rest. If you can send a WhatsApp message, you can get a website.</p>
-        </div>
-
-        <div class="faq-item">
-            <h3>What photos do I need to send?</h3>
-            <p>Ideally: exterior, at least one room, bathroom, and any outdoor areas (pool, braai, garden). If you don't have photos yet, we can use quality stock images as placeholders.</p>
-        </div>
-
-        <div class="faq-item">
-            <h3>What hosting should I use?</h3>
-            <p>We recommend <strong>Cloudflare Pages</strong> — it's free, fast, and reliable. We guide you through the setup step by step. Alternatively, Netlify or Vercel both have free tiers.</p>
-        </div>
-
-        <div class="faq-item">
-            <h3>Can I update the website myself?</h3>
-            <p>Yes — we deliver the source files. If you know basic HTML/CSS you can update it, or we can make updates for a small fee.</p>
-        </div>
-
-        <div class="faq-item">
-            <h3>What about Airbnb and Lekkeslaap listings?</h3>
-            <p>Your website complements your existing listings — it doesn't replace them. Many guests will Google your guesthouse name after seeing it on Airbnb. A professional website builds trust and drives direct bookings.</p>
-        </div>
-
-        <div class="faq-item">
-            <h3>Can you add a booking system?</h3>
-            <p>For the MVP, we recommend using WhatsApp as your booking channel — it's familiar to South African guests and costs nothing. For more complex needs (payment processing, calendar sync), we can discuss a custom solution.</p>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section id="start" style="background: linear-gradient(135deg, #059669 0%, #047857 100%); padding: 5rem 2rem; text-align: center; color: #fff;">
-        <h2 style="color: #fff; margin-bottom: 1rem;">Ready to Get Your Guesthouse Online?</h2>
-        <p style="color: #d1fae5; font-size: 1.2rem; margin-bottom: 2rem;">Send us a WhatsApp message and we'll have your website live within 48 hours.</p>
-        <a href="https://wa.me/27XXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20build%20a%20website%20for%20my%20guesthouse" style="display: inline-block; background: #fbbf24; color: #1e293b; padding: 1.2rem 3rem; border-radius: 3rem; font-size: 1.2rem; font-weight: 800; text-decoration: none; margin-bottom: 1.5rem;">💬 Message Us on WhatsApp</a>
-        <p style="color: #a7f3d0; font-size: 0.9rem;">Or email: <strong>info@qail.co.za</strong></p>
-    </section>
-
-    <!-- Coming Soon: AI Concierge -->
+    <!-- Pricing Section (below form) -->
     <section style="padding: 4rem 2rem; background: #f8fafc;">
-        <h2 style="text-align: center; margin-bottom: 1rem;">Coming Soon: AI Concierge</h2>
-        <p style="text-align: center; color: #64748b; max-width: 600px; margin: 0 auto 3rem;">An AI chatbot that lives on your website and answers guest questions 24/7. Available in English, Afrikaans, German, and more.</p>
-        <div style="max-width: 600px; margin: 0 auto; background: #fff; border-radius: 1.5rem; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
-            <div style="background: #f0fdf4; border-radius: 1rem; padding: 1.5rem; margin-bottom: 1rem;">
-                <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 0.5rem;">Guest</p>
-                <p>"Do you allow small dogs? 🐕"</p>
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <h2 style="text-align: center; margin-bottom: 3rem;">Simple, Transparent Pricing</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                <div style="background: #fff; border-radius: 1.5rem; padding: 2.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 1.3rem; color: #64748b; margin-bottom: 0.5rem;">Starter</h3>
+                    <p style="font-size: 2.2rem; font-weight: 900; color: #1e293b;">R1,500</p>
+                    <p style="color: #94a3b8; margin-bottom: 1.5rem;">one-time</p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #f1f5f9;">✅ 3 Pages: Home, About, Contact</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #f1f5f9;">✅ Mobile responsive</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #f1f5f9;">✅ WhatsApp booking button</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #f1f5f9;">✅ Social media links</li>
+                        <li style="padding: 0.4rem 0;">✅ 1 revision round</li>
+                    </ul>
+                </div>
+                <div style="background: #fff; border-radius: 1.5rem; padding: 2.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 3px solid #059669;">
+                    <div style="background: #059669; color: #fff; padding: 0.3rem 1rem; border-radius: 2rem; display: inline-block; font-size: 0.8rem; font-weight: 700; margin-bottom: 1rem;">POPULAR</div>
+                    <h3 style="font-size: 1.3rem; color: #059669; margin-bottom: 0.5rem;">Standard</h3>
+                    <p style="font-size: 2.2rem; font-weight: 900; color: #1e293b;">R2,500</p>
+                    <p style="color: #94a3b8; margin-bottom: 1.5rem;">one-time</p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #f1f5f9;">✅ 5 Pages: + Rooms, Gallery</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #f1f5f9;">✅ Mobile responsive</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #f1f5f9;">✅ Google Maps</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #f1f5f9;">✅ WhatsApp booking button</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #f1f5f9;">✅ Social media links</li>
+                        <li style="padding: 0.4rem 0;">✅ 2 revision rounds</li>
+                    </ul>
+                </div>
+                <div style="background: #fff; border-radius: 1.5rem; padding: 2.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 1.3rem; color: #64748b; margin-bottom: 0.5rem;">Premium</h3>
+                    <p style="font-size: 2.2rem; font-weight: 900; color: #1e293b;">R4,500+</p>
+                    <p style="color: #94a3b8; margin-bottom: 1.5rem;">custom quote</p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #f1f5f9;">✅ 7+ Pages</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #f1f5f9;">✅ Everything in Standard</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #f1f5f9;">✅ AI Concierge chatbot</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #f1f5f9;">✅ Photo gallery with lightbox</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #f1f5f9;">✅ Guest reviews section</li>
+                        <li style="padding: 0.4rem 0;">✅ 3 revision rounds</li>
+                    </ul>
+                </div>
             </div>
-            <div style="background: #059669; border-radius: 1rem; padding: 1.5rem; margin-bottom: 1rem; color: #fff;">
-                <p style="font-size: 0.85rem; color: #a7f3d0; margin-bottom: 0.5rem;">ModernStay AI Concierge</p>
-                <p>Yes! We love well-behaved small dogs. There's a once-off pet fee of R100 per night. Would you like to book? 🐾</p>
-            </div>
-            <div style="background: #f0fdf4; border-radius: 1rem; padding: 1.5rem;">
-                <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 0.5rem;">Guest</p>
-                <p>"Great! What's your check-in time?"</p>
-            </div>
+            <p style="text-align: center; margin-top: 2rem; color: #94a3b8; font-size: 0.9rem;">
+                Hosting not included. We guide you through free Cloudflare Pages setup.
+            </p>
         </div>
-        <p style="text-align: center; margin-top: 2rem; color: #64748b;">AI Concierge launching Q3 2026. Included free with Premium package.</p>
     </section>
-
 </main>
 
 <footer>
     <div class="footer-content">
         <div class="footer-section">
             <h4>GuesthouseAI</h4>
-            <p>Part of Quantum AI Labs. AI-powered websites for South African guesthouses.</p>
-        </div>
-        <div class="footer-section">
-            <h4>Links</h4>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="guesthouse-ai.html">GuesthouseAI</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
+            <p>Part of Quantum AI Labs. AI websites for South African guesthouses.</p>
         </div>
         <div class="footer-section">
             <h4>Contact</h4>
-            <p>WhatsApp: +27 XX XXX XXXX</p>
             <p>Email: info@qail.co.za</p>
         </div>
     </div>
@@ -261,16 +647,110 @@
     </div>
 </footer>
 
-<style>
-.nav-highlight {
-    background: #059669 !important;
-    color: #fff !important;
-    border-radius: 2rem;
-    padding: 0.4rem 1rem;
+<script>
+// Form Navigation
+let currentStep = 1;
+
+function updateProgressBar(step) {
+    document.querySelectorAll('.progress-step').forEach(el => {
+        const s = parseInt(el.dataset.step);
+        el.classList.remove('active', 'completed');
+        if (s < step) el.classList.add('completed');
+        else if (s === step) el.classList.add('active');
+    });
 }
-.nav-highlight:hover {
-    background: #047857 !important;
+
+function showStep(step) {
+    document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
+    document.querySelector(`.form-step[data-step="${step}"]`).classList.add('active');
+    updateProgressBar(step);
 }
-</style>
+
+function nextStep(from) {
+    // Basic validation
+    const currentCard = document.querySelector(`.form-step[data-step="${from}"]`);
+    const requiredFields = currentCard.querySelectorAll('[required]');
+    let valid = true;
+    requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+            field.style.borderColor = '#ef4444';
+            valid = false;
+        } else {
+            field.style.borderColor = '#e2e8f0';
+        }
+    });
+    if (!valid) {
+        alert('Please fill in all required fields.');
+        return;
+    }
+    currentStep = from + 1;
+    showStep(currentStep);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function prevStep(from) {
+    currentStep = from - 1;
+    showStep(currentStep);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Form Submit
+document.getElementById('intake-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Collect all form data
+    const formData = new FormData(this);
+    const data = {};
+    formData.forEach((value, key) => {
+        if (data[key]) {
+            if (Array.isArray(data[key])) data[key].push(value);
+            else data[key] = [data[key], value];
+        } else {
+            data[key] = value;
+        }
+    });
+
+    // Handle unchecked checkboxes
+    const facilities = [];
+    document.querySelectorAll('input[name="facilities"]:checked').forEach(cb => facilities.push(cb.value));
+    data.facilities = facilities;
+
+    // Generate reference number
+    const ref = 'GHA-' + Date.now().toString().slice(-6);
+    data.reference = ref;
+    data.submitted_at = new Date().toISOString();
+    data.status = 'new';
+
+    // Store to localStorage (for demo — in production, send to API)
+    const submissions = JSON.parse(localStorage.getItem('guesthouse_submissions') || '[]');
+    submissions.push(data);
+    localStorage.setItem('guesthouse_submissions', JSON.stringify(submissions));
+
+    // Show success
+    document.getElementById('ref-number').textContent = ref;
+    document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
+    document.querySelector('.form-step[data-step="success"]').classList.add('active');
+    document.querySelector('.progress-bar').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Log for testing
+    console.log('Submission:', JSON.stringify(data, null, 2));
+});
+
+// Photo preview
+document.getElementById('photo-upload').addEventListener('change', function(e) {
+    const container = document.getElementById('photo-previews');
+    Array.from(e.target.files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            const img = document.createElement('img');
+            img.src = ev.target.result;
+            img.className = 'photo-preview';
+            container.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    });
+});
+</script>
 </body>
 </html>

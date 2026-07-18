@@ -247,6 +247,27 @@
             line-height: 1.6;
         }
         
+        .reference-box {
+            background: rgba(0,212,255,0.2);
+            border: 2px solid #00d4ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .reference-box .ref-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00d4ff;
+            margin-bottom: 5px;
+        }
+        
+        .reference-box .ref-label {
+            font-size: 0.8em;
+            color: #a0a0a0;
+        }
+        
         .required {
             color: #ff6b6b;
         }
@@ -600,7 +621,7 @@
                 
                 <div class="btn-row">
                     <button type="button" class="btn btn-secondary" onclick="prevStep()">← Back</button>
-                    <button type="button" class="btn btn-primary" onclick="submitForm()">Submit ✓</button>
+                    <button type="button" class="btn btn-primary" id="submitBtn" onclick="submitForm()">Submit ✓</button>
                 </div>
             </div>
             
@@ -610,8 +631,12 @@
                     <div class="success-message">
                         <div class="success-icon">🎉</div>
                         <h2>Thank You!</h2>
-                        <p>We've received your property details. Our team will review your information and build your website within 48 hours.</p>
-                        <p style="margin-top: 20px; color: #00d4ff;">We'll send you a preview via WhatsApp.</p>
+                        <p>We've received your property details. Our team will build your website within 48 hours.</p>
+                        <p style="margin-top: 15px; color: #a0a0a0;">Reference number:</p>
+                        <div class="reference-box">
+                            <div class="ref-number" id="refNumber">—</div>
+                            <div class="ref-label">Keep this for your records</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -681,6 +706,8 @@
         }
         
         function submitForm() {
+            const submitBtn = document.getElementById('submitBtn');
+            
             // Collect all form data
             const formData = {
                 propertyName: document.getElementById('propertyName').value,
@@ -711,14 +738,33 @@
                 uniqueSelling: document.getElementById('uniqueSelling').value
             };
             
-            console.log('Form submitted:', formData);
+            // Submit to API
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
             
-            // Show success
-            currentStep = 8;
-            showStep(8);
-            
-            // In production, this would send to a backend/WhatsApp
-            alert('Form submitted! (Demo mode - data logged to console)');
+            fetch('/api/workbook-submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('refNumber').textContent = data.reference;
+                    currentStep = 8;
+                    showStep(8);
+                } else {
+                    alert('Error: ' + (data.error || 'Something went wrong'));
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit ✓';
+                }
+            })
+            .catch(err => {
+                console.error('Submit error:', err);
+                alert('Submission failed. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit ✓';
+            });
         }
     </script>
 </body>

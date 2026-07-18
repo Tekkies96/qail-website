@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Workbook - GuesthouseAI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            font-size: 2em;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            color: #a0a0a0;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        
+        .progress-bar {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            height: 8px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            height: 100%;
+            border-radius: 20px;
+            transition: width 0.3s ease;
+        }
+        
+        .step {
+            display: none;
+        }
+        
+        .step.active {
+            display: block;
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .step-title {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            color: #00d4ff;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #a0a0a0;
+            font-size: 0.9em;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #666;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .checkbox-item {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 12px 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .checkbox-item:hover {
+            border-color: #00d4ff;
+        }
+        
+        .checkbox-item.selected {
+            border-color: #00d4ff;
+            background: rgba(0,212,255,0.2);
+        }
+        
+        .checkbox-item input {
+            display: none;
+        }
+        
+        .checkbox-item .checkmark {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .checkbox-item.selected .checkmark {
+            background: #00d4ff;
+            border-color: #00d4ff;
+        }
+        
+        .checkbox-item.selected .checkmark::after {
+            content: '✓';
+            color: #1a1a2e;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .btn-row {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        
+        .btn:hover {
+            transform: scale(1.02);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            color: #fff;
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #a0a0a0;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .step-indicator {
+            text-align: center;
+            margin-top: 20px;
+            color: #a0a0a0;
+            font-size: 0.9em;
+        }
+        
+        .success-message {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .success-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        
+        .success-message h2 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+        }
+        
+        .success-message p {
+            color: #a0a0a0;
+            line-height: 1.6;
+        }
+        
+        .required {
+            color: #ff6b6b;
+        }
+        
+        .hint {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏠 Property Workbook</h1>
+            <p>Tell us about your property and we'll build your website in 48 hours.</p>
+        </header>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 14.28%"></div>
+        </div>
+        
+        <form id="workbookForm">
+            <!-- Step 1: Property Basics -->
+            <div class="step active" data-step="1">
+                <div class="card">
+                    <h2 class="step-title">🏠 Property Basics</h2>
+                    
+                    <div class="form-group">
+                        <label>Property Name <span class="required">*</span></label>
+                        <input type="text" id="propertyName" placeholder="e.g., ModernStay Ballito" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Type <span class="required">*</span></label>
+                            <select id="propertyType" required>
+                                <option value="">Select type...</option>
+                                <option value="guesthouse">Guesthouse / B&B</option>
+                                <option value="selfcatering">Self-Catering</option>
+                                <option value="holidayhome">Holiday Home</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="villa">Villa</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Number of Units/Rooms <span class="required">*</span></label>
+                            <input type="number" id="roomCount" min="1" placeholder="e.g., 5" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Town/City <span class="required">*</span></label>
+                            <input type="text" id="town" placeholder="e.g., Ballito" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Province <span class="required">*</span></label>
+                            <select id="province" required>
+                                <option value="">Select province...</option>
+                                <option value="western-cape">Western Cape</option>
+                                <option value="eastern-cape">Eastern Cape</option>
+                                <option value="northern-cape">Northern Cape</option>
+                                <option value="free-state">Free State</option>
+                                <option value="north-west">North West</option>
+                                <option value="gauteng">Gauteng</option>
+                                <option value="limpopo">Limpopo</option>
+                                <option value="mpumalanga">Mpumalanga</option>
+                                <option value="kwazulu-natal">KwaZulu-Natal</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Physical Address</label>
+                        <textarea id="address" placeholder="Full street address for Google Maps"></textarea>
+                    </div>
+                </div>
+                
+                <div class="btn-row">
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">Continue →</button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Rooms & Pricing -->
+            <div class="step" data-step="2">
+                <div class="card">
+                    <h2 class="step-title">🛏️ Rooms & Pricing</h2>
+                    
+                    <div class="form-group">
+                        <label>Room Types Available</label>
+                        <textarea id="roomDetails" placeholder="e.g.,&#10;• Standard Room - R850/night - 2 guests, queen bed, en-suite&#10;• Family Suite - R1,200/night - 4 guests, 2 bedrooms&#10;• Luxury Honeymoon Suite - R1,500/night - 2 guests, king bed, jacuzzi"></textarea>
+                        <div class="hint">List each room type with price per night and max guests</div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Check-in Time</label>
+                            <input type="text" id="checkin" placeholder="e.g., 14:00" value="14:00">
+                        </div>
+                        <div class="form-group">
+                            <label>Check-out Time</label>
+                            <input type="text" id="checkout" placeholder="e.g., 10:00" value="10:00">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Minimum Nights</label>
+                        <input type="number" id="minNights" min="1" value="1" placeholder="e.g., 1">
+                    </div>
+                </div>
+                
+                <div class="btn-row">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">← Back</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">Continue →</button>
+                </div>
+            </div>
+            
+            <!-- Step 3: Facilities -->
+            <div class="step" data-step="3">
+                <div class="card">
+                    <h2 class="step-title">✨ Facilities & Amenities</h2>
+                    
+                    <div class="form-group">
+                        <label>Select all facilities available</label>
+                        <div class="checkbox-group" id="facilitiesGroup">
+                            <label class="checkbox-item" data-value="wifi">
+                                <input type="checkbox" name="facilities" value="WiFi">
+                                <span class="checkmark"></span>
+                                <span>WiFi</span>
+                            </label>
+                            <label class="checkbox-item" data-value="pool">
+                                <input type="checkbox" name="facilities" value="Pool">
+                                <span class="checkmark"></span>
+                                <span>Pool</span>
+                            </label>
+                            <label class="checkbox-item" data-value="parking">
+                                <input type="checkbox" name="facilities" value="Free Parking">
+                                <span class="checkmark"></span>
+                                <span>Free Parking</span>
+                            </label>
+                            <label class="checkbox-item" data-value="breakfast">
+                                <input type="checkbox" name="facilities" value="Breakfast">
+                                <span class="checkmark"></span>
+                                <span>Breakfast</span>
+                            </label>
+                            <label class="checkbox-item" data-value="lunch">
+                                <input type="checkbox" name="facilities" value="Lunch">
+                                <span class="checkmark"></span>
+                                <span>Lunch</span>
+                            </label>
+                            <label class="checkbox-item" data-value="dinner">
+                                <input type="checkbox" name="facilities" value="Dinner">
+                                <span class="checkmark"></span>
+                                <span>Dinner</span>
+                            </label>
+                            <label class="checkbox-item" data-value="kitchen">
+                                <input type="checkbox" name="facilities" value="Kitchen">
+                                <span class="checkmark"></span>
+                                <span>Kitchen</span>
+                            </label>
+                            <label class="checkbox-item" data-value="braai">
+                                <input type="checkbox" name="facilities" value="Braai/BBQ">
+                                <span class="checkmark"></span>
+                                <span>Braai/BBQ</span>
+                            </label>
+                            <label class="checkbox-item" data-value="ac">
+                                <input type="checkbox" name="facilities" value="Air Conditioning">
+                                <span class="checkmark"></span>
+                                <span>Air Conditioning</span>
+                            </label>
+                            <label class="checkbox-item" data-value="heating">
+                                <input type="checkbox" name="facilities" value="Heating">
+                                <span class="checkmark"></span>
+                                <span>Heating</span>
+                            </label>
+                            <label class="checkbox-item" data-value="tv">
+                                <input type="checkbox" name="facilities" value="TV">
+                                <span class="checkmark"></span>
+                                <span>TV</span>
+                            </label>
+                            <label class="checkbox-item" data-value="washing">
+                                <input type="checkbox" name="facilities" value="Washing Machine">
+                                <span class="checkmark"></span>
+                                <span>Washing Machine</span>
+                            </label>
+                            <label class="checkbox-item" data-value="beach">
+                                <input type="checkbox" name="facilities" value="Beach Access">
+                                <span class="checkmark"></span>
+                                <span>Beach Access</span>
+                            </label>
+                            <label class="checkbox-item" data-value="pets">
+                                <input type="checkbox" name="facilities" value="Pet Friendly">
+                                <span class="checkmark"></span>
+                                <span>Pet Friendly</span>
+                            </label>
+                            <label class="checkbox-item" data-value="disabled">
+                                <input type="checkbox" name="facilities" value="Disabled Access">
+                                <span class="checkmark"></span>
+                                <span>Disabled Access</span>
+                            </label>
+                            <label class="checkbox-item" data-value="inverter">
+                                <input type="checkbox" name="facilities" value="Inverter/Load Shedding">
+                                <span class="checkmark"></span>
+                                <span>Inverter/Load Shedding</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Other Facilities</label>
+                        <textarea id="otherFacilities" placeholder="Any other facilities not listed above..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="btn-row">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">← Back</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">Continue →</button>
+                </div>
+            </div>
+            
+            <!-- Step 4: Contact Info -->
+            <div class="step" data-step="4">
+                <div class="card">
+                    <h2 class="step-title">📞 Contact Information</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>WhatsApp Number <span class="required">*</span></label>
+                            <input type="tel" id="whatsapp" placeholder="e.g., 0821234567" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" id="phone" placeholder="e.g., 0211234567">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" placeholder="e.g., info@property.co.za" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Website (if existing)</label>
+                        <input type="url" id="website" placeholder="https://...">
+                    </div>
+                </div>
+                
+                <div class="btn-row">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">← Back</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">Continue →</button>
+                </div>
+            </div>
+            
+            <!-- Step 5: Social Media -->
+            <div class="step" data-step="5">
+                <div class="card">
+                    <h2 class="step-title">📱 Social Media</h2>
+                    
+                    <div class="form-group">
+                        <label>Facebook Page</label>
+                        <input type="url" id="facebook" placeholder="https://facebook.com/yourpage">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Instagram</label>
+                        <input type="text" id="instagram" placeholder="@yourusername">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Other Social Media</label>
+                        <textarea id="otherSocial" placeholder="Any other social media links..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="btn-row">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">← Back</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">Continue →</button>
+                </div>
+            </div>
+            
+            <!-- Step 6: Policies -->
+            <div class="step" data-step="6">
+                <div class="card">
+                    <h2 class="step-title">📋 Policies</h2>
+                    
+                    <div class="form-group">
+                        <label>Cancellation Policy</label>
+                        <select id="cancellation">
+                            <option value="flexible">Flexible - Full refund up to 7 days before</option>
+                            <option value="moderate">Moderate - Full refund up to 5 days before</option>
+                            <option value="strict">Strict - 50% refund up to 14 days before</option>
+                            <option value="custom">Custom policy</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Pet Policy</label>
+                        <select id="petPolicy">
+                            <option value="not-allowed">No pets allowed</option>
+                            <option value="dogs">Dogs allowed</option>
+                            <option value="cats">Cats allowed</option>
+                            <option value="all-pets">All pets welcome</option>
+                            <option value="by-arrangement">Pets by arrangement</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Smoking Policy</label>
+                        <select id="smokingPolicy">
+                            <option value="no-smoking">No smoking inside</option>
+                            <option value="outside-only">Smoking outside only</option>
+                            <option value="allowed">Smoking allowed</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Additional Policies / House Rules</label>
+                        <textarea id="houseRules" placeholder="Any additional house rules..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="btn-row">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">← Back</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">Continue →</button>
+                </div>
+            </div>
+            
+            <!-- Step 7: About -->
+            <div class="step" data-step="7">
+                <div class="card">
+                    <h2 class="step-title">📝 About Your Property</h2>
+                    
+                    <div class="form-group">
+                        <label>Property Description</label>
+                        <textarea id="description" placeholder="Tell potential guests what makes your property special...&#10;&#10;e.g., Nestled in the heart of Ballito, ModernStay offers luxury self-catering apartments just 200m from the beach. Perfect for families and couples looking for a relaxing coastal getaway."></textarea>
+                        <div class="hint">This will appear on your website's About page</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Nearby Attractions</label>
+                        <textarea id="attractions" placeholder="e.g.,&#10;• Ballito Beach - 200m walk&#10;• Ballito Mall - 1km&#10;• Dolphinarium - 5km&#10;• uMhlanga Rocks - 15km"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>What makes your property unique?</label>
+                        <textarea id="uniqueSelling" placeholder="What sets you apart from competitors?"></textarea>
+                    </div>
+                </div>
+                
+                <div class="btn-row">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">← Back</button>
+                    <button type="button" class="btn btn-primary" onclick="submitForm()">Submit ✓</button>
+                </div>
+            </div>
+            
+            <!-- Success -->
+            <div class="step" data-step="8">
+                <div class="card">
+                    <div class="success-message">
+                        <div class="success-icon">🎉</div>
+                        <h2>Thank You!</h2>
+                        <p>We've received your property details. Our team will review your information and build your website within 48 hours.</p>
+                        <p style="margin-top: 20px; color: #00d4ff;">We'll send you a preview via WhatsApp.</p>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+        <div class="step-indicator" id="stepIndicator">Step 1 of 7</div>
+    </div>
+    
+    <script>
+        let currentStep = 1;
+        const totalSteps = 7;
+        
+        // Checkbox toggle
+        document.querySelectorAll('.checkbox-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('selected');
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked;
+            });
+        });
+        
+        function showStep(step) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.querySelector(`[data-step="${step}"]`).classList.add('active');
+            
+            const progress = (step / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            if (step <= totalSteps) {
+                document.getElementById('stepIndicator').textContent = `Step ${step} of ${totalSteps}`;
+            } else {
+                document.getElementById('stepIndicator').textContent = '';
+            }
+        }
+        
+        function nextStep() {
+            // Basic validation
+            const currentStepEl = document.querySelector(`[data-step="${currentStep}"]`);
+            const requiredFields = currentStepEl.querySelectorAll('[required]');
+            let valid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    valid = false;
+                    field.style.borderColor = '#ff6b6b';
+                } else {
+                    field.style.borderColor = '';
+                }
+            });
+            
+            if (!valid) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            if (currentStep < totalSteps + 1) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+        
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+        
+        function submitForm() {
+            // Collect all form data
+            const formData = {
+                propertyName: document.getElementById('propertyName').value,
+                propertyType: document.getElementById('propertyType').value,
+                roomCount: document.getElementById('roomCount').value,
+                town: document.getElementById('town').value,
+                province: document.getElementById('province').value,
+                address: document.getElementById('address').value,
+                roomDetails: document.getElementById('roomDetails').value,
+                checkin: document.getElementById('checkin').value,
+                checkout: document.getElementById('checkout').value,
+                minNights: document.getElementById('minNights').value,
+                facilities: Array.from(document.querySelectorAll('input[name="facilities"]:checked')).map(cb => cb.value),
+                otherFacilities: document.getElementById('otherFacilities').value,
+                whatsapp: document.getElementById('whatsapp').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                website: document.getElementById('website').value,
+                facebook: document.getElementById('facebook').value,
+                instagram: document.getElementById('instagram').value,
+                otherSocial: document.getElementById('otherSocial').value,
+                cancellation: document.getElementById('cancellation').value,
+                petPolicy: document.getElementById('petPolicy').value,
+                smokingPolicy: document.getElementById('smokingPolicy').value,
+                houseRules: document.getElementById('houseRules').value,
+                description: document.getElementById('description').value,
+                attractions: document.getElementById('attractions').value,
+                uniqueSelling: document.getElementById('uniqueSelling').value
+            };
+            
+            console.log('Form submitted:', formData);
+            
+            // Show success
+            currentStep = 8;
+            showStep(8);
+            
+            // In production, this would send to a backend/WhatsApp
+            alert('Form submitted! (Demo mode - data logged to console)');
+        }
+    </script>
+</body>
+</html>

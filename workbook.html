@@ -275,8 +275,32 @@
         </div>
         
         <form id="workbookForm">
-            <!-- Step 1: Property Basics -->
+            <!-- Step 1: Property URL -->
             <div class="step active" data-step="1">
+                <div class="card">
+                    <h2 class="step-title">🔗 Paste Your Listing</h2>
+                    <p style="color: #a0a0a0; margin-bottom: 20px;">Paste your Airbnb, Lekkeslaap or Booking.com listing link below. We'll auto-fill most details for you.</p>
+                    
+                    <div class="form-group">
+                        <label>Listing URL</label>
+                        <input type="url" id="listingUrl" placeholder="https://www.airbnb.com/rooms/..." onchange="fetchListingDetails()">
+                        <div class="hint">Paste your existing listing URL and we'll do the hard work</div>
+                    </div>
+                    
+                    <div id="fetchStatus" style="display: none; text-align: center; padding: 20px;">
+                        <div class="spinner-small"></div>
+                        <p style="color: #00d4ff; margin-top: 10px;">Fetching property details...</p>
+                    </div>
+                </div>
+                
+                <div class="btn-row">
+                    <button type="button" class="btn btn-secondary" onclick="skipToStep2()">Skip - Enter manually</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">Continue →</button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Property Basics -->
+            <div class="step" data-step="2">
                 <div class="card">
                     <h2 class="step-title">🏠 Property Basics</h2>
                     
@@ -337,8 +361,8 @@
                 </div>
             </div>
             
-            <!-- Step 2: Rooms & Pricing -->
-            <div class="step" data-step="2">
+            <!-- Step 3: Rooms & Pricing -->
+            <div class="step" data-step="3">
                 <div class="card">
                     <h2 class="step-title">🛏️ Rooms & Pricing</h2>
                     
@@ -371,8 +395,8 @@
                 </div>
             </div>
             
-            <!-- Step 3: Facilities -->
-            <div class="step" data-step="3">
+            <!-- Step 4: Facilities -->
+            <div class="step" data-step="4">
                 <div class="card">
                     <h2 class="step-title">✨ Facilities & Amenities</h2>
                     
@@ -474,8 +498,8 @@
                 </div>
             </div>
             
-            <!-- Step 4: Contact Info -->
-            <div class="step" data-step="4">
+            <!-- Step 5: Contact Info -->
+            <div class="step" data-step="5">
                 <div class="card">
                     <h2 class="step-title">📞 Contact Information</h2>
                     
@@ -507,8 +531,8 @@
                 </div>
             </div>
             
-            <!-- Step 5: Social Media -->
-            <div class="step" data-step="5">
+            <!-- Step 6: Social Media -->
+            <div class="step" data-step="6">
                 <div class="card">
                     <h2 class="step-title">📱 Social Media</h2>
                     
@@ -534,8 +558,8 @@
                 </div>
             </div>
             
-            <!-- Step 6: Policies -->
-            <div class="step" data-step="6">
+            <!-- Step 7: Policies -->
+            <div class="step" data-step="7">
                 <div class="card">
                     <h2 class="step-title">📋 Policies</h2>
                     
@@ -581,8 +605,8 @@
                 </div>
             </div>
             
-            <!-- Step 7: About -->
-            <div class="step" data-step="7">
+            <!-- Step 8: About -->
+            <div class="step" data-step="8">
                 <div class="card">
                     <h2 class="step-title">📝 About Your Property</h2>
                     
@@ -610,7 +634,7 @@
             </div>
             
             <!-- Success -->
-            <div class="step" data-step="8">
+            <div class="step" data-step="9">
                 <div class="card">
                     <div class="success-message">
                         <div class="success-icon">🎉</div>
@@ -626,12 +650,12 @@
             </div>
         </form>
         
-        <div class="step-indicator" id="stepIndicator">Step 1 of 7</div>
+        <div class="step-indicator" id="stepIndicator">Step 1 of 8</div>
     </div>
     
     <script>
         let currentStep = 1;
-        const totalSteps = 7;
+        const totalSteps = 8;
         
         // Checkbox toggle
         document.querySelectorAll('.checkbox-item').forEach(item => {
@@ -657,29 +681,75 @@
         }
         
         function nextStep() {
-            // Basic validation
-            const currentStepEl = document.querySelector(`[data-step="${currentStep}"]`);
-            const requiredFields = currentStepEl.querySelectorAll('[required]');
-            let valid = true;
-            
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    valid = false;
-                    field.style.borderColor = '#ff6b6b';
-                } else {
-                    field.style.borderColor = '';
+            // Basic validation - skip for step 1 (URL is optional)
+            if (currentStep !== 1) {
+                const currentStepEl = document.querySelector(`[data-step="${currentStep}"]`);
+                const requiredFields = currentStepEl.querySelectorAll('[required]');
+                let valid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        valid = false;
+                        field.style.borderColor = '#ff6b6b';
+                    } else {
+                        field.style.borderColor = '';
+                    }
+                });
+                
+                if (!valid) {
+                    alert('Please fill in all required fields');
+                    return;
                 }
-            });
-            
-            if (!valid) {
-                alert('Please fill in all required fields');
-                return;
             }
             
             if (currentStep < totalSteps + 1) {
                 currentStep++;
                 showStep(currentStep);
             }
+        }
+        
+        function skipToStep2() {
+            currentStep = 2;
+            showStep(currentStep);
+        }
+        
+        function fetchListingDetails() {
+            const url = document.getElementById('listingUrl').value;
+            if (!url) return;
+            
+            const status = document.getElementById('fetchStatus');
+            status.style.display = 'block';
+            
+            // Call our API to fetch and analyze the listing
+            fetch('/api/fetch-listing', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url })
+            })
+            .then(res => res.json())
+            .then(data => {
+                status.style.display = 'none';
+                if (data.success && data.data) {
+                    // Auto-fill form fields
+                    if (data.data.propertyName) document.getElementById('propertyName').value = data.data.propertyName;
+                    if (data.data.location) document.getElementById('town').value = data.data.location;
+                    if (data.data.price) document.getElementById('roomDetails').value = data.data.price;
+                    if (data.data.description) document.getElementById('description').value = data.data.description;
+                    if (data.data.facilities) {
+                        data.data.facilities.forEach(facility => {
+                            const checkbox = document.querySelector(`input[name="facilities"][value="${facility}"]`);
+                            if (checkbox) {
+                                checkbox.checked = true;
+                                checkbox.closest('.checkbox-item')?.classList.add('selected');
+                            }
+                        });
+                    }
+                }
+            })
+            .catch(err => {
+                console.error('Fetch error:', err);
+                status.style.display = 'none';
+            });
         }
         
         function prevStep() {
@@ -723,6 +793,9 @@
             };
             
             // Submit to API
+            // Add listing URL to form data
+            formData.listingUrl = document.getElementById('listingUrl').value;
+            
             submitBtn.disabled = true;
             submitBtn.textContent = 'Submitting...';
             

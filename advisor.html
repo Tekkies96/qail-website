@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="af">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Platform Advisor - QAIL</title>
+    <title>Platform Advisor - Compare Properties with AI</title>
     <style>
         * {
             margin: 0;
@@ -79,12 +79,6 @@
         .platform-btn.active {
             border-color: #00d4ff;
             background: rgba(0,212,255,0.2);
-        }
-        
-        .platform-btn img {
-            width: 30px;
-            height: 30px;
-            margin-bottom: 8px;
         }
         
         .urls-section {
@@ -199,6 +193,8 @@
             justify-content: space-between;
             align-items: start;
             margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         
         .property-name {
@@ -217,6 +213,7 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 10px;
+            flex-wrap: wrap;
         }
         
         .stars {
@@ -295,13 +292,31 @@
             border-radius: 15px;
             font-size: 0.85em;
         }
+        
+        .ai-analysis {
+            background: rgba(123,44,191,0.2);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 20px;
+            border: 1px solid rgba(123,44,191,0.3);
+        }
+        
+        .ai-analysis h4 {
+            color: #a855f7;
+            margin-bottom: 10px;
+        }
+        
+        .ai-analysis p {
+            color: #d0d0d0;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>🏠 Platform Advisor</h1>
-            <p>Vergelyk 3 eiendomme en kry AI-aanbeveling</p>
+            <p>Compare 3 properties and get AI-powered recommendations</p>
         </header>
         
         <div class="card">
@@ -319,27 +334,27 @@
             
             <div class="urls-section">
                 <div class="url-input-group">
-                    <label>Eiendom 1</label>
+                    <label>Property 1</label>
                     <input type="url" class="url-input" id="url1" placeholder="https://www.airbnb.com/rooms/...">
                 </div>
                 <div class="url-input-group">
-                    <label>Eiendom 2</label>
+                    <label>Property 2</label>
                     <input type="url" class="url-input" id="url2" placeholder="https://www.airbnb.com/rooms/...">
                 </div>
                 <div class="url-input-group">
-                    <label>Eiendom 3</label>
+                    <label>Property 3</label>
                     <input type="url" class="url-input" id="url3" placeholder="https://www.airbnb.com/rooms/...">
                 </div>
             </div>
             
             <button class="compare-btn" id="compareBtn" onclick="compareProperties()">
-                🔍 Vergelyk Nou
+                🔍 Compare Now
             </button>
         </div>
         
         <div class="loading" id="loading">
             <div class="spinner"></div>
-            <div class="status-text" id="statusText">Bladsye word geopen...</div>
+            <div class="status-text" id="statusText">Opening pages...</div>
         </div>
         
         <div class="results" id="results">
@@ -366,7 +381,17 @@
             const url3 = document.getElementById('url3').value.trim();
             
             if (!url1 || !url2 || !url3) {
-                alert('Vul asseblief al 3 URL\'s in');
+                alert('Please fill in all 3 URLs');
+                return;
+            }
+            
+            // Basic URL validation
+            try {
+                new URL(url1);
+                new URL(url2);
+                new URL(url3);
+            } catch (e) {
+                alert('Please enter valid URLs');
                 return;
             }
             
@@ -395,7 +420,7 @@
                 displayResults(data.properties, data.recommendation);
                 
             } catch (error) {
-                alert('Fout: ' + error.message);
+                alert('Error: ' + error.message);
             } finally {
                 btn.disabled = false;
                 loading.classList.remove('show');
@@ -408,43 +433,51 @@
             
             propertiesList.innerHTML = properties.map((prop, idx) => `
                 <div class="property-card ${prop.isWinner ? 'winner' : ''}">
-                    ${prop.isWinner ? '<div class="winner-badge">⭐ Beste Waarde</div>' : ''}
+                    ${prop.isWinner ? '<div class="winner-badge">⭐ Best Value</div>' : ''}
                     <div class="property-header">
-                        <div class="property-name">${prop.name}</div>
-                        <div class="property-price">${prop.price}</div>
+                        <div class="property-name">${prop.name || 'Property ' + (idx + 1)}</div>
+                        <div class="property-price">${prop.price || 'Price on request'}</div>
                     </div>
                     <div class="property-rating">
-                        <span class="stars">${'⭐'.repeat(Math.round(prop.rating))}</span>
-                        <span>${prop.rating}/5</span>
-                        <span class="review-count">(${prop.reviews} reviews)</span>
+                        <span class="stars">${'⭐'.repeat(Math.round(prop.rating || 0))}</span>
+                        <span>${prop.rating || '0'}/5</span>
+                        <span class="review-count">(${prop.reviews || '0'} reviews)</span>
                     </div>
                     <div class="property-details">
                         <div class="detail-item">
-                            <div class="detail-label">Ligging</div>
-                            <div class="detail-value">${prop.location}</div>
+                            <div class="detail-label">Location</div>
+                            <div class="detail-value">${prop.location || 'N/A'}</div>
                         </div>
                         <div class="detail-item">
-                            <div class="detail-label">Gaste</div>
-                            <div class="detail-value">${prop.guests}</div>
+                            <div class="detail-label">Guests</div>
+                            <div class="detail-value">${prop.guests || 'N/A'}</div>
                         </div>
                         <div class="detail-item">
-                            <div class="detail-label">Slaapkamer</div>
-                            <div class="detail-value">${prop.bedrooms}</div>
+                            <div class="detail-label">Bedrooms</div>
+                            <div class="detail-value">${prop.bedrooms || 'N/A'}</div>
                         </div>
                         <div class="detail-item">
-                            <div class="detail-label">Badkamer</div>
-                            <div class="detail-value">${prop.bathrooms}</div>
+                            <div class="detail-label">Bathrooms</div>
+                            <div class="detail-value">${prop.bathrooms || 'N/A'}</div>
                         </div>
                     </div>
+                    ${prop.amenities && prop.amenities.length > 0 ? `
                     <div class="features-list">
                         ${prop.amenities.map(a => `<span class="feature-tag">${a}</span>`).join('')}
                     </div>
+                    ` : ''}
+                    ${prop.aiAnalysis ? `
+                    <div class="ai-analysis">
+                        <h4>🤖 AI Analysis</h4>
+                        <p>${prop.aiAnalysis}</p>
+                    </div>
+                    ` : ''}
                 </div>
             `).join('');
             
             recDiv.innerHTML = `
-                <h3>💡 AI Aanbeveling</h3>
-                <p>${recommendation}</p>
+                <h3>💡 AI Recommendation</h3>
+                <p>${recommendation || 'Analyze the properties above to make your decision.'}</p>
             `;
             
             results.classList.add('show');

@@ -342,7 +342,7 @@
                     <input type="url" class="url-input" id="url2" placeholder="https://www.airbnb.com/rooms/...">
                 </div>
                 <div class="url-input-group">
-                    <label>Property 3</label>
+                    <label>Property 3 (optional)</label>
                     <input type="url" class="url-input" id="url3" placeholder="https://www.airbnb.com/rooms/...">
                 </div>
             </div>
@@ -380,19 +380,22 @@
             const url2 = document.getElementById('url2').value.trim();
             const url3 = document.getElementById('url3').value.trim();
             
-            if (!url1 || !url2 || !url3) {
-                alert('Please fill in all 3 URLs');
+            // Collect filled URLs (minimum 2 required)
+            const urls = [url1, url2, url3].filter(u => u && u.trim());
+            
+            if (urls.length < 2) {
+                alert('Please fill in at least 2 URLs');
                 return;
             }
             
             // Basic URL validation
-            try {
-                new URL(url1);
-                new URL(url2);
-                new URL(url3);
-            } catch (e) {
-                alert('Please enter valid URLs');
-                return;
+            for (const url of urls) {
+                try {
+                    new URL(url);
+                } catch (e) {
+                    alert('Please enter valid URLs');
+                    return;
+                }
             }
             
             const btn = document.getElementById('compareBtn');
@@ -408,7 +411,7 @@
                 const response = await fetch('/api/compare', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ urls: [url1, url2, url3], platform: selectedPlatform })
+                    body: JSON.stringify({ urls: urls, platform: selectedPlatform })
                 });
                 
                 const data = await response.json();

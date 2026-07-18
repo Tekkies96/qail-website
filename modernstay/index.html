@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModernStay - Zimbali Luxury Apartment</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0f;
+            color: #fff;
+            line-height: 1.6;
+        }
+        .hero {
+            height: 80vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80') center/cover;
+            opacity: 0.4;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(0,212,255,0.2);
+            border: 1px solid #00d4ff;
+            color: #00d4ff;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #fff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.3em;
+            color: #a0a0a0;
+            margin-bottom: 30px;
+        }
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            color: #fff;
+            padding: 18px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: transform 0.2s;
+        }
+        .cta-btn:hover { transform: scale(1.05); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
+        .section-title { font-size: 2em; margin-bottom: 40px; text-align: center; }
+        .rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px; }
+        .room-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .room-image {
+            height: 220px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+        }
+        .room-info { padding: 25px; }
+        .room-name { font-size: 1.3em; margin-bottom: 10px; }
+        .room-details { color: #a0a0a0; font-size: 0.9em; margin-bottom: 15px; line-height: 1.8; }
+        .room-price { font-size: 1.5em; color: #00d4ff; font-weight: bold; }
+        .room-price span { font-size: 0.5em; color: #666; }
+        .amenities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+        .amenity {
+            background: rgba(255,255,255,0.05);
+            padding: 12px 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .host-section {
+            background: rgba(0,212,255,0.05);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 60px;
+            border: 1px solid rgba(0,212,255,0.2);
+        }
+        .host-name { font-size: 1.8em; margin-bottom: 10px; }
+        .superhost-badge {
+            display: inline-block;
+            background: #ff5a5f;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-bottom: 15px;
+        }
+        .host-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .host-stat { text-align: center; }
+        .host-stat-value { font-size: 1.5em; color: #00d4ff; font-weight: bold; }
+        .host-stat-label { color: #a0a0a0; font-size: 0.85em; }
+        .reviews-section {
+            background: rgba(255,255,255,0.03);
+            border-radius: 30px;
+            padding: 60px;
+            margin-bottom: 60px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .rating-big { text-align: center; margin-bottom: 40px; }
+        .rating-number { font-size: 4em; font-weight: bold; color: #ffd700; }
+        .rating-stars { color: #ffd700; font-size: 1.5em; }
+        .rating-count { color: #a0a0a0; }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .review-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 3px solid #ffd700;
+        }
+        .review-text { font-style: italic; margin-bottom: 15px; color: #d0d0d0; line-height: 1.6; }
+        .review-author { color: #00d4ff; font-weight: bold; }
+        .review-date { color: #666; font-size: 0.85em; }
+        .contact-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(0,212,255,0.1) 0%, rgba(123,44,191,0.1) 100%);
+            border-radius: 30px;
+        }
+        .contact-section h2 { font-size: 2em; margin-bottom: 20px; }
+        .contact-section p { color: #a0a0a0; margin-bottom: 30px; }
+        .whatsapp-btn {
+            display: inline-block;
+            background: #25D366;
+            color: #fff;
+            padding: 18px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: transform 0.2s;
+        }
+        .whatsapp-btn:hover { transform: scale(1.05); }
+        footer { text-align: center; padding: 40px; color: #666; font-size: 0.9em; }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(37,211,102,0.4);
+            z-index: 1000;
+            transition: transform 0.2s;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2em; }
+            .container { padding: 40px 15px; }
+            .reviews-section { padding: 30px 20px; }
+            .host-stats { gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="badge">⭐ Guest Favorite</div>
+            <h1>ModernStay Zimbali</h1>
+            <p>Luxury Self-Catering Apartment in Ballito</p>
+            <a href="https://wa.me/27000000000" class="cta-btn">Book Now on WhatsApp</a>
+        </div>
+    </section>
+    
+    <div class="container">
+        <h2 class="section-title">🏠 Our Room</h2>
+        <div class="rooms">
+            <div class="room-card">
+                <div class="room-image">🛋️</div>
+                <div class="room-info">
+                    <h3 class="room-name">Spacious 2 Bedroom Apartment</h3>
+                    <p class="room-details">
+                        👥 4 guests<br>
+                        🛏️ 2 bedrooms (2 queen beds)<br>
+                        🛁 2 bathrooms<br>
+                        ⚡ Inverter for load shedding
+                    </p>
+                    <div class="room-price">R 4,557 <span>/ night</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">✨ Amenities</h2>
+        <div class="amenities">
+            <div class="amenity">📶 WiFi</div>
+            <div class="amenity">🅿️ Free Parking</div>
+            <div class="amenity">📺 Smart TV</div>
+            <div class="amenity">🍳 Full Kitchen</div>
+            <div class="amenity">🧺 Washing Machine</div>
+            <div class="amenity">❄️ Air Conditioning</div>
+            <div class="amenity">⚡ Inverter/Load Shedding</div>
+            <div class="amenity">🏖️ Beach Access Nearby</div>
+            <div class="amenity">🔒 24hr Security</div>
+            <div class="amenity">💼 Dedicated Workspace</div>
+        </div>
+        
+        <div class="host-section">
+            <div class="superhost-badge">SUPERHOST</div>
+            <h3 class="host-name">Hosted by Johannes</h3>
+            <p style="color: #a0a0a0;">Zimbali Coastal Resort, Ballito</p>
+            <div class="host-stats">
+                <div class="host-stat">
+                    <div class="host-stat-value">100%</div>
+                    <div class="host-stat-label">Response Rate</div>
+                </div>
+                <div class="host-stat">
+                    <div class="host-stat-value">~1hr</div>
+                    <div class="host-stat-label">Response Time</div>
+                </div>
+                <div class="host-stat">
+                    <div class="host-stat-value">2 years</div>
+                    <div class="host-stat-label">Hosting</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="reviews-section">
+            <div class="rating-big">
+                <div class="rating-number">4.88</div>
+                <div class="rating-stars">⭐⭐⭐⭐⭐</div>
+                <div class="rating-count">Based on 42 reviews</div>
+            </div>
+            
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <p class="review-text">"Beautiful and cozy unit, Johannes and Susan really thought of everything. Felt right at home and definitely will be coming back again."</p>
+                    <div class="review-author">Magdella</div>
+                    <div class="review-date">⭐ 5.0</div>
+                </div>
+                <div class="review-card">
+                    <p class="review-text">"The host went above and beyond to make my stay exceptional. Beautiful apartment, excellent location, and thoughtful touches throughout."</p>
+                    <div class="review-author">Sefako</div>
+                    <div class="review-date">⭐ 5.0</div>
+                </div>
+                <div class="review-card">
+                    <p class="review-text">"We had a wonderful stay. The place was clean, comfortable. The location was convenient and made it easy to get around."</p>
+                    <div class="review-author">Alex</div>
+                    <div class="review-date">⭐ 5.0</div>
+                </div>
+                <div class="review-card">
+                    <p class="review-text">"This apartment is a home away from home. Great and detail management are very tight. The apartment was spotless."</p>
+                    <div class="review-author">K</div>
+                    <div class="review-date">⭐ 5.0</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-section">
+            <h2>📞 Book via WhatsApp</h2>
+            <p>Message us directly for availability and bookings</p>
+            <a href="https://wa.me/27000000000" class="whatsapp-btn">💬 WhatsApp Us</a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>ModernStay Zimbali • Ballito, KwaZulu-Natal, South Africa</p>
+        <p>📧 info@modernstay.co.za • 📱 WhatsApp available</p>
+    </footer>
+    
+    <a href="https://wa.me/27000000000" class="whatsapp-float">💬</a>
+</body>
+</html>

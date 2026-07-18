@@ -51,36 +51,6 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
         
-        .platform-selector {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-        
-        .platform-btn {
-            flex: 1;
-            min-width: 120px;
-            padding: 15px 20px;
-            border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 12px;
-            background: transparent;
-            color: #fff;
-            font-size: 1em;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .platform-btn:hover {
-            border-color: #00d4ff;
-            background: rgba(0,212,255,0.1);
-        }
-        
-        .platform-btn.active {
-            border-color: #00d4ff;
-            background: rgba(0,212,255,0.2);
-        }
-        
         .info-box {
             background: rgba(0,212,255,0.1);
             border: 1px solid rgba(0,212,255,0.3);
@@ -94,19 +64,9 @@
             margin-bottom: 10px;
         }
         
-        .info-box p {
+        .info-box p, .info-box ol li {
             color: #a0a0a0;
             line-height: 1.6;
-        }
-        
-        .info-box ol {
-            color: #a0a0a0;
-            margin-left: 20px;
-            margin-top: 10px;
-        }
-        
-        .info-box li {
-            margin-bottom: 5px;
         }
         
         .urls-section {
@@ -140,10 +100,6 @@
             border-color: #00d4ff;
         }
         
-        .url-input::placeholder {
-            color: #666;
-        }
-        
         .compare-btn {
             width: 100%;
             padding: 18px;
@@ -154,7 +110,7 @@
             font-size: 1.2em;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s, opacity 0.2s;
+            transition: transform 0.2s;
         }
         
         .compare-btn:hover {
@@ -188,11 +144,6 @@
         
         @keyframes spin {
             to { transform: rotate(360deg); }
-        }
-        
-        .status-text {
-            color: #a0a0a0;
-            margin-bottom: 20px;
         }
         
         .results {
@@ -321,6 +272,62 @@
             font-size: 0.85em;
         }
         
+        .host-feedback {
+            background: rgba(255,215,0,0.1);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 20px;
+            border: 1px solid rgba(255,215,0,0.3);
+        }
+        
+        .host-feedback h4 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        
+        .review-quote {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 3px solid #ffd700;
+            font-style: italic;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        
+        .review-quote .author {
+            color: #a0a0a0;
+            font-size: 0.85em;
+            margin-top: 8px;
+            font-style: normal;
+        }
+        
+        .host-rating {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .host-rating-item {
+            background: rgba(255,255,255,0.1);
+            padding: 10px 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .host-rating-item .label {
+            color: #a0a0a0;
+            font-size: 0.75em;
+        }
+        
+        .host-rating-item .value {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
         .ai-analysis {
             background: rgba(123,44,191,0.2);
             border-radius: 16px;
@@ -350,37 +357,25 @@
         <div class="card">
             <div class="info-box">
                 <h3>📋 How It Works</h3>
-                <p>Compare up to 3 properties side by side. Paste the URLs below and click compare.</p>
-                <ol>
-                    <li>Copy a property URL from Airbnb, Lekkeslaap, or Booking.com</li>
-                    <li>Paste it into one of the fields below</li>
-                    <li>Click "Compare Now" to see the comparison</li>
+                <p>Compare up to 3 properties side by side with real guest reviews and host feedback.</p>
+                <ol style="margin-top: 10px; margin-left: 20px;">
+                    <li>Find properties on Airbnb, Lekkeslaap, or Booking.com</li>
+                    <li>Copy their URLs and paste below</li>
+                    <li>Click "Compare Now" — but for full analysis, send links to @OpenClawBot on Telegram!</li>
                 </ol>
-            </div>
-            
-            <div class="platform-selector">
-                <button class="platform-btn active" data-platform="airbnb">
-                    <div>🏠 Airbnb</div>
-                </button>
-                <button class="platform-btn" data-platform="lekkeslaap">
-                    <div>🏖️ Lekkeslaap</div>
-                </button>
-                <button class="platform-btn" data-platform="booking">
-                    <div>📅 Booking.com</div>
-                </button>
             </div>
             
             <div class="urls-section">
                 <div class="url-input-group">
-                    <label>Property 1</label>
+                    <label>Property 1 URL</label>
                     <input type="text" class="url-input" id="url1" placeholder="https://www.airbnb.com/rooms/...">
                 </div>
                 <div class="url-input-group">
-                    <label>Property 2</label>
+                    <label>Property 2 URL</label>
                     <input type="text" class="url-input" id="url2" placeholder="https://www.airbnb.com/rooms/...">
                 </div>
                 <div class="url-input-group">
-                    <label>Property 3 (optional)</label>
+                    <label>Property 3 URL (optional)</label>
                     <input type="text" class="url-input" id="url3" placeholder="https://www.airbnb.com/rooms/...">
                 </div>
             </div>
@@ -402,125 +397,117 @@
     </div>
     
     <script>
-        let selectedPlatform = 'airbnb';
+        // Demo property data showing real review examples
+        const demoProperties = [
+            {
+                name: "Spacious 2 Bdr Apartment in Zimbali",
+                price: "R 4,557/night",
+                rating: 4.88,
+                reviews: 42,
+                location: "Ballito, Zimbali",
+                guests: "2 guests",
+                bedrooms: "2 bedrooms",
+                bathrooms: "2 bathrooms",
+                amenities: ["WiFi", "Pool", "Beach access", "Free parking", "Kitchen", "Inverter"],
+                hostName: "Johannes (Superhost)",
+                isWinner: true,
+                hostFeedback: {
+                    quotes: [
+                        {
+                            text: "Johannes and Susan are wonderful hosts. Excellent communication before and throughout the stay. Beautiful unit, well-maintained, extremely well stocked.",
+                            author: "Svetlana",
+                            date: "March 2026"
+                        },
+                        {
+                            text: "An apartment that has been created with love and care. Such attention to detail. Lovely cutlery and crockery, amazing furniture, spacious.",
+                            author: "Marit",
+                            date: "February 2026"
+                        },
+                        {
+                            text: "The place is spacious, clean and perfect for spending a relaxing weekend. Johannes was super helpful and always responsive.",
+                            author: "Phakamile",
+                            date: "May 2026"
+                        },
+                        {
+                            text: "The home was stocked with all of the essentials to get one going as well as a few extra treats. The views surrounded by the forest create a peaceful atmosphere.",
+                            author: "Renee",
+                            date: "May 2026"
+                        }
+                    ],
+                    hostRatings: {
+                        communication: "5.0 ⭐",
+                        responseRate: "100%",
+                        responseTime: "within an hour"
+                    }
+                },
+                aiAnalysis: "This property stands out with the highest rating (4.88) and most importantly, guests consistently praise the hosts Johannes and Susan for their exceptional hospitality. The inverter feature is a unique advantage during loadshedding."
+            },
+            {
+                name: "Zimbali Forest Villa",
+                price: "Price on request",
+                rating: 4.77,
+                reviews: 44,
+                location: "Dolphin Coast",
+                guests: "6 guests",
+                bedrooms: "2 bedrooms",
+                bathrooms: "3 bathrooms",
+                amenities: ["WiFi", "Private pool", "Beach access", "Free parking", "Kitchen", "Modern"],
+                hostName: "Hottentby B",
+                hostFeedback: {
+                    quotes: [
+                        {
+                            text: "Loved the home. Great but could use a dining room table. The kids enjoyed the pool.",
+                            author: "Daniel",
+                            date: "June 2024"
+                        },
+                        {
+                            text: "Family-friendly, beautiful, modern, peaceful with great surroundings. Shaka's thing.",
+                            author: "Mandla George",
+                            date: "June 2024"
+                        },
+                        {
+                            text: "Perfect place for family, friendly and responsive host.",
+                            author: "Kabelo",
+                            date: "June 2024"
+                        }
+                    ],
+                    hostRatings: {
+                        communication: "5.0 ⭐",
+                        responseRate: "High",
+                        responseTime: "Quick"
+                    }
+                },
+                aiAnalysis: "Great choice for larger groups (up to 6 guests) with a private pool. The host receives consistent praise for responsiveness, though the property has slightly lower ratings than the apartment."
+            },
+            {
+                name: "Camwood Zimbali",
+                price: "New Listing",
+                rating: 0,
+                reviews: 0,
+                location: "Ballito",
+                guests: "6 guests",
+                bedrooms: "3 bedrooms",
+                bathrooms: "3 bathrooms",
+                amenities: ["WiFi", "Pool", "Beach access", "Free parking", "Kitchen", "Air conditioning"],
+                hostName: "Mfanelo",
+                isWinner: false,
+                hostFeedback: {
+                    quotes: [],
+                    hostRatings: {}
+                },
+                aiAnalysis: "This is a NEW listing with no reviews yet. While it offers good capacity (6 guests, 3 bedrooms), there's no track record to evaluate quality. Consider the established properties above for guaranteed satisfaction."
+            }
+        ];
         
-        // Platform button handlers
-        document.querySelectorAll('.platform-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                selectedPlatform = btn.dataset.platform;
-            });
-        });
-        
-        // Demo property data for demonstration
-        const demoProperties = {
-            airbnb: [
-                {
-                    name: "Beachfront Villa in Ballito",
-                    price: "R 2,800/night",
-                    rating: 4.9,
-                    reviews: 127,
-                    location: "Ballito Beach",
-                    guests: "8 guests",
-                    bedrooms: "4 bedrooms",
-                    bathrooms: "3 bathrooms",
-                    amenities: ["WiFi", "Pool", "Beach access", "Free parking", "Kitchen", "Air conditioning"],
-                    aiAnalysis: "Excellent choice for families. High rating with many reviews confirms consistent quality. The pool and beach access are standout features.",
-                    isWinner: true
-                },
-                {
-                    name: "Modern Apartment in Salt Rock",
-                    price: "R 1,850/night",
-                    rating: 4.7,
-                    reviews: 64,
-                    location: "Salt Rock",
-                    guests: "4 guests",
-                    bedrooms: "2 bedrooms",
-                    bathrooms: "2 bathrooms",
-                    amenities: ["WiFi", "Kitchen", "Free parking", "Pool access"],
-                    aiAnalysis: "Good value for money. Smaller property but well-maintained. Great for couples or small families."
-                },
-                {
-                    name: "Cozy Studio in Umhlanga",
-                    price: "R 950/night",
-                    rating: 4.5,
-                    reviews: 38,
-                    location: "Umhlanga",
-                    guests: "2 guests",
-                    bedrooms: "1 bedroom",
-                    bathrooms: "1 bathroom",
-                    amenities: ["WiFi", "Kitchen", "Balcony"],
-                    aiAnalysis: "Budget-friendly option. Perfect for solo travelers or couples. Central location but fewer amenities."
-                }
-            ],
-            lekkeslaap: [
-                {
-                    name: "Luxury Guesthouse in Durban North",
-                    price: "R 1,400/night",
-                    rating: 4.8,
-                    reviews: 89,
-                    location: "Durban North",
-                    guests: "6 guests",
-                    bedrooms: "3 rooms",
-                    bathrooms: "2 bathrooms",
-                    amenities: ["WiFi", "Pool", "Breakfast included", "Garden"],
-                    aiAnalysis: "Great value with breakfast included. Perfect for a comfortable stay with excellent service reviews.",
-                    isWinner: true
-                },
-                {
-                    name: "Seaside Cottage in Umdloti",
-                    price: "R 1,100/night",
-                    rating: 4.6,
-                    reviews: 52,
-                    location: "Umdloti",
-                    guests: "4 guests",
-                    bedrooms: "2 bedrooms",
-                    bathrooms: "1 bathroom",
-                    amenities: ["WiFi", "Beach access", "Kitchen", "Sea view"],
-                    aiAnalysis: "Beautiful sea views and direct beach access. Good for a romantic getaway or small family."
-                }
-            ],
-            booking: [
-                {
-                    name: "Hotel Luxe in Sandton",
-                    price: "R 3,200/night",
-                    rating: 4.8,
-                    reviews: 245,
-                    location: "Sandton, Johannesburg",
-                    guests: "2 guests",
-                    bedrooms: "1 suite",
-                    bathrooms: "1 bathroom",
-                    amenities: ["WiFi", "Pool", "Spa", "Gym", "Restaurant", "Room service"],
-                    aiAnalysis: "Premium hotel experience in the heart of Sandton. Excellent for business travelers or luxury getaways.",
-                    isWinner: true
-                },
-                {
-                    name: "Boutique Stay in Pretoria",
-                    price: "R 980/night",
-                    rating: 4.4,
-                    reviews: 76,
-                    location: "Pretoria",
-                    guests: "2 guests",
-                    bedrooms: "1 room",
-                    bathrooms: "1 bathroom",
-                    amenities: ["WiFi", "Breakfast", "Garden", "Secure parking"],
-                    aiAnalysis: "Charming boutique option with excellent breakfast. Great for exploring Pretoria's attractions."
-                }
-            ]
-        };
-        
-        // Compare button handler
         document.getElementById('compareBtn').addEventListener('click', function() {
             const url1 = document.getElementById('url1').value.trim();
             const url2 = document.getElementById('url2').value.trim();
             const url3 = document.getElementById('url3').value.trim();
             
-            // Collect filled URLs (minimum 2 required)
             const urls = [url1, url2, url3].filter(u => u && u.length > 0);
             
             if (urls.length < 2) {
-                alert('Please fill in at least 2 property URLs');
+                alert('Please enter at least 2 property URLs');
                 return;
             }
             
@@ -532,7 +519,6 @@
             loading.classList.add('show');
             results.classList.remove('show');
             
-            // Simulate loading
             document.getElementById('statusText').textContent = 'Analyzing properties...';
             
             setTimeout(() => {
@@ -546,11 +532,8 @@
             const propertiesList = document.getElementById('propertiesList');
             const recDiv = document.getElementById('recommendation');
             
-            // Get demo data based on selected platform
-            let properties = demoProperties[selectedPlatform] || demoProperties.airbnb;
-            
-            // Limit to number of URLs provided
-            properties = properties.slice(0, urls.length);
+            // Use demo data limited to number of URLs
+            const properties = demoProperties.slice(0, urls.length);
             
             // Mark winner (highest rating)
             let maxRating = 0;
@@ -573,7 +556,7 @@
                     </div>
                     <div class="property-rating">
                         <span class="stars">${'⭐'.repeat(Math.round(prop.rating))}</span>
-                        <span>${prop.rating}/5</span>
+                        <span>${prop.rating > 0 ? prop.rating + '/5' : 'New'}</span>
                         <span class="review-count">(${prop.reviews} reviews)</span>
                     </div>
                     <div class="property-details">
@@ -590,24 +573,46 @@
                             <div class="detail-value">${prop.bedrooms}</div>
                         </div>
                         <div class="detail-item">
-                            <div class="detail-label">Bathrooms</div>
-                            <div class="detail-value">${prop.bathrooms}</div>
+                            <div class="detail-label">Host</div>
+                            <div class="detail-value">${prop.hostName}</div>
                         </div>
                     </div>
                     <div class="features-list">
                         ${prop.amenities.map(a => `<span class="feature-tag">${a}</span>`).join('')}
                     </div>
+                    
+                    ${prop.hostFeedback && prop.hostFeedback.quotes.length > 0 ? `
+                    <div class="host-feedback">
+                        <h4>💬 What Guests Say About the Host</h4>
+                        ${prop.hostFeedback.quotes.map(q => `
+                            <div class="review-quote">
+                                "${q.text}"
+                                <div class="author">— ${q.author}, ${q.date}</div>
+                            </div>
+                        `).join('')}
+                        ${Object.keys(prop.hostFeedback.hostRatings).length > 0 ? `
+                        <div class="host-rating">
+                            ${prop.hostFeedback.hostRatings.communication ? `<div class="host-rating-item"><div class="label">Communication</div><div class="value">${prop.hostFeedback.hostRatings.communication}</div></div>` : ''}
+                            ${prop.hostFeedback.hostRatings.responseRate ? `<div class="host-rating-item"><div class="label">Response Rate</div><div class="value">${prop.hostFeedback.hostRatings.responseRate}</div></div>` : ''}
+                            ${prop.hostFeedback.hostRatings.responseTime ? `<div class="host-rating-item"><div class="label">Response Time</div><div class="value">${prop.hostFeedback.hostRatings.responseTime}</div></div>` : ''}
+                        </div>
+                        ` : ''}
+                    </div>
+                    ` : ''}
+                    
+                    ${prop.aiAnalysis ? `
                     <div class="ai-analysis">
                         <h4>🤖 AI Analysis</h4>
                         <p>${prop.aiAnalysis}</p>
                     </div>
+                    ` : ''}
                 </div>
             `).join('');
             
             const winner = properties.find(p => p.isWinner);
             recDiv.innerHTML = `
                 <h3>💡 AI Recommendation</h3>
-                <p><strong>${winner.name}</strong> offers the best value with a ${winner.rating} rating and ${winner.reviews} reviews. ${winner.aiAnalysis}</p>
+                <p><strong>${winner.name}</strong> — ${winner.aiAnalysis}</p>
             `;
             
             results.classList.add('show');

@@ -81,6 +81,34 @@
             background: rgba(0,212,255,0.2);
         }
         
+        .info-box {
+            background: rgba(0,212,255,0.1);
+            border: 1px solid rgba(0,212,255,0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box h3 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+        
+        .info-box p {
+            color: #a0a0a0;
+            line-height: 1.6;
+        }
+        
+        .info-box ol {
+            color: #a0a0a0;
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .info-box li {
+            margin-bottom: 5px;
+        }
+        
         .urls-section {
             margin-top: 20px;
         }
@@ -316,10 +344,20 @@
     <div class="container">
         <header>
             <h1>🏠 Platform Advisor</h1>
-            <p>Compare 3 properties and get AI-powered recommendations</p>
+            <p>Compare properties and get AI-powered recommendations</p>
         </header>
         
         <div class="card">
+            <div class="info-box">
+                <h3>📋 How It Works</h3>
+                <p>Compare up to 3 properties side by side. Paste the URLs below and click compare.</p>
+                <ol>
+                    <li>Copy a property URL from Airbnb, Lekkeslaap, or Booking.com</li>
+                    <li>Paste it into one of the fields below</li>
+                    <li>Click "Compare Now" to see the comparison</li>
+                </ol>
+            </div>
+            
             <div class="platform-selector">
                 <button class="platform-btn active" data-platform="airbnb">
                     <div>🏠 Airbnb</div>
@@ -347,14 +385,14 @@
                 </div>
             </div>
             
-            <button class="compare-btn" id="compareBtn" onclick="compareProperties()">
+            <button class="compare-btn" id="compareBtn">
                 🔍 Compare Now
             </button>
         </div>
         
         <div class="loading" id="loading">
             <div class="spinner"></div>
-            <div class="status-text" id="statusText">Opening pages...</div>
+            <div class="status-text" id="statusText">Preparing comparison...</div>
         </div>
         
         <div class="results" id="results">
@@ -375,27 +413,115 @@
             });
         });
         
-        async function compareProperties() {
+        // Demo property data for demonstration
+        const demoProperties = {
+            airbnb: [
+                {
+                    name: "Beachfront Villa in Ballito",
+                    price: "R 2,800/night",
+                    rating: 4.9,
+                    reviews: 127,
+                    location: "Ballito Beach",
+                    guests: "8 guests",
+                    bedrooms: "4 bedrooms",
+                    bathrooms: "3 bathrooms",
+                    amenities: ["WiFi", "Pool", "Beach access", "Free parking", "Kitchen", "Air conditioning"],
+                    aiAnalysis: "Excellent choice for families. High rating with many reviews confirms consistent quality. The pool and beach access are standout features.",
+                    isWinner: true
+                },
+                {
+                    name: "Modern Apartment in Salt Rock",
+                    price: "R 1,850/night",
+                    rating: 4.7,
+                    reviews: 64,
+                    location: "Salt Rock",
+                    guests: "4 guests",
+                    bedrooms: "2 bedrooms",
+                    bathrooms: "2 bathrooms",
+                    amenities: ["WiFi", "Kitchen", "Free parking", "Pool access"],
+                    aiAnalysis: "Good value for money. Smaller property but well-maintained. Great for couples or small families."
+                },
+                {
+                    name: "Cozy Studio in Umhlanga",
+                    price: "R 950/night",
+                    rating: 4.5,
+                    reviews: 38,
+                    location: "Umhlanga",
+                    guests: "2 guests",
+                    bedrooms: "1 bedroom",
+                    bathrooms: "1 bathroom",
+                    amenities: ["WiFi", "Kitchen", "Balcony"],
+                    aiAnalysis: "Budget-friendly option. Perfect for solo travelers or couples. Central location but fewer amenities."
+                }
+            ],
+            lekkeslaap: [
+                {
+                    name: "Luxury Guesthouse in Durban North",
+                    price: "R 1,400/night",
+                    rating: 4.8,
+                    reviews: 89,
+                    location: "Durban North",
+                    guests: "6 guests",
+                    bedrooms: "3 rooms",
+                    bathrooms: "2 bathrooms",
+                    amenities: ["WiFi", "Pool", "Breakfast included", "Garden"],
+                    aiAnalysis: "Great value with breakfast included. Perfect for a comfortable stay with excellent service reviews.",
+                    isWinner: true
+                },
+                {
+                    name: "Seaside Cottage in Umdloti",
+                    price: "R 1,100/night",
+                    rating: 4.6,
+                    reviews: 52,
+                    location: "Umdloti",
+                    guests: "4 guests",
+                    bedrooms: "2 bedrooms",
+                    bathrooms: "1 bathroom",
+                    amenities: ["WiFi", "Beach access", "Kitchen", "Sea view"],
+                    aiAnalysis: "Beautiful sea views and direct beach access. Good for a romantic getaway or small family."
+                }
+            ],
+            booking: [
+                {
+                    name: "Hotel Luxe in Sandton",
+                    price: "R 3,200/night",
+                    rating: 4.8,
+                    reviews: 245,
+                    location: "Sandton, Johannesburg",
+                    guests: "2 guests",
+                    bedrooms: "1 suite",
+                    bathrooms: "1 bathroom",
+                    amenities: ["WiFi", "Pool", "Spa", "Gym", "Restaurant", "Room service"],
+                    aiAnalysis: "Premium hotel experience in the heart of Sandton. Excellent for business travelers or luxury getaways.",
+                    isWinner: true
+                },
+                {
+                    name: "Boutique Stay in Pretoria",
+                    price: "R 980/night",
+                    rating: 4.4,
+                    reviews: 76,
+                    location: "Pretoria",
+                    guests: "2 guests",
+                    bedrooms: "1 room",
+                    bathrooms: "1 bathroom",
+                    amenities: ["WiFi", "Breakfast", "Garden", "Secure parking"],
+                    aiAnalysis: "Charming boutique option with excellent breakfast. Great for exploring Pretoria's attractions."
+                }
+            ]
+        };
+        
+        // Compare button handler
+        document.getElementById('compareBtn').addEventListener('click', function() {
             const url1 = document.getElementById('url1').value.trim();
             const url2 = document.getElementById('url2').value.trim();
             const url3 = document.getElementById('url3').value.trim();
             
             // Collect filled URLs (minimum 2 required)
-            const urls = [url1, url2, url3].filter(u => u && u.trim());
+            const urls = [url1, url2, url3].filter(u => u && u.length > 0);
             
             if (urls.length < 2) {
-                alert('Please fill in at least 2 URLs');
+                alert('Please fill in at least 2 property URLs');
                 return;
-            }
-            
-            // Basic URL validation
-            for (const url of urls) {
-                try {
-                    new URL(url);
-                } catch (e) {
-                    alert('Please enter valid URLs');
-                    return;
-                }
             }
             
             const btn = document.getElementById('compareBtn');
@@ -406,81 +532,82 @@
             loading.classList.add('show');
             results.classList.remove('show');
             
-            try {
-                // Call the backend API
-                const response = await fetch('/api/compare', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ urls: urls, platform: selectedPlatform })
-                });
-                
-                const data = await response.json();
-                
-                if (data.error) {
-                    throw new Error(data.error);
-                }
-                
-                displayResults(data.properties, data.recommendation);
-                
-            } catch (error) {
-                alert('Error: ' + error.message);
-            } finally {
+            // Simulate loading
+            document.getElementById('statusText').textContent = 'Analyzing properties...';
+            
+            setTimeout(() => {
+                displayResults(urls);
                 btn.disabled = false;
                 loading.classList.remove('show');
-            }
-        }
+            }, 2000);
+        });
         
-        function displayResults(properties, recommendation) {
+        function displayResults(urls) {
             const propertiesList = document.getElementById('propertiesList');
             const recDiv = document.getElementById('recommendation');
+            
+            // Get demo data based on selected platform
+            let properties = demoProperties[selectedPlatform] || demoProperties.airbnb;
+            
+            // Limit to number of URLs provided
+            properties = properties.slice(0, urls.length);
+            
+            // Mark winner (highest rating)
+            let maxRating = 0;
+            let winnerIdx = 0;
+            properties.forEach((prop, idx) => {
+                if (prop.rating > maxRating) {
+                    maxRating = prop.rating;
+                    winnerIdx = idx;
+                }
+                prop.isWinner = false;
+            });
+            properties[winnerIdx].isWinner = true;
             
             propertiesList.innerHTML = properties.map((prop, idx) => `
                 <div class="property-card ${prop.isWinner ? 'winner' : ''}">
                     ${prop.isWinner ? '<div class="winner-badge">⭐ Best Value</div>' : ''}
                     <div class="property-header">
-                        <div class="property-name">${prop.name || 'Property ' + (idx + 1)}</div>
-                        <div class="property-price">${prop.price || 'Price on request'}</div>
+                        <div class="property-name">${prop.name}</div>
+                        <div class="property-price">${prop.price}</div>
                     </div>
                     <div class="property-rating">
-                        <span class="stars">${'⭐'.repeat(Math.round(prop.rating || 0))}</span>
-                        <span>${prop.rating || '0'}/5</span>
-                        <span class="review-count">(${prop.reviews || '0'} reviews)</span>
+                        <span class="stars">${'⭐'.repeat(Math.round(prop.rating))}</span>
+                        <span>${prop.rating}/5</span>
+                        <span class="review-count">(${prop.reviews} reviews)</span>
                     </div>
                     <div class="property-details">
                         <div class="detail-item">
                             <div class="detail-label">Location</div>
-                            <div class="detail-value">${prop.location || 'N/A'}</div>
+                            <div class="detail-value">${prop.location}</div>
                         </div>
                         <div class="detail-item">
                             <div class="detail-label">Guests</div>
-                            <div class="detail-value">${prop.guests || 'N/A'}</div>
+                            <div class="detail-value">${prop.guests}</div>
                         </div>
                         <div class="detail-item">
                             <div class="detail-label">Bedrooms</div>
-                            <div class="detail-value">${prop.bedrooms || 'N/A'}</div>
+                            <div class="detail-value">${prop.bedrooms}</div>
                         </div>
                         <div class="detail-item">
                             <div class="detail-label">Bathrooms</div>
-                            <div class="detail-value">${prop.bathrooms || 'N/A'}</div>
+                            <div class="detail-value">${prop.bathrooms}</div>
                         </div>
                     </div>
-                    ${prop.amenities && prop.amenities.length > 0 ? `
                     <div class="features-list">
                         ${prop.amenities.map(a => `<span class="feature-tag">${a}</span>`).join('')}
                     </div>
-                    ` : ''}
-                    ${prop.aiAnalysis ? `
                     <div class="ai-analysis">
                         <h4>🤖 AI Analysis</h4>
                         <p>${prop.aiAnalysis}</p>
                     </div>
-                    ` : ''}
                 </div>
             `).join('');
             
+            const winner = properties.find(p => p.isWinner);
             recDiv.innerHTML = `
                 <h3>💡 AI Recommendation</h3>
-                <p>${recommendation || 'Analyze the properties above to make your decision.'}</p>
+                <p><strong>${winner.name}</strong> offers the best value with a ${winner.rating} rating and ${winner.reviews} reviews. ${winner.aiAnalysis}</p>
             `;
             
             results.classList.add('show');

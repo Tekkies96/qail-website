@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Comparison Advisor — GuesthouseAI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico">
+</head>
+<style>
+/* Advisor Styles */
+.advisor-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+.advisor-hero {
+    background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+    border-radius: 1.5rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 2rem;
+}
+
+.advisor-hero h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.75rem;
+}
+
+.advisor-hero p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Demo Properties Section */
+.demo-section {
+    background: #fef3c7;
+    border: 2px solid #fbbf24;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.demo-section h3 {
+    font-size: 1rem;
+    color: #92400e;
+    margin-bottom: 0.5rem;
+}
+
+.demo-section p {
+    font-size: 0.9rem;
+    color: #b45309;
+}
+
+/* Comparison Form */
+.compare-card {
+    background: #fff;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.compare-card h2 {
+    font-size: 1.4rem;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.compare-card > p {
+    color: #64748b;
+    margin-bottom: 1.5rem;
+}
+
+.property-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.property-input {
+    border: 2px solid #e2e8f0;
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+    transition: border-color 0.2s;
+}
+
+.property-input:hover {
+    border-color: #0891b2;
+}
+
+.property-input .prop-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.property-input .prop-num {
+    background: #0891b2;
+    color: #fff;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.property-input h3 {
+    font-size: 1rem;
+    color: #1e293b;
+}
+
+.prop-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.prop-fields .form-group {
+    margin-bottom: 0;
+}
+
+.prop-fields label {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.prop-fields input,
+.prop-fields select,
+.prop-fields textarea {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-family: inherit;
+}
+
+.prop-fields input:focus,
+.prop-fields textarea:focus,
+.prop-fields select:focus {
+    outline: none;
+    border-color: #0891b2;
+}
+
+.btn {
+    padding: 0.85rem 2rem;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: #0891b2;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #0e7490;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* Output */
+.output-section {
+    display: none;
+}
+
+.output-section.visible {
+    display: block;
+}
+
+.verdict-card {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    color: #fff;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.verdict-card .verdict-badge {
+    background: rgba(255,255,255,0.2);
+    padding: 0.3rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.verdict-card h2 {
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 0.75rem;
+}
+
+.verdict-card .winner-name {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #fbbf24;
+    margin-bottom: 1rem;
+}
+
+.verdict-card .verdict-reason {
+    font-size: 1.05rem;
+    opacity: 0.95;
+    max-width: 550px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.6;
+}
+
+.verdict-card .verdict-price {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+}
+
+.verdict-card .verdict-rating {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.verdict-card .verdict-cta {
+    display: inline-block;
+    background: #fff;
+    color: #059669;
+    padding: 0.75rem 2rem;
+    border-radius: 2rem;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+/* Comparison Table */
+.compare-table {
+    background: #fff;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.compare-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.compare-table th {
+    background: #f8fafc;
+    padding: 1rem 1.25rem;
+    text-align: left;
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 600;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.compare-table th:first-child {
+    width: 30%;
+}
+
+.compare-table td {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.95rem;
+    vertical-align: top;
+}
+
+.compare-table tr:last-child td {
+    border-bottom: none;
+}
+
+.compare-table tr.winner-row {
+    background: #f0fdf4;
+}
+
+.compare-table tr.winner-row td:first-child::after {
+    content: ' ✅';
+}
+
+.compare-table .rating-cell {
+    color: #f59e0b;
+    font-weight: 700;
+}
+
+.compare-table .price-cell {
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.compare-table .winner-cell {
+    background: #d1fae5;
+    font-weight: 700;
+    color: #065f46;
+}
+
+/* Pros Cons Cards */
+.pros-cons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.pros-cons-card {
+    background: #fff;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.pros-cons-card.winner {
+    border: 3px solid #059669;
+}
+
+.pros-cons-card .card-header {
+    padding: 1.25rem;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pros-cons-card:nth-child(1) .card-header { background: #0891b2; }
+.pros-cons-card:nth-child(2) .card-header { background: #0891b2; }
+.pros-cons-card:nth-child(3) .card-header { background: #0891b2; }
+
+.pros-cons-card .card-header h4 {
+    font-size: 1rem;
+}
+
+.pros-cons-card .card-header .rating {
+    font-size: 0.9rem;
+    background: rgba(255,255,255,0.2);
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+}
+
+.pros-cons-card .card-body {
+    padding: 1.25rem;
+}
+
+.card-pros, .card-cons {
+    margin-bottom: 1rem;
+}
+
+.card-pros h5, .card-cons h5 {
+    font-size: 0.82rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-pros h5 { color: #059669; }
+.card-cons h5 { color: #ef4444; }
+
+.card-pros ul, .card-cons ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.card-pros li, .card-cons li {
+    font-size: 0.88rem;
+    padding: 0.25rem 0;
+    color: #475569;
+}
+
+.ai-insight {
+    background: #fefce8;
+    border: 1px solid #fde68a;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.ai-insight p {
+    font-size: 0.88rem;
+    color: #854d0e;
+    font-style: italic;
+    line-height: 1.5;
+}
+
+/* Quick Tips */
+.tips-section {
+    background: #f8fafc;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.tips-section h3 {
+    font-size: 1.1rem;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.tip-item {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #475569;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.tip-item span {
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .prop-fields {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<main>
+<div class="advisor-page">
+
+    <div class="advisor-hero">
+        <h1>🏠 Property Comparison Advisor</h1>
+        <p>Found 3 Ballito listings you like? Paste the details below and we'll tell you which one gives you the best value for money.</p>
+    </div>
+
+    <!-- Demo Properties Info -->
+    <div class="demo-section">
+        <h3>📌 Demo: 3 Ballito Properties</h3>
+        <p>We've pre-filled this form with 3 real Ballito Airbnb listings so you can see how the advisor works. Click "Compare Now" to see the full comparison.</p>
+    </div>
+
+    <!-- Comparison Form -->
+    <div class="compare-card">
+        <h2>Enter the properties you want to compare</h2>
+        <p>Fill in the details from each listing. Don't worry about being exact — even estimates help.</p>
+
+        <div class="property-inputs">
+
+            <!-- Property 1 -->
+            <div class="property-input">
+                <div class="prop-header">
+                    <div style="display:flex;align-items:center;gap:0.75rem;">
+                        <div class="prop-num">1</div>
+                        <h3>13 Kiribati</h3>
+                    </div>
+                    <select id="p1_rating" style="padding:0.4rem 0.6rem;border:1px solid #e2e8f0;border-radius:0.5rem;font-size:0.85rem;">
+                        <option value="4.9">4.9 ★</option>
+                        <option value="4.8" selected>4.8 ★</option>
+                        <option value="4.7">4.7 ★</option>
+                        <option value="4.6">4.6 ★</option>
+                        <option value="4.5">4.5 ★</option>
+                    </select>
+                </div>
+                <div class="prop-fields">
+                    <div class="form-group">
+                        <label>Price per night (ZAR)</label>
+                        <input type="text" id="p1_price" value="R1,800" placeholder="e.g. R1,800">
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" id="p1_location" value="Ballito Beach, 5 min walk" placeholder="e.g. Ballito Beach">
+                    </div>
+                    <div class="form-group">
+                        <label>Sleeps</label>
+                        <select id="p1_sleeps">
+                            <option value="2">2 guests</option>
+                            <option value="4" selected>4 guests</option>
+                            <option value="6">6 guests</option>
+                            <option value="8">8+ guests</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Rooms</label>
+                        <select id="p1_rooms">
+                            <option value="1">1 bedroom</option>
+                            <option value="2" selected>2 bedrooms</option>
+                            <option value="3">3 bedrooms</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Key facilities (comma separated)</label>
+                        <input type="text" id="p1_facilities" value="WiFi, Air Conditioning, Pool, Braai, Golf Cart (R400/day), Free Parking, DSTV" placeholder="e.g. WiFi, Pool, Parking">
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>What guests say (reviews snippet)</label>
+                        <textarea id="p1_reviews" rows="2" placeholder="e.g. Perfect location, spotlessly clean, great value">"Perfect location — 5 min walk to beach. Spotlessly clean. The golf cart was amazing with kids. Host was responsive on WhatsApp. Will definitely come back."</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 2 -->
+            <div class="property-input">
+                <div class="prop-header">
+                    <div style="display:flex;align-items:center;gap:0.75rem;">
+                        <div class="prop-num">2</div>
+                        <h3>Salt Rock Cottage</h3>
+                    </div>
+                    <select id="p2_rating" style="padding:0.4rem 0.6rem;border:1px solid #e2e8f0;border-radius:0.5rem;font-size:0.85rem;">
+                        <option value="4.9">4.9 ★</option>
+                        <option value="4.8">4.8 ★</option>
+                        <option value="4.7">4.7 ★</option>
+                        <option value="4.6" selected>4.6 ★</option>
+                        <option value="4.5">4.5 ★</option>
+                    </select>
+                </div>
+                <div class="prop-fields">
+                    <div class="form-group">
+                        <label>Price per night (ZAR)</label>
+                        <input type="text" id="p2_price" value="R2,200" placeholder="e.g. R1,800">
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" id="p2_location" value="Salt Rock, 3 min to beach" placeholder="e.g. Ballito Beach">
+                    </div>
+                    <div class="form-group">
+                        <label>Sleeps</label>
+                        <select id="p2_sleeps">
+                            <option value="2">2 guests</option>
+                            <option value="4" selected>4 guests</option>
+                            <option value="6">6 guests</option>
+                            <option value="8">8+ guests</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Rooms</label>
+                        <select id="p2_rooms">
+                            <option value="1">1 bedroom</option>
+                            <option value="2" selected>2 bedrooms</option>
+                            <option value="3">3 bedrooms</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Key facilities (comma separated)</label>
+                        <input type="text" id="p2_facilities" value="WiFi, Fireplace, Garden, Pet Friendly, Free Parking, Beach Access" placeholder="e.g. WiFi, Pool, Parking">
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>What guests say (reviews snippet)</label>
+                        <textarea id="p2_reviews" rows="2" placeholder="e.g. Perfect location, spotlessly clean, great value">"Beautiful cottage in a quiet area. Fireplace was perfect for winter evenings. Pet-friendly which we needed. Garden is stunning. Only issue was the beach is a 3-min drive."</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 3 -->
+            <div class="property-input">
+                <div class="prop-header">
+                    <div style="display:flex;align-items:center;gap:0.75rem;">
+                        <div class="prop-num">3</div>
+                        <h3>Dolphin View Unit</h3>
+                    </div>
+                    <select id="p3_rating" style="padding:0.4rem 0.6rem;border:1px solid #e2e8f0;border-radius:0.5rem;font-size:0.85rem;">
+                        <option value="4.9">4.9 ★</option>
+                        <option value="4.8">4.8 ★</option>
+                        <option value="4.7">4.7 ★</option>
+                        <option value="4.6">4.6 ★</option>
+                        <option value="4.5" selected>4.5 ★</option>
+                    </select>
+                </div>
+                <div class="prop-fields">
+                    <div class="form-group">
+                        <label>Price per night (ZAR)</label>
+                        <input type="text" id="p3_price" value="R1,400" placeholder="e.g. R1,800">
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" id="p3_location" value="Ballito North, 2km to beach" placeholder="e.g. Ballito Beach">
+                    </div>
+                    <div class="form-group">
+                        <label>Sleeps</label>
+                        <select id="p3_sleeps">
+                            <option value="2" selected>2 guests</option>
+                            <option value="4">4 guests</option>
+                            <option value="6">6 guests</option>
+                            <option value="8">8+ guests</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Rooms</label>
+                        <select id="p3_rooms">
+                            <option value="1" selected>1 bedroom</option>
+                            <option value="2">2 bedrooms</option>
+                            <option value="3">3 bedrooms</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Key facilities (comma separated)</label>
+                        <input type="text" id="p3_facilities" value="WiFi, Air Conditioning, Balcony with Sea View, Free Parking" placeholder="e.g. WiFi, Pool, Parking">
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>What guests say (reviews snippet)</label>
+                        <textarea id="p3_reviews" rows="2" placeholder="e.g. Perfect location, spotlessly clean, great value">"Great value for money. Clean and modern. The sea view from the balcony is beautiful. Perfect for a quick weekend getaway. Not luxurious but exactly what you pay for."</textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <button class="btn btn-primary btn-full" onclick="compareProperties()" style="font-size:1.1rem; padding:1rem;">
+            🔍 Compare Now — Find the Best Value
+        </button>
+    </div>
+
+    <!-- Output -->
+    <div class="output-section" id="output-section">
+
+        <!-- Verdict -->
+        <div class="verdict-card" id="verdict-card">
+            <!-- Filled by JS -->
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="compare-table">
+            <table id="compare-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th id="th-p1">13 Kiribati</th>
+                        <th id="th-p2">Salt Rock Cottage</th>
+                        <th id="th-p3">Dolphin View Unit</th>
+                    </tr>
+                </thead>
+                <tbody id="compare-tbody">
+                    <!-- Filled by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pros & Cons -->
+        <div class="pros-cons-grid" id="pros-cons-grid">
+            <!-- Filled by JS -->
+        </div>
+
+    </div>
+
+    <!-- Tips -->
+    <div class="tips-section">
+        <h3>💡 How to Use This Comparison</h3>
+        <div class="tips-grid">
+            <div class="tip-item">
+                <span>📊</span>
+                <div><strong>Look at value, not just price</strong><br>A cheaper room might not include WiFi or parking.</div>
+            </div>
+            <div class="tip-item">
+                <span>⭐</span>
+                <div><strong>Rating matters</strong><br>A 4.6+ is excellent. Below 4.0? Look at why.</div>
+            </div>
+            <div class="tip-item">
+                <span>📍</span>
+                <div><strong>Location is everything</strong><br>5 min walk vs 2km drive adds up over a weekend.</div>
+            </div>
+            <div class="tip-item">
+                <span>👥</span>
+                <div><strong>Match to your group</strong><br>A 1-bedroom is perfect for couples. Families need more space.</div>
+            </div>
+            <div class="tip-item">
+                <span>🔍</span>
+                <div><strong>Read recent reviews</strong><br>A property with 4.8★ but 2-year-old reviews might have changed.</div>
+            </div>
+            <div class="tip-item">
+                <span>🏷️</span>
+                <div><strong>Check what's included</strong><br>Some prices exclude cleaning fees or don't include WiFi.</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</main>
+
+<script>
+// Extract numeric price from string like "R1,800"
+function extractPrice(str) {
+    const match = str.replace(/,/g,'').match(/\d+/);
+    return match ? parseInt(match[0]) : 0;
+}
+
+function compareProperties() {
+    const props = [];
+    for (let i = 1; i <= 3; i++) {
+        const name = document.getElementById(`p${i}_location`).value.split(',')[0].trim() || `Property ${i}`;
+        const price = extractPrice(document.getElementById(`p${i}_price`).value);
+        const rating = parseFloat(document.getElementById(`p${i}_rating`).value);
+        const location = document.getElementById(`p${i}_location`).value;
+        const sleeps = parseInt(document.getElementById(`p${i}_sleeps`).value);
+        const rooms = parseInt(document.getElementById(`p${i}_rooms`).value);
+        const facilities = document.getElementById(`p${i}_facilities`).value;
+        const reviews = document.getElementById(`p${i}_reviews`).value;
+        const propName = i === 1 ? '13 Kiribati' : i === 2 ? 'Salt Rock Cottage' : 'Dolphin View Unit';
+
+        props.push({ id: i, name: propName, price, rating, location, sleeps, rooms, facilities, reviews });
+    }
+
+    // Calculate value score
+    // Higher rating = better, lower price per person = better
+    props.forEach(p => {
+        p.pricePerPerson = p.price / p.sleeps;
+        // Value score: rating * 10 - (price per person / 100)
+        p.valueScore = (p.rating * 10) - (p.pricePerPerson / 100);
+        // Normalize facilities count
+        p.facilityCount = p.facilities.split(',').length;
+    });
+
+    // Find winner
+    const sorted = [...props].sort((a, b) => b.valueScore - a.valueScore);
+    const winner = sorted[0];
+    const second = sorted[1];
+
+    // Build verdict
+    const priceDiff = winner.price - second.price;
+    const priceDiffText = priceDiff > 0 ? `R${Math.abs(priceDiff).toLocaleString()} more` : `R${Math.abs(priceDiff).toLocaleString()} less`;
+    const ratingDiff = (winner.rating - second.rating).toFixed(1);
+
+    let verdictText = '';
+    if (winner.sleeps > second.sleeps) {
+        verdictText = `${winner.name} wins because it sleeps ${winner.sleeps} guests for only ${priceDiffText} than ${second.name} (sleeps ${second.sleeps}), plus it has ${winner.facilityCount} facilities vs ${second.facilityCount}. Better value per person.`;
+    } else if (priceDiff < -200) {
+        verdictText = `${winner.name} is the clear winner — it's R${Math.abs(priceDiff).toLocaleString()} cheaper than ${second.name} while maintaining a ${winner.rating}★ rating. If you're watching your budget, this is your pick.`;
+    } else if (ratingDiff >= 0.2) {
+        verdictText = `${winner.name} takes the top spot with a ${winner.rating}★ rating — that's ${ratingDiff} stars higher than ${second.name}. For quality-conscious travellers, the higher rating justifies the ${priceDiffText} per night.`;
+    } else {
+        verdictText = `${winner.name} gives the best overall value. At R${winner.price.toLocaleString()}/night for ${winner.sleeps} guests, you get a ${winner.rating}★ experience with ${winner.facilityCount} facilities. ${second.name} costs ${priceDiffText} and has fewer perks.`;
+    }
+
+    // Add comparison for property 3 if it's the cheapest
+    const cheapest = [...props].sort((a, b) => a.price - b.price)[0];
+    if (cheapest.id !== winner.id && cheapest.price < winner.price * 0.85) {
+        verdictText += ` Note: ${cheapest.name} is the cheapest at R${cheapest.price.toLocaleString()}/night — if budget is your top priority, it's worth considering despite the slightly lower rating of ${cheapest.rating}★.`;
+    }
+
+    document.getElementById('verdict-card').innerHTML = `
+        <div class="verdict-badge">🏆 BEST VALUE RECOMMENDATION</div>
+        <h2>${winner.name}</h2>
+        <div class="winner-name">${winner.location}</div>
+        <div class="verdict-price">${winner.price.toLocaleString()} / night</div>
+        <div class="verdict-rating">${'★'.repeat(Math.round(winner.rating))} ${winner.rating} · Sleeps ${winner.sleeps} · ${winner.rooms} bed${winner.rooms > 1 ? 's' : ''}</div>
+        <p class="verdict-reason">${verdictText}</p>
+        <a href="#" class="verdict-cta" onclick="return false;">View This Listing →</a>
+    `;
+
+    // Build comparison table
+    const tbody = document.getElementById('compare-tbody');
+    const rows = [
+        ['Price / Night', 'price', 'R{price}/night', null],
+        ['Rating', 'rating', '{rating} ★', null],
+        ['Sleeps', 'sleeps', '{sleeps} guests', null],
+        ['Bedrooms', 'rooms', '{rooms} bed{rooms>1?"s":""}', null],
+        ['Location', 'location', '{location}', null],
+        ['Facilities', 'facilityCount', '{facilityCount} facilities listed', null],
+        ['Value Score', 'valueScore', '{valueScore.toFixed(1)}/10', 'higher is better'],
+        ['Price / Person', 'pricePerPerson', 'R{pricePerPerson.toFixed(0)}/person', 'lower is better'],
+    ];
+
+    let tableHTML = '';
+    rows.forEach(([label, key, format, note]) => {
+        const vals = props.map(p => {
+            let val = p[key];
+            let display = format.replace(/\{(\w+)\}/g, (_, k) => {
+                if (k === 'price') return `R${p.price.toLocaleString()}`;
+                if (k === 'pricePerPerson') return `R${p.pricePerPerson.toFixed(0)}`;
+                if (k === 'rooms') return `${p.rooms} bed${p.rooms > 1 ? 's' : ''}`;
+                return val;
+            });
+            const isWinner = p.id === winner.id && (key === 'valueScore' || key === 'pricePerPerson' && p.pricePerPerson <= winner.pricePerPerson);
+            return `<td class="${isWinner ? 'winner-cell' : ''}">${display}</td>`;
+        }).join('');
+
+        tableHTML += `<tr class="${key === 'valueScore' ? 'winner-row' : ''}">
+            <td>${label}${note ? `<br><small style="color:#94a3b8;font-size:0.75rem;">${note}</small>` : ''}</td>
+            ${vals}
+        </tr>`;
+    });
+    tbody.innerHTML = tableHTML;
+
+    // Update table headers
+    props.forEach((p, i) => {
+        document.getElementById(`th-p${i+1}`).textContent = p.name;
+    });
+
+    // Build pros/cons cards
+    const prosConsHTML = props.map(p => {
+        const isWinner = p.id === winner.id;
+        const pros = [];
+        const cons = [];
+
+        if (p.rating >= 4.7) pros.push('Excellent rating (4.7+)');
+        if (p.price < 1500) pros.push('Budget-friendly price');
+        if (p.facilityCount >= 5) pros.push(`${p.facilityCount} facilities included`);
+        if (p.location.includes('walk') || p.location.includes('min')) pros.push('Close to beach');
+        if (p.sleeps >= 4) pros.push(`Sleeps ${p.sleeps} guests`);
+        if (p.pricePerPerson < 500) pros.push('Great price per person');
+
+        if (p.rating < 4.6) cons.push('Rating below 4.6 — check reviews');
+        if (p.price > 2000) cons.push('Premium price point');
+        if (p.facilityCount < 4) cons.push('Fewer facilities than competitors');
+        if (p.sleeps <= 2) cons.push('Only suitable for couples');
+        if (p.pricePerPerson > 600) cons.push('Higher price per person');
+
+        let insight = '';
+        if (isWinner) {
+            insight = `This is our best value pick. ${p.name} delivers the right balance of ${p.rating}★ quality at R${p.price.toLocaleString()}/night — ${p.sleeps} guests get R${p.pricePerPerson.toFixed(0)} per person, which is excellent for this area.`;
+        } else if (p.id === cheapest.id) {
+            insight = `Best for budget travellers. At R${p.price.toLocaleString()}/night this is the cheapest option. Rating of ${p.rating}★ is solid for the price. Good for quick getaways where you just need a clean, comfortable place to sleep.`;
+        } else {
+            insight = `A solid mid-range choice. At R${p.price.toLocaleString()}/night with ${p.rating}★ rating, it's competitively priced. Best for travellers who want a specific facility or location that the others don't offer.`;
+        }
+
+        return `
+            <div class="pros-cons-card ${isWinner ? 'winner' : ''}">
+                <div class="card-header">
+                    <h4>${p.name} ${isWinner ? '🏆' : ''}</h4>
+                    <span class="rating">${p.rating}★ · R${p.price.toLocaleString()}/n</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-pros">
+                        <h5>✅ Strengths</h5>
+                        <ul>${pros.slice(0, 3).map(x => `<li>${x}</li>`).join('')}</ul>
+                    </div>
+                    <div class="card-cons">
+                        <h5>⚠️ Watch Out</h5>
+                        <ul>${cons.slice(0, 2).map(x => `<li>${x}</li>`).join('')}</ul>
+                    </div>
+                    <div class="ai-insight">
+                        <p>🤖 ${insight}</p>
+                    </div>
+                </div>
+            </div>`;
+    }).join('');
+
+    document.getElementById('pros-cons-grid').innerHTML = prosConsHTML;
+
+    // Show output
+    document.getElementById('output-section').classList.add('visible');
+    document.getElementById('output-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+
+</body>
+</html>

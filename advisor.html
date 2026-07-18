@@ -700,10 +700,9 @@ function extractPrice(str) {
     return match ? parseInt(match[0]) : 0;
 }
 
-function compareProperties() {
+async function compareProperties() {
     const props = [];
     for (let i = 1; i <= 3; i++) {
-        const name = document.getElementById(`p${i}_location`).value.split(',')[0].trim() || `Property ${i}`;
         const price = extractPrice(document.getElementById(`p${i}_price`).value);
         const rating = parseFloat(document.getElementById(`p${i}_rating`).value);
         const location = document.getElementById(`p${i}_location`).value;
@@ -716,54 +715,127 @@ function compareProperties() {
         props.push({ id: i, name: propName, price, rating, location, sleeps, rooms, facilities, reviews });
     }
 
-    // Calculate value score
-    // Higher rating = better, lower price per person = better
     props.forEach(p => {
         p.pricePerPerson = p.price / p.sleeps;
-        // Value score: rating * 10 - (price per person / 100)
-        p.valueScore = (p.rating * 10) - (p.pricePerPerson / 100);
-        // Normalize facilities count
         p.facilityCount = p.facilities.split(',').length;
     });
 
-    // Find winner
+    // Show loading
+    const outputSection = document.getElementById('output-section');
+    outputSection.innerHTML = `
+        <div style="text-align:center;padding:3rem;background:#fff;border-radius:1.5rem;box-shadow:0 10px 25px -5px rgba(0,0,0,0.1);">
+            <div style="width:3rem;height:3rem;border:4px solid #e2e8f0;border-top-color:#0891b2;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1rem;"></div>
+            <p style="color:#64748b;font-size:1rem;">🤖 AI is comparing these properties via Pacman...</p>
+            <p style="color:#94a3b8;font-size:0.85rem;margin-top:0.5rem;">Powered by Qwen2.5:14b on Pacman server</p>
+        </div>`;
+    outputSection.classList.add('visible');
+    outputSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Call Pacman AI (same endpoint as search agent)
+    const PACMAN_URL = 'http://100.93.250.92:5050/chat_with_search';
+    
+    const propertiesList = props.map((p, i) => `
+Property ${i + 1}: ${p.name}
+- Price: R${p.price}/night (ZAR)
+- Rating: ${p.rating} stars
+- Location: ${p.location}
+- Sleeps: ${p.sleeps} guests
+- Bedrooms: ${p.rooms}
+- Facilities: ${p.facilities}
+- Guest reviews: ${p.reviews}
+    `.trim()).join('\n\n');
+
+    const query = `Compare these ${props.length} Ballito holiday rentals and recommend the best value:
+
+${propertiesList}
+
+Tell me which one gives the best value. Consider:
+- Price per person (price ÷ sleeps)
+- Rating quality
+- Location for beach access
+- Facilities (DSTV, braai, pool, etc)
+- What guests highlight in reviews
+
+Give me: winner name, score out of 10, and a 2-3 sentence verdict on why.`;
+
+    try {
+        const response = await fetch(PACMAN_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                query: query,
+                model: 'qwen2.5:14b',
+                limit: 1
+            })
+        });
+
+        const data = await response.json();
+        const aiOpinion = data.llm?.response?.message?.content || data.llm?.response || data.response || '';
+
+        // If we got a useful AI response, display it
+        if (aiOpinion && aiOpinion.length > 50) {
+            displayResultsWithAI(props, aiOpinion);
+        } else {
+            // Fallback to local calculation
+            displayResultsLocal(props);
+        }
+    } catch (error) {
+        console.log('Pacman unavailable, using local calculation:', error.message);
+        displayResultsLocal(props);
+    }
+}
+
+function displayResultsWithAI(props, aiOpinion) {
+    // Find winner by price per person
+    const sorted = [...props].sort((a, b) => (a.price / a.sleeps) - (b.price / b.sleeps));
+    const winner = sorted[0];
+    
+    // Display verdict
+    document.getElementById('verdict-card').innerHTML = `
+        <div class="verdict-badge">🏆 AI RECOMMENDATION</div>
+        <h2>${winner.name}</h2>
+        <div class="winner-name">${winner.location}</div>
+        <div class="verdict-price">R${winner.price.toLocaleString()} / night</div>
+        <div class="verdict-rating">${'★'.repeat(Math.round(winner.rating))} ${winner.rating} · Sleeps ${winner.sleeps} · ${winner.rooms} bed${winner.rooms > 1 ? 's' : ''}</div>
+        <p class="verdict-reason">${aiOpinion.substring(0, 400)}</p>
+        <a href="#" class="verdict-cta" onclick="return false;">View This Listing →</a>
+        <p style="font-size:0.75rem;opacity:0.7;margin-top:1rem;">🤖 AI Analysis via Pacman · Qwen2.5:14b</p>
+    `;
+
+    buildComparisonTable(props, winner);
+    buildProsConsCards(props, winner);
+    
+    document.getElementById('output-section').classList.add('visible');
+    document.getElementById('output-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function displayResultsLocal(props) {
+    // Local fallback calculation
+    props.forEach(p => {
+        p.valueScore = (p.rating * 10) - (p.pricePerPerson / 100);
+    });
+
     const sorted = [...props].sort((a, b) => b.valueScore - a.valueScore);
     const winner = sorted[0];
-    const second = sorted[1];
-
-    // Build verdict
-    const priceDiff = winner.price - second.price;
-    const priceDiffText = priceDiff > 0 ? `R${Math.abs(priceDiff).toLocaleString()} more` : `R${Math.abs(priceDiff).toLocaleString()} less`;
-    const ratingDiff = (winner.rating - second.rating).toFixed(1);
-
-    let verdictText = '';
-    if (winner.sleeps > second.sleeps) {
-        verdictText = `${winner.name} wins because it sleeps ${winner.sleeps} guests for only ${priceDiffText} than ${second.name} (sleeps ${second.sleeps}), plus it has ${winner.facilityCount} facilities vs ${second.facilityCount}. Better value per person.`;
-    } else if (priceDiff < -200) {
-        verdictText = `${winner.name} is the clear winner — it's R${Math.abs(priceDiff).toLocaleString()} cheaper than ${second.name} while maintaining a ${winner.rating}★ rating. If you're watching your budget, this is your pick.`;
-    } else if (ratingDiff >= 0.2) {
-        verdictText = `${winner.name} takes the top spot with a ${winner.rating}★ rating — that's ${ratingDiff} stars higher than ${second.name}. For quality-conscious travellers, the higher rating justifies the ${priceDiffText} per night.`;
-    } else {
-        verdictText = `${winner.name} gives the best overall value. At R${winner.price.toLocaleString()}/night for ${winner.sleeps} guests, you get a ${winner.rating}★ experience with ${winner.facilityCount} facilities. ${second.name} costs ${priceDiffText} and has fewer perks.`;
-    }
-
-    // Add comparison for property 3 if it's the cheapest
-    const cheapest = [...props].sort((a, b) => a.price - b.price)[0];
-    if (cheapest.id !== winner.id && cheapest.price < winner.price * 0.85) {
-        verdictText += ` Note: ${cheapest.name} is the cheapest at R${cheapest.price.toLocaleString()}/night — if budget is your top priority, it's worth considering despite the slightly lower rating of ${cheapest.rating}★.`;
-    }
 
     document.getElementById('verdict-card').innerHTML = `
         <div class="verdict-badge">🏆 BEST VALUE RECOMMENDATION</div>
         <h2>${winner.name}</h2>
         <div class="winner-name">${winner.location}</div>
-        <div class="verdict-price">${winner.price.toLocaleString()} / night</div>
+        <div class="verdict-price">R${winner.price.toLocaleString()} / night</div>
         <div class="verdict-rating">${'★'.repeat(Math.round(winner.rating))} ${winner.rating} · Sleeps ${winner.sleeps} · ${winner.rooms} bed${winner.rooms > 1 ? 's' : ''}</div>
-        <p class="verdict-reason">${verdictText}</p>
+        <p class="verdict-reason">${winner.name} gives the best overall value at R${winner.price.toLocaleString()}/night for ${winner.sleeps} guests — that's R${winner.pricePerPerson.toFixed(0)} per person with a ${winner.rating}★ rating and ${winner.facilityCount} facilities.</p>
         <a href="#" class="verdict-cta" onclick="return false;">View This Listing →</a>
     `;
 
-    // Build comparison table
+    buildComparisonTable(props, winner);
+    buildProsConsCards(props, winner);
+    
+    document.getElementById('output-section').classList.add('visible');
+    document.getElementById('output-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function buildComparisonTable(props, winner) {
     const tbody = document.getElementById('compare-tbody');
     const rows = [
         ['Price / Night', 'price', 'R{price}/night', null],
@@ -772,37 +844,34 @@ function compareProperties() {
         ['Bedrooms', 'rooms', '{rooms} bed{rooms>1?"s":""}', null],
         ['Location', 'location', '{location}', null],
         ['Facilities', 'facilityCount', '{facilityCount} facilities listed', null],
-        ['Value Score', 'valueScore', '{valueScore.toFixed(1)}/10', 'higher is better'],
-        ['Price / Person', 'pricePerPerson', 'R{pricePerPerson.toFixed(0)}/person', 'lower is better'],
+        ['Price / Person', 'pricePerPerson', 'R{pricePerPerson}/person', 'lower is better'],
     ];
 
     let tableHTML = '';
     rows.forEach(([label, key, format, note]) => {
         const vals = props.map(p => {
-            let val = p[key];
             let display = format.replace(/\{(\w+)\}/g, (_, k) => {
                 if (k === 'price') return `R${p.price.toLocaleString()}`;
                 if (k === 'pricePerPerson') return `R${p.pricePerPerson.toFixed(0)}`;
                 if (k === 'rooms') return `${p.rooms} bed${p.rooms > 1 ? 's' : ''}`;
-                return val;
+                if (k === 'rating') return `${p.rating} ★`;
+                return p[k];
             });
-            const isWinner = p.id === winner.id && (key === 'valueScore' || key === 'pricePerPerson' && p.pricePerPerson <= winner.pricePerPerson);
+            const isWinner = p.id === winner.id && (key === 'pricePerPerson');
             return `<td class="${isWinner ? 'winner-cell' : ''}">${display}</td>`;
         }).join('');
-
-        tableHTML += `<tr class="${key === 'valueScore' ? 'winner-row' : ''}">
+        tableHTML += `<tr>
             <td>${label}${note ? `<br><small style="color:#94a3b8;font-size:0.75rem;">${note}</small>` : ''}</td>
             ${vals}
         </tr>`;
     });
     tbody.innerHTML = tableHTML;
-
-    // Update table headers
     props.forEach((p, i) => {
         document.getElementById(`th-p${i+1}`).textContent = p.name;
     });
+}
 
-    // Build pros/cons cards
+function buildProsConsCards(props, winner) {
     const prosConsHTML = props.map(p => {
         const isWinner = p.id === winner.id;
         const pros = [];
@@ -811,24 +880,18 @@ function compareProperties() {
         if (p.rating >= 4.7) pros.push('Excellent rating (4.7+)');
         if (p.price < 1500) pros.push('Budget-friendly price');
         if (p.facilityCount >= 5) pros.push(`${p.facilityCount} facilities included`);
-        if (p.location.includes('walk') || p.location.includes('min')) pros.push('Close to beach');
         if (p.sleeps >= 4) pros.push(`Sleeps ${p.sleeps} guests`);
         if (p.pricePerPerson < 500) pros.push('Great price per person');
+        if (p.location.includes('walk')) pros.push('Walking distance to beach');
 
-        if (p.rating < 4.6) cons.push('Rating below 4.6 — check reviews');
+        if (p.rating < 4.6) cons.push('Rating below 4.6 — check reviews first');
         if (p.price > 2000) cons.push('Premium price point');
         if (p.facilityCount < 4) cons.push('Fewer facilities than competitors');
         if (p.sleeps <= 2) cons.push('Only suitable for couples');
-        if (p.pricePerPerson > 600) cons.push('Higher price per person');
 
-        let insight = '';
-        if (isWinner) {
-            insight = `This is our best value pick. ${p.name} delivers the right balance of ${p.rating}★ quality at R${p.price.toLocaleString()}/night — ${p.sleeps} guests get R${p.pricePerPerson.toFixed(0)} per person, which is excellent for this area.`;
-        } else if (p.id === cheapest.id) {
-            insight = `Best for budget travellers. At R${p.price.toLocaleString()}/night this is the cheapest option. Rating of ${p.rating}★ is solid for the price. Good for quick getaways where you just need a clean, comfortable place to sleep.`;
-        } else {
-            insight = `A solid mid-range choice. At R${p.price.toLocaleString()}/night with ${p.rating}★ rating, it's competitively priced. Best for travellers who want a specific facility or location that the others don't offer.`;
-        }
+        let insight = isWinner 
+            ? `Best value pick: R${p.pricePerPerson.toFixed(0)}/person with ${p.rating}★ quality and ${p.facilityCount} facilities.`
+            : `At R${p.pricePerPerson.toFixed(0)}/person this is ${p.price > winner.price ? 'priced higher' : 'competitively priced'} for what it offers.`;
 
         return `
             <div class="pros-cons-card ${isWinner ? 'winner' : ''}">
@@ -853,10 +916,6 @@ function compareProperties() {
     }).join('');
 
     document.getElementById('pros-cons-grid').innerHTML = prosConsHTML;
-
-    // Show output
-    document.getElementById('output-section').classList.add('visible');
-    document.getElementById('output-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 </script>
 

@@ -144,7 +144,9 @@
             transition: all 0.3s;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .checkbox-item:hover {
@@ -156,31 +158,13 @@
             background: rgba(0,212,255,0.2);
         }
         
-        .checkbox-item input {
-            display: none;
-        }
-        
-        .checkbox-item .checkmark {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-        
-        .checkbox-item.selected .checkmark {
-            background: #00d4ff;
-            border-color: #00d4ff;
-        }
-        
-        .checkbox-item.selected .checkmark::after {
-            content: '✓';
-            color: #1a1a2e;
-            font-weight: bold;
-            font-size: 0.9em;
+        .checkbox-item input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            margin: 0;
+            cursor: pointer;
+            accent-color: #00d4ff;
+            flex-shrink: 0;
         }
         
         .btn-row {

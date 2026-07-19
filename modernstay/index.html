@@ -3,7 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ModernStay - Zimbali Luxury Apartment</title>
+    <title>ModernStay - Zimbali Luxury Apartment | 50 Yellowwood Drive, Ballito</title>
+    <meta name="description" content="Luxurious 2-bedroom en-suite apartment in Zimbali Coastal Resort, Ballito. Inverter, pool access, beach nearby, 24-hour security. From R3000/night. Book via WhatsApp or Airbnb.">
+    <link rel="canonical" href="https://www.qail.co.za/modernstay/">
+    <!-- Open Graph -->
+    <meta property="og:title" content="ModernStay - Zimbali Luxury Apartment">
+    <meta property="og:description" content="Luxurious 2-bedroom en-suite apartment in Zimbali Coastal Resort, Ballito. From R3000/night. Inverter, pool, beach access, 24-hour security.">
+    <meta property="og:image" content="https://www.qail.co.za/modernstay/images/01.jpg">
+    <meta property="og:url" content="https://www.qail.co.za/modernstay/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_ZA">
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ModernStay - Zimbali Luxury Apartment">
+    <meta name="twitter:description" content="Luxurious 2-bedroom apartment in Zimbali Coastal Resort, Ballito. From R3000/night.">
+    <meta name="twitter:image" content="https://www.qail.co.za/modernstay/images/01.jpg">
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VacationRental",
+      "name": "ModernStay - Zimbali Luxury Apartment",
+      "description": "Luxurious 2-bedroom en-suite apartment in Zimbali Coastal Resort, Ballito. Moments from the beach with pool access, inverter backup, and 24-hour security.",
+      "image": "https://www.qail.co.za/modernstay/images/01.jpg",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "50 Yellowwood Drive",
+        "addressLocality": "Ballito",
+        "addressRegion": "KwaZulu-Natal",
+        "postalCode": "4424",
+        "addressCountry": "ZA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -29.54891,
+        "longitude": 31.19081
+      },
+      "bedDetails": [
+        {"@type": "BedDetails", "numberOfBeds": 2, "bedType": "Queen"}
+      ],
+      "numberOfRooms": 2,
+      "occupancy": {"@type": "QuantitativeValue", "maxValue": 4},
+      "priceRange": "R3000-R5000",
+      "amenityFeature": [
+        {"@type": "LocationFeatureSpecification", "name": "Pool", "value": true},
+        {"@type": "LocationFeatureSpecification", "name": "Beach Access", "value": true},
+        {"@type": "LocationFeatureSpecification", "name": "24-Hour Security", "value": true},
+        {"@type": "LocationFeatureSpecification", "name": "Inverter", "value": true},
+        {"@type": "LocationFeatureSpecification", "name": "WiFi", "value": true},
+        {"@type": "LocationFeatureSpecification", "name": "Gas BBQ", "value": true},
+        {"@type": "LocationFeatureSpecification", "name": "Self Check-in", "value": true}
+      ],
+      "url": "https://www.qail.co.za/modernstay/",
+      "bookingAgent": {"@type": "Organization", "name": "QAIL"},
+      "containedInPlace": {"@type": "Place", "name": "Zimbali Coastal Resort"}
+    }
+    </script>
+    <!-- Additional JSON-LD: WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ModernStay",
+      "url": "https://www.qail.co.za/modernstay/",
+      "potentialAction": {
+        "@type": "ReserveAction",
+        "target": {"@type": "EntryPoint", "urlTemplate": "https://wa.me/27600000000"},
+        "result": {"@type": "Reservation", "name": "Book ModernStay"}
+      }
+    }
+    </script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -459,7 +528,7 @@
                         🛁 2 bathrooms<br>
                         ⚡ Inverter for load shedding
                     </p>
-                    <div class="room-price">R 4,557 <span>/ night</span></div>
+                    <div class="room-price">From R3,000 <span>/ night</span></div>
                 </div>
             </div>
         </div>
@@ -481,7 +550,7 @@
         <div class="host-section">
             <div class="superhost-badge">SUPERHOST</div>
             <h3 class="host-name">Hosted by Johannes</h3>
-            <p style="color: #a0a0a0;">Zimbali Coastal Resort, Ballito</p>
+            <p style="color: #a0a0a0;">50 Yellowwood Drive, Zimbali Coastal Resort, Ballito</p>
             <div class="host-stats">
                 <div class="host-stat">
                     <div class="host-stat-value">100%</div>
@@ -560,8 +629,9 @@
     </div>
     
     <footer>
-        <p>ModernStay Zimbali • Ballito, KwaZulu-Natal, South Africa</p>
-        <p>📧 info@modernstay.co.za • 📱 WhatsApp available</p>
+        <p><strong>ModernStay Zimbali</strong></p>
+        <p>50 Yellowwood Drive, Zimbali Coastal Resort, Ballito, KwaZulu-Natal, South Africa</p>
+        <p>📱 WhatsApp: +27 60 000 0000</p>
     </footer>
     
     <a href="https://wa.me/27000000000" class="whatsapp-float">💬</a>
@@ -623,7 +693,7 @@
     });
 
     // --- BOOKING WIDGET ---
-    const PRICE_PER_NIGHT = 4557;
+    const PRICE_PER_NIGHT = 3000;
     const ICAL_URL = 'https://www.airbnb.co.za/calendar/ical/1266811295906668461.ics?t=c28eee71ddef4016a2c59e17565e64bb';
     const WA_NUMBER = '27600000000';
 

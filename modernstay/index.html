@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ModernStay - Zimbali Luxury Apartment | 50 Yellowwood Drive, Ballito</title>
-    <meta name="description" content="Luxurious 2-bedroom en-suite apartment in Zimbali Coastal Resort, Ballito. Inverter, pool access, beach nearby, 24-hour security. From R3000/night. Book via WhatsApp or Airbnb.">
+    <meta name="description" content="Popular 2-Bedroom En-Suite Retreat in Zimbali Coastal Resort. Inverter backup, private patio with gas BBQ, fully equipped kitchen. 4 guests, 2 queen beds, 2 bathrooms. From R3000/night.">
     <link rel="canonical" href="https://www.qail.co.za/modernstay/">
     <!-- Open Graph -->
     <meta property="og:title" content="ModernStay - Zimbali Luxury Apartment">
-    <meta property="og:description" content="Luxurious 2-bedroom en-suite apartment in Zimbali Coastal Resort, Ballito. From R3000/night. Inverter, pool, beach access, 24-hour security.">
+    <meta property="og:description" content="Popular 2-Bedroom En-Suite Retreat in Zimbali Coastal Resort. Moments from the beach with inverter backup, gas BBQ patio, and 24-hour security. From R3000/night.">
     <meta property="og:image" content="https://www.qail.co.za/modernstay/images/01.jpg">
     <meta property="og:url" content="https://www.qail.co.za/modernstay/">
     <meta property="og:type" content="website">
@@ -16,7 +16,7 @@
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ModernStay - Zimbali Luxury Apartment">
-    <meta name="twitter:description" content="Luxurious 2-bedroom apartment in Zimbali Coastal Resort, Ballito. From R3000/night.">
+    <meta name="twitter:description" content="Popular 2-Bedroom En-Suite Retreat in Zimbali Coastal Resort, Ballito. Inverter, gas BBQ, beach access. From R3000/night.">
     <meta name="twitter:image" content="https://www.qail.co.za/modernstay/images/01.jpg">
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -24,7 +24,7 @@
       "@context": "https://schema.org",
       "@type": "VacationRental",
       "name": "ModernStay - Zimbali Luxury Apartment",
-      "description": "Luxurious 2-bedroom en-suite apartment in Zimbali Coastal Resort, Ballito. Moments from the beach with pool access, inverter backup, and 24-hour security.",
+      "description": "Popular 2-Bedroom En-Suite Retreat in Zimbali Coastal Resort. Located in the prestigious Zimbali Coastal Resort, this sought-after unit blends luxury, nature, and sustainability. Moments from the beach with inverter backup, private patio with gas BBQ, fully equipped kitchen, and 24-hour security.",
       "image": "https://www.qail.co.za/modernstay/images/01.jpg",
       "address": {
         "@type": "PostalAddress",
@@ -135,6 +135,67 @@
             transition: transform 0.2s;
         }
         .cta-btn:hover { transform: scale(1.05); }
+        .top-nav {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 18px 30px;
+            z-index: 10;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(10px);
+        }
+        .top-nav a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.95em;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .top-nav a:hover { color: #00d4ff; }
+        .intro-section {
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto 60px;
+            padding: 40px 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .intro-section p {
+            color: #b0b0b0;
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        .intro-section p:last-child { margin-bottom: 0; color: #00d4ff; font-weight: 500; }
+        .hero-sub {
+            font-size: 1.05em !important;
+            color: #00d4ff !important;
+            margin-bottom: 25px !important;
+            opacity: 0.9;
+        }
+        .why-section { margin-bottom: 60px; }
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+        .why-card {
+            background: rgba(255,255,255,0.04);
+            border-radius: 16px;
+            padding: 28px 24px;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .why-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0,212,255,0.3);
+        }
+        .why-icon { font-size: 2.2em; margin-bottom: 14px; }
+        .why-card h4 { font-size: 1.1em; margin-bottom: 10px; color: #fff; }
+        .why-card p { color: #909090; font-size: 0.93em; line-height: 1.7; }
         .container { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
         .section-title { font-size: 2em; margin-bottom: 40px; text-align: center; }
         .rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px; }
@@ -172,6 +233,39 @@
             display: flex;
             align-items: center;
             gap: 8px;
+        }
+        .description-section {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 60px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .description-section h3 {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            color: #00d4ff;
+        }
+        .description-section p {
+            color: #c0c0c0;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        .description-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .description-section ul li {
+            color: #b0b0b0;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .description-section ul li strong {
+            color: #fff;
+            min-width: 140px;
         }
         .host-section {
             background: rgba(0,212,255,0.05);
@@ -505,18 +599,30 @@
     </style>
 </head>
 <body>
+    <nav class="top-nav">
+        <a href="https://www.qail.co.za/modernstay/">ModernStay</a>
+        <a href="https://www.airbnb.co.uk/rooms/1266811295906668461" target="_blank">Airbnb Listing</a>
+    </nav>
+
     <section class="hero">
         <div class="hero-bg"></div>
         <div class="hero-content">
-            <div class="badge">⭐ Guest Favorite</div>
-            <h1>ModernStay Zimbali</h1>
-            <p>Luxury Self-Catering Apartment in Ballito</p>
-            <a href="https://www.airbnb.co.uk/rooms/1266811295906668461" target="_blank" class="cta-btn">🏠 Check Availability on Airbnb</a>
+            <div class="badge">⭐ Guest Favorite — 4.88 ★ (42 reviews)</div>
+            <h1>Your Home in Zimbali</h1>
+            <p>A beloved 2-bedroom retreat where families, friends & couples create lasting memories</p>
+            <p class="hero-sub">Beach moments away · Inverter backup · Gas BBQ sunsets</p>
+            <a href="https://www.airbnb.co.uk/rooms/1266811295906668461" target="_blank" class="cta-btn">🏠 View on Airbnb</a>
         </div>
     </section>
     
+    <main>
     <div class="container">
-        <h2 class="section-title">🏠 Our Room</h2>
+        <div class="intro-section">
+            <p>Located in the prestigious <strong>Zimbali Coastal Resort</strong>, our 2-bedroom en-suite apartment is a Tourist Favorite — loved by international guests and locals alike. We blend <strong>luxury, nature and sustainability</strong> in a safe, serene setting just moments from the beach.</p>
+            <p>Whether you're here to unwind, explore, or simply breathe — you'll feel right at home from the moment you arrive.</p>
+        </div>
+
+        <h2 class="section-title">🏠 The Space</h2>
         <div class="rooms">
             <div class="room-card">
                 <div class="room-image">🛋️</div>
@@ -545,6 +651,48 @@
             <div class="amenity">🏖️ Beach Access Nearby</div>
             <div class="amenity">🔒 24hr Security</div>
             <div class="amenity">💼 Dedicated Workspace</div>
+            <div class="amenity">🍖 Gas BBQ</div>
+        </div>
+
+        <div class="why-section">
+            <h2 class="section-title">💙 Why Guests Love It Here</h2>
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-icon">🛏️</div>
+                    <h4>Space & Privacy</h4>
+                    <p>Each bedroom has its own private en-suite bathroom — no queuing, no compromise. Both rooms have queen-sized beds for a truly restful sleep.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">⚡</div>
+                    <h4>Load Shedding? Never heard of it.</h4>
+                    <p>Our inverter and battery backup keeps the lights on, your devices charged, and the fridge running — no matter what Eskom throws at us.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">🌿</div>
+                    <h4>Sunset BBQs & Patio Living</h4>
+                    <p>The private patio with gas BBQ and dining area is where guests spend their evenings — the best views in Zimbali, right at your doorstep.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">🔒</div>
+                    <h4>Safe & Secure</h4>
+                    <p>Zimbali's 24-hour security means you can relax completely. Strict gate control, ID checks at every entry — paradise without the worry.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="description-section">
+            <h3>🏠 About This Space</h3>
+            <p>Located in the prestigious <strong>Zimbali Coastal Resort</strong>, this sought-after 2-bedroom en-suite unit blends luxury, nature, and sustainability. Just moments from the beach, it's a favorite among international tourists seeking a safe, serene getaway. Enjoy modern comforts, scenic views, and 24-hour security in this eco-conscious paradise, perfect for families, friends, or couples.</p>
+            <p><strong>Spacious 2-Bedroom En-Suite Unit with Inverter & Battery Backup</strong></p>
+            <p>Welcome to our comfortable and well-appointed unit, designed for both relaxation and convenience. With its spacious layout and modern amenities, your stay will be hassle-free and enjoyable.</p>
+            <ul>
+                <li><strong>🛏️ Comfortable Living:</strong> Each bedroom has its own private en-suite bathroom with a queen-sized bed for a restful night's sleep.</li>
+                <li><strong>⚡ Power Backup:</strong> Inverter and battery backup — never worry about load shedding.</li>
+                <li><strong>🌿 Outdoor Enjoyment:</strong> Relax on the lovely patio with a gas BBQ grill and dining area — perfect for alfresco meals.</li>
+                <li><strong>🍳 Fully Equipped Kitchen:</strong> Cook to your heart's content in the fully equipped kitchen.</li>
+                <li><strong>🔑 Self Check-in:</strong> Keybox code sent after booking confirmation.</li>
+            </ul>
+            <p style="color: #00d4ff; margin-top: 20px;">📍 Zimbali Coastal Resort • 🚗 Golf cart available (R400/day) • 🔒 Strict 24hr security</p>
         </div>
         
         <div class="host-section">
@@ -627,6 +775,7 @@
             </div>
         </div>
     </div>
+    </main>
     
     <footer>
         <p><strong>ModernStay Zimbali</strong></p>

@@ -17,6 +17,7 @@
     { "source": "/api/logs", "destination": "/api/logs" },
     { "source": "/api/payfast-checkout", "destination": "/api/payfast-checkout" },
     { "source": "/api/payfast-notify", "destination": "/api/payfast-notify" },
-    { "source": "/api/report-download", "destination": "/api/report-download" }
+    { "source": "/api/report-download", "destination": "/api/report-download" },
+    { "source": "/api/contact-submit", "destination": "/api/contact-submit" }
   ]
 }

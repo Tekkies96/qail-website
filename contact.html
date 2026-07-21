@@ -274,8 +274,13 @@ async function redirectToCheckout(priceId) {
     // const result = await stripe.redirectToCheckout({sessionId: session.id});
 }
 
-document.getElementById('contact-form').addEventListener('submit', function(e) {
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
     e.preventDefault();
+    
+    const btn = document.querySelector('button[type="submit"]');
+    const originalText = btn.textContent;
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
     
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
@@ -285,10 +290,26 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
     const cellphone = document.getElementById('cellphone').value;
     const fullPhone = countryCode + ' ' + cellphone;
     
-    document.getElementById('contact-form').style.display = 'none';
-    document.getElementById('form-success').style.display = 'block';
-    
-    console.log('Contact form submitted:', { name, email, subject, message });
+    try {
+        const response = await fetch('/api/contact-submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, cellphone: fullPhone, subject, message })
+        });
+        
+        if (response.ok) {
+            document.getElementById('contact-form').style.display = 'none';
+            document.getElementById('form-success').style.display = 'block';
+        } else {
+            alert('Error submitting form. Please try again or contact us directly.');
+            btn.textContent = originalText;
+            btn.disabled = false;
+        }
+    } catch(err) {
+        alert('Error: ' + err.message);
+        btn.textContent = originalText;
+        btn.disabled = false;
+    }
 });
 </script>
 </body>

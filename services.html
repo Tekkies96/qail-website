@@ -97,6 +97,50 @@
             </div>
         </div>
     </section>
+
+    <!-- PayFast Direct Payment Section -->
+    <section style="padding: 3rem 2rem; background: var(--secondary);">
+        <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+            <h2 style="font-size: 2rem; margin-bottom: 1rem;">Make a Payment</h2>
+            <p style="margin-bottom: 2rem; color: var(--text-light);">Pay securely via PayFast. Enter your amount below.</p>
+            
+            <script type="text/javascript">
+            function customQuantitiesPayFast (formReference) {
+                formReference['amount'].value = formReference['amount'].value * formReference['custom_quantity'].value;
+                return true;
+            }
+            </script>
+            <script type="text/javascript">
+            function actionPayFastJavascript (formReference) {
+                let shippingValidOrOff = typeof shippingValid !== 'undefined' ? shippingValid : true;
+                let customValid = shippingValidOrOff ? customQuantitiesPayFast(formReference) : false;
+                if (typeof shippingValid !== 'undefined' && !shippingValid) {
+                    return false;
+                }
+                if (typeof customValid !== 'undefined' && !customValid) {
+                    return false;
+                }
+                return true;
+            }
+            </script>
+            <form onsubmit="return actionPayFastJavascript(this);" name="PayFastPayNowForm" action="https://payment.payfast.io/eng/process" method="post" style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <input required type="hidden" name="cmd" value="_paynow">
+                <input required type="hidden" name="receiver" pattern="[0-9]" value="36200669">
+                <input type="hidden" name="return_url" value="https://www.qail.co.za">
+                <input type="hidden" name="cancel_url" value="https://www.qail.co.za">
+                <input type="hidden" name="notify_url" value="https://www.qail.co.za">
+                <input required type="hidden" name="amount" value="500">
+                <table style="width: 100%; margin-bottom: 1rem;">
+                    <tr>
+                        <td style="padding: 0.75rem 0; text-align: left;"><label for="custom_quantity">Amount (R):</label></td>
+                        <td style="padding: 0.75rem 0; text-align: right;"><input required id="custom_quantity" type="number" name="custom_quantity" value="1" min="1" style="width: 120px; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; text-align: right;"></td>
+                    </tr>
+                </table>
+                <input required type="hidden" name="item_name" maxlength="255" value="QAIL Service Payment">
+                <input type="image" src="https://my.payfast.io/images/buttons/BuyNow/Primary-Large-BuyNow.png" alt="Buy Now" title="Buy Now with PayFast" style="cursor: pointer;">
+            </form>
+        </div>
+    </section>
 </main>
 
 <footer>

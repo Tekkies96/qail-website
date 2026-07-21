@@ -125,7 +125,7 @@
             </script>
             <form onsubmit="return actionPayFastJavascript(this);" name="PayFastPayNowForm" action="https://payment.payfast.io/eng/process" method="post" style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
                 <input required type="hidden" name="cmd" value="_paynow">
-                <input required type="hidden" name="receiver" pattern="[0-9]" value="36200669">
+                <input required type="hidden" name="merchant_id" value="36200669">
                 <input type="hidden" name="return_url" value="https://www.qail.co.za">
                 <input type="hidden" name="cancel_url" value="https://www.qail.co.za">
                 <input type="hidden" name="notify_url" value="https://www.qail.co.za">

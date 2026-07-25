@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="af">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rivierzicht — Stilbaai-Wes | Garden Route Selfsorg</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #FAF7F2;
+      --sand: #E8DFD0;
+      --ocean: #4A7C8A;
+      --ocean-dark: #2D5A63;
+      --terracotta: #C4714A;
+      --charcoal: #2C2C2C;
+      --warm-gray: #6B6460;
+      --white: #FFFFFF;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      transition: all 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(250,247,242,0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 3rem;
+      box-shadow: 0 2px 30px rgba(0,0,0,0.06);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--terracotta); }
+    .nav-links { display: flex; gap: 2.5rem; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--terracotta); }
+    .nav-cta {
+      background: var(--terracotta);
+      color: white !important;
+      padding: 0.6rem 1.5rem;
+      border-radius: 2px;
+      letter-spacing: 0.05em;
+    }
+    .nav-cta:hover { background: #b5623d; }
+
+    /* HERO */
+    .hero {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      background: url('photo1.jpg') center/cover no-repeat;
+      filter: brightness(0.7);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.4) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: white;
+      max-width: 800px;
+      padding: 0 2rem;
+    }
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 0.4rem 1.2rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 1s ease 0.2s both;
+    }
+    .hero h1 {
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 300;
+      line-height: 1;
+      margin-bottom: 1rem;
+      animation: fadeUp 1s ease 0.4s both;
+    }
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 300;
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      opacity: 0.9;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 1s ease 0.6s both;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 1s ease 0.8s both;
+    }
+    .btn-primary {
+      background: var(--terracotta);
+      color: white;
+      padding: 0.9rem 2.2rem;
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: #b5623d; transform: translateY(-2px); }
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.6);
+      color: white;
+      padding: 0.9rem 2.2rem;
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+    /* QUICK FACTS */
+    .quick-facts {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: var(--white);
+      border-bottom: 1px solid var(--sand);
+    }
+    .fact {
+      padding: 2.5rem 2rem;
+      text-align: center;
+      border-right: 1px solid var(--sand);
+    }
+    .fact:last-child { border-right: none; }
+    .fact-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--terracotta);
+      line-height: 1;
+    }
+    .fact-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      margin-top: 0.5rem;
+    }
+
+    /* SECTIONS */
+    .section { padding: 7rem 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 300;
+      color: var(--charcoal);
+      line-height: 1.1;
+    }
+    .section-title em {
+      font-style: italic;
+      color: var(--ocean);
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .about-text p {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--warm-gray);
+      margin-bottom: 1.5rem;
+    }
+    .about-text p:first-of-type::first-letter {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      font-weight: 300;
+      float: left;
+      line-height: 0.8;
+      margin-right: 0.5rem;
+      margin-top: 0.3rem;
+      color: var(--terracotta);
+    }
+    .about-img {
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    }
+    .about-img img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      display: block;
+    }
+    .host-card {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: var(--sand);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .host-avatar {
+      width: 60px;
+      height: 60px;
+      background: var(--ocean);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+    }
+    .host-info h4 {
+      font-size: 1.2rem;
+      font-weight: 400;
+    }
+    .host-info p {
+      font-size: 0.8rem;
+      color: var(--warm-gray);
+      margin-top: 0.2rem;
+    }
+
+    /* GALLERY */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 300px 300px;
+      gap: 1rem;
+    }
+    .gallery-item {
+      overflow: hidden;
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-item:first-child {
+      grid-row: span 2;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.05); }
+
+    /* AMENITIES */
+    .amenities-bg { background: var(--white); }
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+    .amenity {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    .amenity-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .amenity h4 {
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 0.3rem;
+    }
+    .amenity p {
+      font-size: 0.8rem;
+      color: var(--warm-gray);
+    }
+
+    /* ROOMS */
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .room-card {
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--white);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .room-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+    }
+    .room-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    .room-body { padding: 1.5rem; }
+    .room-body h4 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    .room-body p {
+      font-size: 0.85rem;
+      color: var(--warm-gray);
+      line-height: 1.6;
+    }
+
+    /* REVIEWS */
+    .reviews-bg { background: var(--ocean-dark); color: white; }
+    .reviews-bg .section-label { color: var(--sand); }
+    .reviews-bg .section-title { color: white; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    .review-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      padding: 2rem;
+    }
+    .review-stars { color: #F5C842; font-size: 0.9rem; margin-bottom: 1rem; }
+    .review-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      line-height: 1.7;
+      opacity: 0.9;
+      margin-bottom: 1.5rem;
+    }
+    .review-author {
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      opacity: 0.6;
+    }
+    .review-score {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .review-big {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 6rem;
+      font-weight: 300;
+      line-height: 1;
+    }
+    .review-big-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+
+    /* LOCATION */
+    .location-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: 500px;
+    }
+    .location-map {
+      background: url('photo1.jpg') center/cover;
+      position: relative;
+    }
+    .location-map::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(74,124,138,0.3);
+    }
+    .location-map::after {
+      content: '📍';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+    }
+    .location-info {
+      background: var(--charcoal);
+      color: white;
+      padding: 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .location-info h3 {
+      font-size: 2.5rem;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+    .location-info p {
+      font-size: 1rem;
+      line-height: 1.8;
+      opacity: 0.8;
+      margin-bottom: 1rem;
+    }
+    .location-tag {
+      display: inline-block;
+      background: var(--terracotta);
+      padding: 0.4rem 1rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      margin-top: 1rem;
+    }
+
+    /* BOOKING */
+    .booking-bg {
+      background: var(--cream);
+      text-align: center;
+    }
+    .price-display {
+      margin: 2rem 0;
+    }
+    .price-main {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      font-weight: 300;
+      color: var(--charcoal);
+      line-height: 1;
+    }
+    .price-main span {
+      font-size: 1.5rem;
+      opacity: 0.6;
+    }
+    .price-sub {
+      font-size: 0.85rem;
+      color: var(--warm-gray);
+      margin-top: 0.5rem;
+    }
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--charcoal);
+      color: white;
+      padding: 4rem 0 2rem;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .footer-logo span { color: var(--terracotta); }
+    footer p {
+      font-size: 0.8rem;
+      opacity: 0.4;
+      margin-top: 0.5rem;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .quick-facts { grid-template-columns: repeat(2, 1fr); }
+      .fact { border-right: none; border-bottom: 1px solid var(--sand); }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .gallery-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+      .gallery-item:first-child { grid-row: span 1; }
+      .gallery-item img { height: 250px; }
+      .amenities-grid { grid-template-columns: repeat(2, 1fr); }
+      .rooms-grid { grid-template-columns: 1fr; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .location-grid { grid-template-columns: 1fr; }
+      .location-info { padding: 3rem 2rem; }
+      .about-img img { height: 300px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">Rivier<span>zicht</span></a>
+    <div class="nav-links">
+      <a href="#about">Die Plek</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#amenities">Geriewe</a>
+      <a href="#location">Ligging</a>
+      <a href="#book" class="nav-cta">Bespreke</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-img"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Garden Route — Stilbaai-Wes</div>
+      <h1>Die see roep.<br><em>Jou antwoord is hier.</em></h1>
+      <p class="hero-sub">Rivierzicht — Selfsorg vir 5, aan die brander se kant</p>
+      <div class="hero-actions">
+        <a href="#book" class="btn-primary">Bespreke</a>
+        <a href="#gallery" class="btn-outline">Sien Foto's</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK FACTS -->
+  <div class="quick-facts">
+    <div class="fact">
+      <div class="fact-number">5</div>
+      <div class="fact-label">Gaste</div>
+    </div>
+    <div class="fact">
+      <div class="fact-number">2</div>
+      <div class="fact-label">Slaapkamers</div>
+    </div>
+    <div class="fact">
+      <div class="fact-number">3</div>
+      <div class="fact-label">Beddens</div>
+    </div>
+    <div class="fact">
+      <div class="fact-number">4.9</div>
+      <div class="fact-label">Gradering</div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <div class="section-label">Oor Die Plek</div>
+          <h2 class="section-title" style="margin-bottom:2rem;">Waar die water <em>ontmoet</em> die lug</h2>
+          <p>Geleë in die hartjie van Stilbaai-Wes, is Rivierzicht die perfekte wegkruipplek vir gesinne of 'n groep vriende. Hier is elke oomblik 'n geleentheid om te ontspan — die lagune is 'n klipgooi ver, die strand selfs nader, en die see se musiek begin waar die sand ophou.</p>
+          <p>Ronell, jou gasheer, het die plek met sorg ingerig sodat jy jou tyd kan deurbring om te lewe, nie om te bekommer oor die small stuff nie. Met gratis WiFi, DStv, en selfs loadshedding-voorsiening, is jy altyd verbind — tot die rustige Garden Route wat jou wag.</p>
+          <p>Die Braai-area is die hart van die huis. As die son ondergaan,yster die gesin bymekaar met 'n glas wyn en die geur van houtskool in die aandlug.</p>
+          <div class="host-card">
+            <div class="host-avatar">R</div>
+            <div class="host-info">
+              <h4>Ronell</h4>
+              <p>Jou gasheer · 5 jaar op Lekkeslaap · 22 geverifieerde resensies</p>
+            </div>
+          </div>
+        </div>
+        <div class="about-img reveal">
+          <img src="photo-kitchen.jpg" alt="Rivierzicht kombuis" onerror="this.style.display='none'">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="section" id="gallery" style="background: var(--sand);">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Foto's</div>
+        <h2 class="section-title">Druk die album</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item reveal"><img src="photo-pool.jpg" alt="Swembad" onerror="this.parentElement.style.display='none'"></div>
+        <div class="gallery-item reveal"><img src="photo-living.jpg" alt="Woonarea" onerror="this.parentElement.style.display='none'"></div>
+        <div class="gallery-item reveal"><img src="photo-fireplace.jpg" alt="Kaggel" onerror="this.parentElement.style.display='none'"></div>
+        <div class="gallery-item reveal"><img src="photo-bedroom.jpg" alt="Slaapkamer" onerror="this.parentElement.style.display='none'"></div>
+        <div class="gallery-item reveal"><img src="photo-bathroom.jpg" alt="Badkamer" onerror="this.parentElement.style.display='none'"></div>
+        <div class="gallery-item reveal"><img src="photo-patio.jpg" alt="Patio" onerror="this.parentElement.style.display='none'"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AMENITIES -->
+  <section class="section amenities-bg" id="amenities">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Wat jy kry</div>
+        <h2 class="section-title">Alle geriewe <em>ingesluit</em></h2>
+      </div>
+      <div class="amenities-grid">
+        <div class="amenity reveal">
+          <div class="amenity-icon">📶</div>
+          <h4>Gratis WiFi</h4>
+          <p>Blou aanlyn terwyl jy die uitsig geniet</p>
+        </div>
+        <div class="amenity reveal">
+          <div class="amenity-icon">📺</div>
+          <h4>DStv</h4>
+          <p>Vol decoder, alle kanale</p>
+        </div>
+        <div class="amenity reveal">
+          <div class="amenity-icon">🍖</div>
+          <h4>Braai-area</h4>
+          <p>Ingeboude braai met eetarea</p>
+        </div>
+        <div class="amenity reveal">
+          <div class="amenity-icon">⚡</div>
+          <h4>Loadshedding</h4>
+          <p>Geen onderbreking — back-up voorsien</p>
+        </div>
+        <div class="amenity reveal">
+          <div class="amenity-icon">🚗</div>
+          <h4>Parkering</h4>
+          <p>Veilige on-site parking, gratis</p>
+        </div>
+        <div class="amenity reveal">
+          <div class="amenity-icon">🐾</div>
+          <h4>Honde</h4>
+          <p>Volgens afspraak welkom</p>
+        </div>
+        <div class="amenity reveal">
+          <div class="amenity-icon">🧺</div>
+          <h4>Vol kombuis</h4>
+          <p>Stoof, oond, yskas, mikrogolf</p>
+        </div>
+        <div class="amenity reveal">
+          <div class="amenity-icon">🌊</div>
+          <h4>Uitsig</h4>
+          <p>Mooie uitsig oor die area</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROOMS -->
+  <section class="section" id="rooms">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Kamer-opset</div>
+        <h2 class="section-title">Ruimtes wat <em>rum die siel</em></h2>
+      </div>
+      <div class="rooms-grid">
+        <div class="room-card reveal">
+          <img src="photo-bedroom.jpg" alt="Hoofslaapkamer" onerror="this.src='https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=600'">
+          <div class="room-body">
+            <h4>Hoofslaapkamer</h4>
+            <p>Dubbelbed met pragtige uitsig. Dieperfecte plek om die oggend met 'n koppie koffie te verwelkom.</p>
+          </div>
+        </div>
+        <div class="room-card reveal">
+          <img src="photo-pool.jpg" alt="Tweede slaapkamer" onerror="this.src='https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600'">
+          <div class="room-body">
+            <h4>Tweede Slaapkamer</h4>
+            <p>Stapelbed wat plek bied aan 2 kinders of volwassenes. Sag en koel in die somer.</p>
+          </div>
+        </div>
+        <div class="room-card reveal">
+          <img src="photo-living.jpg" alt="Leefarea" onerror="this.src='https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=600'">
+          <div class="room-body">
+            <h4>Leefarea</h4>
+            <p>Gerieflik met 'n ekstra enkelbed. Ruim enough vir almal om te ontspan na 'n dag op die strand.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section reviews-bg" id="reviews">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Gaste se stem</div>
+        <h2 class="section-title" style="color:white;">Wat hulle <em>sê</em></h2>
+      </div>
+      <div class="review-score reveal">
+        <div class="review-big">4.9</div>
+        <div class="review-big-label">Uit 5 · 22 Resensies</div>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card reveal">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Perfect location in Stilbaai — close to everything and super safe. Terribly nice stay! Beautiful place, clean and neat. Rusks, milk, 5l of drinking water... Ronell het aan alles gedink."</p>
+          <div class="review-author">— Kristia V, Maart 2026</div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Had a wonderful stay. Very nice stay, neat and safe. Die Braai-area is die beste in die aand. Sal definitief terugkom!"</p>
+          <div class="review-author">— Jannie F, Februarie 2026</div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Ons het met die gesin gekom en kon nie 'n beter plek gevind het nie. Stilbaai is rustig, die strand is pragtig, en Rivierzicht het alles gehad wat ons nodig gehad het."</p>
+          <div class="review-author">— De Wet & Familie, Januarie 2026</div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"The loadshedding provisions are a game changer. We never even noticed the power cuts. The kitchen is fully equipped and the braai area is fantastic."</p>
+          <div class="review-author">— Craig S, Desember 2025</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="section" id="location">
+    <div class="location-grid">
+      <div class="location-map"></div>
+      <div class="location-info">
+        <h3>Stilbaai-Wes<br>Garden Route</h3>
+        <p><strong>43 Bergroos Drive</strong><br>Stilbaai-Wes, 6674<br>Wes-Kaap, Suid-Afrika</p>
+        <p>Skuinsgedeelte van winkels, restourante, die lagune en die strand. Stilbaai is bekend vir sy skoon strande, rustige waters en vriendelike gemeenskap — die perfekte ouwêreldse kusdorpie.</p>
+        <p><strong>Slaaptyd inklok:</strong> 14:00 – 19:00<br><strong>Uitklok:</strong> 10:00</p>
+        <div class="location-tag">Selfsorg · Alle ouderdomme welkom</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section class="section booking-bg" id="book">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Bespreking</div>
+        <h2 class="section-title">Begin jou <em>Stilbaai</em> storie</h2>
+      </div>
+      <div class="price-display reveal">
+        <div class="price-main">R900 <span>/ nag</span></div>
+        <div class="price-sub">Vir 2 mense · Slaap tot 5 · Teen R180/persoon</div>
+      </div>
+      <div class="cta-buttons reveal">
+        <a href="https://www.lekkeslaap.co.za/akkommodasie/rivierzicht" target="_blank" class="btn-primary">Bespreke Op Lekkeslaap</a>
+        <a href="https://www.airbnb.com" target="_blank" class="btn-outline" style="color:var(--charcoal);border-color:var(--charcoal);">Soek Op Airbnb</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-logo">Rivier<span>zicht</span></div>
+      <p>43 Bergroos Drive, Stilbaai-Wes, 6674 · Wes-Kaap</p>
+      <p style="margin-top:1.5rem;">&copy; 2026 Rivierzicht · Garden Route, Suid-Afrika</p>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 80);
+    });
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

@@ -71,70 +71,86 @@
         .nav-links a:hover, .nav-links a.active { color: var(--accent); }
         .nav-links a.active { color: var(--accent); font-weight: 600; }
 
-        /* ── Hero ── */
-        .hero {
-            min-height: 92vh;
+        /* ── Hero Carousel ── */
+        .hero-carousel {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            background: #1a1a1a;
+        }
+        .carousel-track {
             display: flex;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: kenBurns 12s ease-in-out infinite alternate;
+        }
+        @keyframes kenBurns {
+            0%   { transform: scale(1.0) translate(0, 0); }
+            100% { transform: scale(1.08) translate(-2%, -1%); }
+        }
+        .carousel-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(28,20,10,0.25) 0%,
+                rgba(28,20,10,0.15) 40%,
+                rgba(28,20,10,0.55) 100%
+            );
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             padding: 80px 40px 60px;
-            background: linear-gradient(170deg, var(--cream) 0%, var(--bg) 60%);
-            position: relative;
-            overflow: hidden;
         }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -20%;
-            right: -10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(184,137,90,0.08) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -10%;
-            left: -5%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(122,158,142,0.07) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-        .hero-badge {
+        .carousel-badge {
             display: inline-block;
-            background: var(--sage-light);
-            color: var(--sage);
-            font-size: 0.8rem;
+            background: rgba(255,255,255,0.18);
+            backdrop-filter: blur(8px);
+            color: rgba(255,255,255,0.92);
+            font-size: 0.78rem;
             font-weight: 600;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            padding: 6px 16px;
+            padding: 6px 18px;
             border-radius: 100px;
             margin-bottom: 28px;
+            border: 1px solid rgba(255,255,255,0.25);
         }
-        .hero h1 {
+        .carousel-slide h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2.8rem, 6vw, 5rem);
+            font-size: clamp(2.6rem, 6vw, 4.8rem);
             font-weight: 700;
             line-height: 1.1;
             margin-bottom: 20px;
-            color: var(--text);
+            color: #fff;
             letter-spacing: -0.03em;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
         }
-        .hero h1 em {
+        .carousel-slide h1 em {
             font-style: italic;
             color: var(--accent);
         }
-        .hero-sub {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            max-width: 560px;
-            margin: 0 auto 40px;
+        .carousel-slide .hero-sub {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.82);
+            max-width: 540px;
+            margin: 0 auto 36px;
             line-height: 1.7;
             font-weight: 300;
+            text-shadow: 0 1px 8px rgba(0,0,0,0.25);
         }
         .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
         .btn-primary {
@@ -149,35 +165,108 @@
             border: none;
             cursor: pointer;
         }
-        .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(184,137,90,0.35); }
+        .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(184,137,90,0.4); }
         .btn-secondary {
             background: transparent;
-            color: var(--text);
+            color: #fff;
             padding: 14px 32px;
             border-radius: 100px;
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
-            border: 1.5px solid rgba(44,36,23,0.2);
+            border: 1.5px solid rgba(255,255,255,0.5);
             transition: all 0.25s;
         }
-        .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
-        .hero-stats {
+        .btn-secondary:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+        /* ── Carousel Navigation ── */
+        .carousel-nav {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
             display: flex;
-            gap: 48px;
-            justify-content: center;
-            margin-top: 64px;
-            padding-top: 40px;
-            border-top: 1px solid rgba(184,137,90,0.15);
+            flex-direction: column;
+            gap: 12px;
+            z-index: 10;
         }
-        .hero-stat { text-align: center; }
-        .hero-stat-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+        .carousel-dot {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.18);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: rgba(255,255,255,0.6);
+            font-size: 0.72rem;
             font-weight: 700;
-            color: var(--accent);
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
         }
-        .hero-stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
+        .carousel-dot.active,
+        .carousel-dot:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            transform: scale(1.1);
+        }
+        /* ── Carousel Arrows ── */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s;
+            z-index: 10;
+            text-decoration: none;
+        }
+        .carousel-arrow:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-50%) scale(1.1); }
+        .carousel-arrow.prev { left: 24px; }
+        .carousel-arrow.next { right: 76px; }
+        /* ── Carousel Progress ── */
+        .carousel-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent);
+            transition: width 0.1s linear;
+            z-index: 10;
+        }
+        /* ── Slide captions ── */
+        .slide-caption {
+            position: absolute;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.6);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .carousel-nav { right: 16px; }
+            .carousel-arrow.next { right: 56px; }
+            .carousel-arrow.prev { left: 12px; }
+        }
 
         /* ── Properties ── */
         .properties { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
@@ -424,36 +513,143 @@
     </div>
 </nav>
 
-<!-- Hero -->
-<section class="hero">
-    <div>
-        <div class="hero-badge">🏆 Airbnb Superhost · ✨ Guest Favourite · 4.88 Stars</div>
-        <h1>Your <em>home away<br>from home</em></h1>
-        <p class="hero-sub">ModernStay curates South Africa's finest stay experiences — from Zimbali's coastal paradise to your perfect city retreat. Every detail, every time.</p>
-        <div class="hero-actions">
-            <a href="zimbali.html" class="btn-primary">Explore Zimbali</a>
-            <a href="about.html" class="btn-secondary">Our Story</a>
+<!-- Hero Carousel -->
+<section class="hero-carousel" id="heroCarousel">
+    <div class="carousel-track" id="carouselTrack">
+
+        <div class="carousel-slide" data-index="0">
+            <img src="images/01.jpg" alt="Zimbali coastal paradise" loading="eager">
+            <div class="carousel-overlay">
+                <div class="carousel-badge">🏆 Airbnb Superhost · ✨ Guest Favourite</div>
+                <h1>Your <em>home away<br>from home</em></h1>
+                <p class="hero-sub">ModernStay curates South Africa's finest stay experiences — from Zimbali's coastal paradise to your perfect city retreat.</p>
+                <div class="hero-actions">
+                    <a href="zimbali.html" class="btn-primary">Explore Zimbali</a>
+                    <a href="about.html" class="btn-secondary">Our Story</a>
+                </div>
+            </div>
+            <div class="slide-caption">Zimbali Coastal Resort</div>
         </div>
-        <div class="hero-stats">
-            <div class="hero-stat">
-                <div class="hero-stat-number">42+</div>
-                <div class="hero-stat-label">Verified Reviews</div>
+
+        <div class="carousel-slide" data-index="1">
+            <img src="images/02.jpg" alt="Modern interior" loading="lazy">
+            <div class="carousel-overlay">
+                <div class="carousel-badge">✨ Thoughtfully Curated Spaces</div>
+                <h1>Designed for<br><em>real living</em></h1>
+                <p class="hero-sub">Every home is chosen for warmth, comfort, and those little extras that make travel feel truly special.</p>
+                <div class="hero-actions">
+                    <a href="zimbali.html" class="btn-primary">View Properties</a>
+                    <a href="about.html" class="btn-secondary">Our Story</a>
+                </div>
             </div>
-            <div class="hero-stat">
-                <div class="hero-stat-number">4.88</div>
-                <div class="hero-stat-label">Average Rating</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-number">2</div>
-                <div class="hero-stat-label">Properties</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-number">100%</div>
-                <div class="hero-stat-label">Guest Satisfaction</div>
-            </div>
+            <div class="slide-caption">Zimbali — Interior</div>
         </div>
+
+        <div class="carousel-slide" data-index="2">
+            <img src="images/03.jpg" alt="Coastal views" loading="lazy">
+            <div class="carousel-overlay">
+                <div class="carousel-badge">🌊 Wake Up to Ocean Views</div>
+                <h1>The perfect<br><em>coastal escape</em></h1>
+                <p class="hero-sub">Fresh sea air, golden beaches, and all the space you need to truly unwind — just 20 minutes from Ballito.</p>
+                <div class="hero-actions">
+                    <a href="zimbali.html" class="btn-primary">Book Zimbali</a>
+                    <a href="micasa.html" class="btn-secondary">Also Available</a>
+                </div>
+            </div>
+            <div class="slide-caption">Zimbali — Views</div>
+        </div>
+
+        <div class="carousel-slide" data-index="3">
+            <img src="images/04.jpg" alt="ModernStay property" loading="lazy">
+            <div class="carousel-overlay">
+                <div class="carousel-badge">📍 Zimbali &amp; MiCasa</div>
+                <h1>Two properties,<br><em>one standard</em></h1>
+                <p class="hero-sub">From Zimbali's five-star coastal resort to MiCasa's warm city convenience — both held to the same exceptional standard.</p>
+                <div class="hero-actions">
+                    <a href="zimbali.html" class="btn-primary">Explore Zimbali</a>
+                    <a href="micasa.html" class="btn-secondary">Explore MiCasa</a>
+                </div>
+            </div>
+            <div class="slide-caption">Zimbali &amp; MiCasa</div>
+        </div>
+
+        <div class="carousel-slide" data-index="4">
+            <img src="images/05.jpg" alt="Guest experience" loading="lazy">
+            <div class="carousel-overlay">
+                <div class="carousel-badge">⭐ 4.88 Average Rating</div>
+                <h1>Guests love it.<br><em>We guarantee it.</em></h1>
+                <p class="hero-sub">42+ verified five-star reviews. Every detail managed, every expectation exceeded — guaranteed.</p>
+                <div class="hero-actions">
+                    <a href="zimbali.html" class="btn-primary">See Reviews</a>
+                    <a href="about.html" class="btn-secondary">Our Promise</a>
+                </div>
+            </div>
+            <div class="slide-caption">Guest Experience</div>
+        </div>
+
     </div>
+
+    <!-- Arrows -->
+    <a href="#" class="carousel-arrow prev" id="carouselPrev" aria-label="Previous">&#10094;</a>
+    <a href="#" class="carousel-arrow next" id="carouselNext" aria-label="Next">&#10095;</a>
+
+    <!-- Number Navigation -->
+    <nav class="carousel-nav" id="carouselNav" aria-label="Slide navigation">
+        <button class="carousel-dot active" data-slide="0">01</button>
+        <button class="carousel-dot" data-slide="1">02</button>
+        <button class="carousel-dot" data-slide="2">03</button>
+        <button class="carousel-dot" data-slide="3">04</button>
+        <button class="carousel-dot" data-slide="4">05</button>
+    </nav>
+
+    <!-- Progress Bar -->
+    <div class="carousel-progress" id="carouselProgress"></div>
 </section>
+
+<script>
+(function() {
+    const track  = document.getElementById('carouselTrack');
+    const dots   = document.querySelectorAll('.carousel-dot');
+    const prev   = document.getElementById('carouselPrev');
+    const next   = document.getElementById('carouselNext');
+    const prog   = document.getElementById('carouselProgress');
+    const SLIDES = 5;
+    const INTERVAL = 5000;
+    let current = 0;
+    let timer   = null;
+
+    function goTo(n) {
+        current = ((n % SLIDES) + SLIDES) % SLIDES;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        dots.forEach((d, i) => d.classList.toggle('active', i === current));
+        resetTimer();
+    }
+    function resetTimer() {
+        clearInterval(timer);
+        prog.style.width = '0%';
+        prog.style.transition = 'none';
+        // brief repaint
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            prog.style.transition = `width ${INTERVAL}ms linear`;
+            prog.style.width = '100%';
+        }));
+        timer = setInterval(() => goTo(current + 1), INTERVAL);
+    }
+    prev.addEventListener('click',  e => { e.preventDefault(); goTo(current - 1); });
+    next.addEventListener('click',  e => { e.preventDefault(); goTo(current + 1); });
+    dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.slide)));
+    // touch swipe
+    let startX = 0;
+    const carousel = document.getElementById('heroCarousel');
+    carousel.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
+    carousel.addEventListener('touchend',   e => {
+        const dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 50) goTo(dx < 0 ? current + 1 : current - 1);
+    });
+    // start
+    resetTimer();
+})();
+</script>
 
 <!-- Properties -->
 <section class="properties">

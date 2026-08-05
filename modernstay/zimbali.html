@@ -243,100 +243,34 @@
         }
         .amenity:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
 
-        /* ── Photo Gallery ── */
-        .gallery-section { padding: 80px 40px; background: var(--bg); }
-        .gallery-inner { max-width: 1200px; margin: 0 auto; }
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        /* ── Photos Strip ── */
+        .photos-section { padding: 80px 40px; background: var(--bg); overflow: hidden; }
+        .photos-inner { max-width: 1200px; margin: 0 auto; }
+        .photos-scroll {
+            display: flex;
             gap: 12px;
-            margin-top: 40px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
         }
-        .gallery-item {
+        .photos-scroll::-webkit-scrollbar { height: 4px; }
+        .photos-scroll::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+        .photo-thumb {
+            flex-shrink: 0;
+            width: 300px;
+            height: 200px;
             border-radius: 12px;
             overflow: hidden;
-            aspect-ratio: 4/3;
-            cursor: pointer;
-            position: relative;
+            scroll-snap-align: start;
         }
-        .gallery-item img {
+        .photo-thumb img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.35s;
+            transition: transform 0.3s;
         }
-        .gallery-item:hover img { transform: scale(1.06); }
-        .gallery-item .gallery-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.6));
-            color: #fff;
-            font-size: 0.72rem;
-            padding: 20px 12px 10px;
-            opacity: 0;
-            transition: opacity 0.25s;
-        }
-        .gallery-item:hover .gallery-caption { opacity: 1; }
-
-        /* ── Lightbox ── */
-        .lightbox {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 1000;
-            background: rgba(0,0,0,0.92);
-            align-items: center;
-            justify-content: center;
-        }
-        .lightbox.active { display: flex; }
-        .lightbox img {
-            max-width: 92vw;
-            max-height: 88vh;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 24px;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.25);
-            color: #fff;
-            font-size: 1.8rem;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-        .lightbox-close:hover { background: rgba(255,255,255,0.25); }
-        .lightbox-nav {
-            position: absolute;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .lightbox-nav button {
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.25);
-            color: #fff;
-            padding: 8px 20px;
-            border-radius: 100px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.2s;
-        }
-        .lightbox-nav button:hover { background: rgba(255,255,255,0.25); }
-        .lightbox-counter { color: rgba(255,255,255,0.6); font-size: 0.82rem; }
+        .photo-thumb:hover img { transform: scale(1.05); }
 
         /* ── Booking ── */
         .booking-section {
@@ -465,8 +399,7 @@
             .rooms-grid { grid-template-columns: 1fr; }
             .amenities-section { padding: 60px 16px; }
             .amenities-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-            .gallery-section { padding: 60px 16px; }
-            .gallery-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .photos-section { padding: 60px 16px; }
             .booking-section { padding: 60px 16px; }
             .reviews-section { padding: 60px 16px; }
             .reviews-grid { grid-template-columns: 1fr; }
@@ -562,28 +495,21 @@
     </div>
 </section>
 
-<!-- Photo Gallery -->
-<section class="gallery-section">
-    <div class="gallery-inner">
-        <div class="section-label">Photo Gallery</div>
-        <h2 class="section-title">A glimpse of what awaits</h2>
-
-        <div class="gallery-grid" id="gallery-grid">
-            <!-- Populated by JS -->
-        </div>
+<!-- Photos -->
+<section class="photos-section">
+    <div class="photos-inner">
+        <div class="section-label">A Glimpse</div>
+        <h2 class="section-title">What awaits at 13 Kiribati</h2>
+    </div>
+    <div class="photos-scroll" style="margin-top:40px; padding: 0 40px;">
+        <div class="photo-thumb"><img src="https://www.qail.co.za/modernstay/images/01.jpg" alt="Zimbali exterior" loading="lazy"></div>
+        <div class="photo-thumb"><img src="https://www.qail.co.za/modernstay/images/02.jpg" alt="Living area" loading="lazy"></div>
+        <div class="photo-thumb"><img src="https://www.qail.co.za/modernstay/images/03.jpg" alt="Ocean view" loading="lazy"></div>
+        <div class="photo-thumb"><img src="https://www.qail.co.za/modernstay/images/06.jpg" alt="Kitchen" loading="lazy"></div>
+        <div class="photo-thumb"><img src="https://www.qail.co.za/modernstay/images/07.jpg" alt="Bedroom" loading="lazy"></div>
+        <div class="photo-thumb"><img src="https://www.qail.co.za/modernstay/images/08.jpg" alt="Bathroom" loading="lazy"></div>
     </div>
 </section>
-
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
-    <button class="lightbox-close" onclick="closeLightbox()">×</button>
-    <img id="lb-img" src="" alt="" />
-    <div class="lightbox-nav">
-        <button onclick="navigateLb(-1)">← Prev</button>
-        <span class="lightbox-counter" id="lb-counter"></span>
-        <button onclick="navigateLb(1)">Next →</button>
-    </div>
-</div>
 
 <!-- Reviews -->
 <section class="reviews-section">
@@ -672,54 +598,6 @@
 
 <!-- WhatsApp Float -->
 <a href="https://wa.me/27600000000" class="whatsapp-float">💬</a>
-
-<script>
-(function() {
-    // --- GALLERY ---
-    const TOTAL_PHOTOS = 28;
-    let lbIndex = 1;
-
-    const galleryGrid = document.getElementById('gallery-grid');
-    if (galleryGrid) {
-        for (let i = 1; i <= TOTAL_PHOTOS; i++) {
-            const item = document.createElement('div');
-            item.className = 'gallery-item';
-            item.innerHTML = `<img src="https://www.qail.co.za/modernstay/images/${i}.jpg" alt="Photo ${i}" loading="lazy" />`;
-            item.onclick = () => openLightbox(i);
-            galleryGrid.appendChild(item);
-        }
-    }
-
-    function openLightbox(n) {
-        lbIndex = n;
-        updateLightbox();
-        document.getElementById('lightbox').classList.add('active');
-    }
-    window.openLightbox = openLightbox;
-
-    function closeLightbox() {
-        document.getElementById('lightbox').classList.remove('active');
-    }
-    window.closeLightbox = closeLightbox;
-
-    window.navigateLb = function(dir) {
-        lbIndex = ((lbIndex - 1 + dir + TOTAL_PHOTOS) % TOTAL_PHOTOS) + 1;
-        updateLightbox();
-    };
-
-    function updateLightbox() {
-        document.getElementById('lb-img').src = `https://www.qail.co.za/modernstay/images/${lbIndex}.jpg`;
-        document.getElementById('lb-counter').textContent = `${lbIndex} / ${TOTAL_PHOTOS}`;
-    }
-
-    document.addEventListener('keydown', function(e) {
-        if (!document.getElementById('lightbox').classList.contains('active')) return;
-        if (e.key === 'ArrowLeft') navigateLb(-1);
-        if (e.key === 'ArrowRight') navigateLb(1);
-        if (e.key === 'Escape') closeLightbox();
-    });
-})();
-</script>
 
 </body>
 </html>

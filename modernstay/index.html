@@ -487,31 +487,29 @@
         .footer-bottom { max-width: 1200px; margin: 40px auto 0; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; text-align: center; }
 
         @media (max-width: 768px) {
-            nav { padding: 0 20px; }
-            .nav-links { gap: 16px; }
-            .hero { padding: 60px 20px 40px; }
-            .hero-stats { gap: 24px; flex-wrap: wrap; }
-            .properties { padding: 60px 20px; }
-            .why-section { padding: 60px 20px; }
-            .testimonial-strip { padding: 60px 20px; }
-            .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+            nav { padding: 0 16px; }
+            .nav-links { gap: 12px; font-size: 0.78rem; }
+            .hero-carousel { height: 100svh; }
+            .carousel-overlay { padding: 60px 20px 48px; }
+            .carousel-slide h1 { font-size: clamp(1.8rem, 8vw, 3rem); }
+            .carousel-slide .hero-sub { font-size: 0.9rem; padding: 0 8px; }
+            .hero-actions { gap: 10px; }
+            .btn-primary, .btn-secondary { padding: 11px 22px; font-size: 0.85rem; }
+            .slide-caption { bottom: 72px; font-size: 0.65rem; }
+            .slide-number { top: 16px; right: 16px; font-size: 0.68rem; padding: 4px 10px; }
+            .properties { padding: 60px 16px; }
+            .properties-grid { grid-template-columns: 1fr; gap: 20px; }
+            .why-section { padding: 60px 16px; }
+            .why-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+            .testimonial-strip { padding: 60px 16px; }
+            .testimonial-grid { grid-template-columns: 1fr; }
+            .cta-banner { padding: 60px 20px; }
+            .footer-inner { grid-template-columns: 1fr; gap: 28px; padding: 0 20px; }
+            .footer-bottom { padding: 20px 20px 0; }
         }
     </style>
 </head>
 <body>
-
-<!-- Navigation -->
-<nav>
-    <div class="nav-inner">
-        <a href="index.html" class="nav-logo">Modern<span>Stay</span></a>
-        <ul class="nav-links">
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="zimbali.html">Zimbali</a></li>
-            <li><a href="micasa.html">MiCasa</a></li>
-            <li><a href="about.html">About</a></li>
-        </ul>
-    </div>
-</nav>
 
 <!-- Hero Carousel -->
 <section class="hero-carousel" id="heroCarousel">

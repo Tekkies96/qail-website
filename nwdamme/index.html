@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noordwes Damme — Steel Tanks &amp; Water Storage Solutions | South Africa</title>
+  <meta name="description" content="South African manufacturers of steel water tanks, grain dams, HDPE liners and fire fighting storage. From 1kl to 5000kl. Get a free quote today.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0a1628;
+      --blue: #1565c0;
+      --blue-light: #1e88e5;
+      --blue-dark: #0d47a1;
+      --orange: #e65100;
+      --orange-light: #ff6d00;
+      --grey-dark: #1a1a2e;
+      --grey-mid: #2d2d44;
+      --grey-light: #f4f6fa;
+      --white: #ffffff;
+      --text: #2c3e50;
+      --text-light: #607d8b;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+      background: var(--white);
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Montserrat', sans-serif;
+      line-height: 1.2;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: var(--navy);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+
+    nav .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    nav .logo-area img {
+      height: 50px;
+      width: auto;
+    }
+
+    nav .logo-area .logo-text {
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      line-height: 1.2;
+    }
+
+    nav .logo-text small {
+      display: block;
+      font-weight: 400;
+      font-size: 0.65rem;
+      color: #90caf9;
+      letter-spacing: 0.05em;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 32px;
+      align-items: center;
+    }
+
+    nav ul a {
+      color: #c8d8f0;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--white); }
+
+    nav .nav-cta {
+      background: var(--orange);
+      color: var(--white) !important;
+      padding: 9px 22px;
+      border-radius: 6px;
+      font-weight: 700 !important;
+      transition: background 0.2s;
+    }
+
+    nav .nav-cta:hover { background: var(--orange-light); }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    /* HERO */
+    .hero {
+      margin-top: 70px;
+      min-height: 90vh;
+      background: linear-gradient(105deg, var(--navy) 0%, var(--grey-dark) 60%, var(--blue-dark) 100%);
+      display: flex;
+      align-items: center;
+      padding: 80px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: var(--white);
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-text .badge {
+      display: inline-block;
+      background: rgba(30,136,229,0.2);
+      border: 1px solid var(--blue-light);
+      color: #90caf9;
+      padding: 5px 16px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      margin-bottom: 24px;
+    }
+
+    .hero-text h1 {
+      color: var(--white);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+
+    .hero-text h1 span { color: var(--orange-light); }
+
+    .hero-text p {
+      color: #a8c0e0;
+      font-size: 1.1rem;
+      margin-bottom: 36px;
+      max-width: 520px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .hero-stat .number {
+      color: var(--orange-light);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .hero-stat .label {
+      color: #78909c;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+    }
+
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--orange);
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover { background: var(--orange-light); transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      display: inline-block;
+      border: 2px solid rgba(255,255,255,0.3);
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: var(--white); background: rgba(255,255,255,0.05); }
+
+    .hero-img-area {
+      position: relative;
+    }
+
+    .hero-img-area img {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+
+    .hero-badge-overlay {
+      position: absolute;
+      bottom: -20px;
+      left: -20px;
+      background: var(--blue);
+      color: var(--white);
+      padding: 16px 24px;
+      border-radius: 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      box-shadow: 0 10px 30px rgba(21,101,192,0.5);
+    }
+
+    .hero-badge-overlay small {
+      display: block;
+      font-weight: 400;
+      opacity: 0.8;
+      font-size: 0.75rem;
+    }
+
+    /* SECTION BASE */
+    .section {
+      padding: 90px 40px;
+    }
+
+    .section-dark {
+      background: var(--grey-light);
+    }
+
+    .section-navy {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-label {
+      display: inline-block;
+      background: rgba(30,136,229,0.1);
+      color: var(--blue);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 30px;
+      margin-bottom: 16px;
+    }
+
+    .section-dark .section-label {
+      background: rgba(255,255,255,0.1);
+      color: #90caf9;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+
+    .section-navy .section-header h2 { color: var(--white); }
+
+    .section-header p {
+      color: var(--text-light);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .section-navy .section-header p { color: #90a8c0; }
+
+    /* PRODUCTS GRID */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+
+    .product-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid #e8ecf0;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.14);
+    }
+
+    .product-card-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .product-card-body {
+      padding: 28px;
+    }
+
+    .product-card-body h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .product-card-body p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .product-card-specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .spec-tag {
+      background: var(--grey-light);
+      color: var(--text);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid #e0e4e8;
+    }
+
+    /* CAPABILITIES STRIP */
+    .capabilities {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .capability {
+      text-align: center;
+      padding: 50px 30px;
+      background: var(--grey-mid);
+      border-right: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.2s;
+    }
+
+    .capability:last-child { border-right: none; }
+
+    .capability:hover { background: rgba(30,136,229,0.15); }
+
+    .cap-icon {
+      font-size: 2.4rem;
+      margin-bottom: 16px;
+    }
+
+    .capability h4 {
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .capability p {
+      color: #78909c;
+      font-size: 0.85rem;
+    }
+
+    /* SIZES TABLE */
+    .sizes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-top: 50px;
+    }
+
+    .size-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 30px;
+      border: 2px solid #e8ecf0;
+      transition: border-color 0.2s;
+    }
+
+    .size-card:hover { border-color: var(--blue); }
+
+    .size-card .size-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .size-card h4 {
+      color: var(--navy);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .size-card p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* WHY US */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .why-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 36px;
+      transition: background 0.2s;
+    }
+
+    .why-card:hover { background: rgba(255,255,255,0.09); }
+
+    .why-card .why-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+
+    .why-card h4 {
+      color: var(--white);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .why-card p {
+      color: #78909c;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* CTA */
+    .cta-section {
+      background: linear-gradient(135deg, var(--orange) 0%, #f57c00 100%);
+      padding: 90px 40px;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      color: var(--white);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .cta-section p {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.05rem;
+      margin-bottom: 36px;
+    }
+
+    .cta-section .btn-white {
+      background: var(--white);
+      color: var(--orange);
+      padding: 16px 40px;
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    .cta-section .btn-white:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(0,0,0,0.3);
+    }
+
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .contact-info h3 {
+      color: var(--navy);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .contact-item .ci-icon {
+      font-size: 1.4rem;
+      margin-top: 2px;
+    }
+
+    .contact-item h4 {
+      color: var(--navy);
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .contact-item p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .contact-form {
+      background: var(--grey-light);
+      border-radius: 16px;
+      padding: 40px;
+    }
+
+    .contact-form h3 {
+      color: var(--navy);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 2px solid #d0d7e0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: 'Open Sans', sans-serif;
+      transition: border-color 0.2s;
+      background: var(--white);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--blue);
+    }
+
+    .form-group textarea { height: 100px; resize: vertical; }
+
+    .form-submit {
+      background: var(--blue);
+      color: var(--white);
+      padding: 14px 32px;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s;
+    }
+
+    .form-submit:hover { background: var(--blue-dark); }
+
+    /* FOOTER */
+    footer {
+      background: var(--navy);
+      color: #78909c;
+      padding: 50px 40px 30px;
+      text-align: center;
+    }
+
+    footer .footer-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    footer p { font-size: 0.85rem; }
+
+    /* SCROLL TO TOP */
+    .scroll-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 48px;
+      height: 48px;
+      background: var(--blue);
+      color: var(--white);
+      border: none;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(21,101,192,0.4);
+      transition: background 0.2s;
+      z-index: 999;
+    }
+
+    .scroll-top:hover { background: var(--blue-dark); }
+    .scroll-top.visible { display: flex; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .mobile-menu-btn { display: block; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-img-area { display: none; }
+      .capabilities { grid-template-columns: repeat(2, 1fr); }
+      .contact-grid { grid-template-columns: 1fr; }
+      .section { padding: 60px 20px; }
+      .hero { padding: 60px 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .capabilities { grid-template-columns: 1fr 1fr; }
+      .hero-stats { gap: 20px; }
+    }
+
+    /* Mobile nav open */
+    nav ul.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background: var(--navy);
+      padding: 20px 40px;
+      gap: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav>
+    <div class="logo-area">
+      <img src="images/logo.png" alt="Noordwes Damme Logo" onerror="this.style.display='none'">
+      <div class="logo-text">Noordwes Damme<small>Steel Tanks &amp; Water Storage</small></div>
+    </div>
+    <ul id="navLinks">
+      <li><a href="#products">Products</a></li>
+      <li><a href="#why-us">Why Us</a></li>
+      <li><a href="#sizes">Sizing Guide</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
+    </ul>
+    <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">☰</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <span class="badge">🇿🇦 South African Manufacturer</span>
+        <h1>Built to Last.<br><span>Built for Africa.</span></h1>
+        <p>From farm dams to industrial fire tanks — we engineer and manufacture steel water storage solutions from 1kl to 5000kl. SABS-certified materials. Nationwide delivery.</p>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="number">5000kl</div>
+            <div class="label">Max Capacity</div>
+          </div>
+          <div class="hero-stat">
+            <div class="number">500+</div>
+            <div class="label">Projects Built</div>
+          </div>
+          <div class="hero-stat">
+            <div class="number">20+</div>
+            <div class="label">Years Experience</div>
+          </div>
+        </div>
+        <div class="hero-btns">
+          <a href="#contact" class="btn-primary">Request a Quote</a>
+          <a href="#products" class="btn-secondary">View Products</a>
+        </div>
+      </div>
+      <div class="hero-img-area">
+        <img src="images/steeldam-hero.png" alt="Steel dam installation" onerror="this.parentElement.style.display='none'">
+        <div class="hero-badge-overlay">
+          SABS-Certified Steel<small>10-Year Structural Warranty</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="section section-dark" id="products">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Our Products</span>
+        <h2>Complete Water Storage Solutions</h2>
+        <p>Whatever your water storage need — potable water, irrigation, fire protection or grain — we have a proven solution.</p>
+      </div>
+      <div class="products-grid">
+
+        <div class="product-card animate-on-scroll">
+          <img src="images/potable-water.jpg" alt="Potable Water Tanks" class="product-card-img">
+          <div class="product-card-body">
+            <h3>Potable Water Tanks</h3>
+            <p>Food-grade certified lining, roof included. Safe for drinking water storage on farms, factories, and developments.</p>
+            <div class="product-card-specs">
+              <span class="spec-tag">5kl – 500kl</span>
+              <span class="spec-tag">Food Grade Lining</span>
+              <span class="spec-tag">Roof Included</span>
+              <span class="spec-tag">50mm Outlet</span>
+            </div>
+            <a href="#contact" class="btn-primary" style="font-size:0.85rem;padding:10px 22px;">Request Quote</a>
+          </div>
+        </div>
+
+        <div class="product-card animate-on-scroll">
+          <img src="images/zinc-dams.jpg" alt="Zinc Dams" class="product-card-img">
+          <div class="product-card-body">
+            <h3>Zinc Dams</h3>
+            <p>Corrugated zinc steel tanks ideal for irrigation, livestock, and general water storage. Built for the harsh SA climate.</p>
+            <div class="product-card-specs">
+              <span class="spec-tag">1kl – 522kl</span>
+              <span class="spec-tag">Corrugated Zinc</span>
+              <span class="spec-tag">50mm Outlet</span>
+              <span class="spec-tag">40mm Overflow</span>
+            </div>
+            <a href="#contact" class="btn-primary" style="font-size:0.85rem;padding:10px 22px;">Request Quote</a>
+          </div>
+        </div>
+
+        <div class="product-card animate-on-scroll">
+          <img src="images/grain-dams.jpg" alt="Grain Dams" class="product-card-img">
+          <div class="product-card-body">
+            <h3>Grain Dams</h3>
+            <p>Sealed storage for grain, silage, and bulk commodities. Available with augers and compatible grain silos.</p>
+            <div class="product-card-specs">
+              <span class="spec-tag">5 – 400 tons</span>
+              <span class="spec-tag">Sealed Design</span>
+              <span class="spec-tag">Augers Available</span>
+              <span class="spec-tag">Silos Available</span>
+            </div>
+            <a href="#contact" class="btn-primary" style="font-size:0.85rem;padding:10px 22px;">Request Quote</a>
+          </div>
+        </div>
+
+        <div class="product-card animate-on-scroll">
+          <img src="images/fire-fighting.jpg" alt="Fire Fighting Tanks" class="product-card-img">
+          <div class="product-card-body">
+            <h3>Fire Fighting Storage</h3>
+            <p>Large-capacity tanks for fire suppression systems. Various outlet sizes to suit fire pump requirements.</p>
+            <div class="product-card-specs">
+              <span class="spec-tag">100kl – 5000kl</span>
+              <span class="spec-tag">Multiple Outlets</span>
+              <span class="spec-tag">Fire Pump Ready</span>
+              <span class="spec-tag">Industrial Grade</span>
+            </div>
+            <a href="#contact" class="btn-primary" style="font-size:0.85rem;padding:10px 22px;">Request Quote</a>
+          </div>
+        </div>
+
+        <div class="product-card animate-on-scroll">
+          <img src="images/zinc-lining.jpg" alt="Dam Linings" class="product-card-img">
+          <div class="product-card-body">
+            <h3>Linings for Concrete &amp; Zinc Dams</h3>
+            <p>Professional lining systems for concrete reservoirs and zinc tanks. Prevents leakage and extends dam life.</p>
+            <div class="product-card-specs">
+              <span class="spec-tag">Custom Fit</span>
+              <span class="spec-tag">Leak Prevention</span>
+              <span class="spec-tag">UV Resistant</span>
+              <span class="spec-tag">Durable</span>
+            </div>
+            <a href="#contact" class="btn-primary" style="font-size:0.85rem;padding:10px 22px;">Request Quote</a>
+          </div>
+        </div>
+
+        <div class="product-card animate-on-scroll">
+          <img src="images/hdpe-liners.jpg" alt="HDPE Earth Dam Liners" class="product-card-img">
+          <div class="product-card-body">
+            <h3>HDPE Liners for Earth Dams</h3>
+            <p>High-density polyethylene liners for earth dams and reservoirs. Resistant to UV, chemicals, and root penetration.</p>
+            <div class="product-card-specs">
+              <span class="spec-tag">HDPE Material</span>
+              <span class="spec-tag">Root Proof</span>
+              <span class="spec-tag">UV Stable</span>
+              <span class="spec-tag">Custom Sizing</span>
+            </div>
+            <a href="#contact" class="btn-primary" style="font-size:0.85rem;padding:10px 22px;">Request Quote</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITIES STRIP -->
+  <section class="section-navy" style="padding:0">
+    <div class="capabilities">
+      <div class="capability">
+        <div class="cap-icon">🏭</div>
+        <h4>SA Manufactured</h4>
+        <p>Proudly made in South Africa</p>
+      </div>
+      <div class="capability">
+        <div class="cap-icon">🛡️</div>
+        <h4>10-Year Warranty</h4>
+        <p>Structural guarantee on all tanks</p>
+      </div>
+      <div class="capability">
+        <div class="cap-icon">🚛</div>
+        <h4>Nationwide Delivery</h4>
+        <p>Delivered anywhere in South Africa</p>
+      </div>
+      <div class="capability">
+        <div class="cap-icon">📐</div>
+        <h4>Custom Engineering</h4>
+        <p>Tailored to your exact specs</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="section" id="why-us">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Why Choose Us</span>
+        <h2>Why South Africans Choose Noordwes Damme</h2>
+        <p>We don't just sell tanks — we engineer complete water storage solutions backed by decades of hands-on experience.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card animate-on-scroll">
+          <div class="why-icon">⚙️</div>
+          <h4>Engineered for SA Conditions</h4>
+          <p>Our tanks are built for extreme heat, UV exposure, and thecorrosive conditions common across South Africa's climate zones.</p>
+        </div>
+        <div class="why-card animate-on-scroll">
+          <div class="why-icon">💯</div>
+          <h4>Quality Materials Only</h4>
+          <p>We use SABS-certified steel and food-grade linings where required. No shortcuts, no substandard materials.</p>
+        </div>
+        <div class="why-card animate-on-scroll">
+          <div class="why-icon">🤝</div>
+          <h4>End-to-End Service</h4>
+          <p>From site assessment and engineering to delivery and installation support — we stay with you through the whole process.</p>
+        </div>
+        <div class="why-card animate-on-scroll">
+          <div class="why-icon">⏱️</div>
+          <h4>Fast Turnaround</h4>
+          <p>Most orders manufactured and dispatched within 2–3 weeks. We understand you need water storage, not excuses.</p>
+        </div>
+        <div class="why-card animate-on-scroll">
+          <div class="why-icon">💰</div>
+          <h4>Competitive Pricing</h4>
+          <p>Direct from manufacturer — no middlemen markup. Get the best price for South African-made quality.</p>
+        </div>
+        <div class="why-card animate-on-scroll">
+          <div class="why-icon">🌊</div>
+          <h4>Any Size, Any Shape</h4>
+          <p>From 1kl garden tanks to 5000kl industrial reservoirs — if you need it, we can build it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIZING GUIDE -->
+  <section class="section section-dark" id="sizes">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Sizing Guide</span>
+        <h2>Which Size Do You Need?</h2>
+        <p>Use this as a starting point. We help you size correctly — overbuying costs money, underbuying leaves you high and dry.</p>
+      </div>
+      <div class="sizes-grid">
+
+        <div class="size-card animate-on-scroll">
+          <div class="size-icon">🚿</div>
+          <h4>1kl – 20kl</h4>
+          <p>Homes, smallholdings, farm worker housing, nurseries. Ideal for rainwater harvesting or potable water backup.</p>
+        </div>
+
+        <div class="size-card animate-on-scroll">
+          <div class="size-icon">🏡</div>
+          <h4>20kl – 100kl</h4>
+          <p>Guest houses, small farms, irrigation reservoirs, community water points. Covers most agricultural needs.</p>
+        </div>
+
+        <div class="size-card animate-on-scroll">
+          <div class="size-icon">🏭</div>
+          <h4>100kl – 500kl</h4>
+          <p>Commercial developments, factories, game lodges, mining operations. Industrial-grade capacity with potable option.</p>
+        </div>
+
+        <div class="size-card animate-on-scroll">
+          <div class="size-icon">🔥</div>
+          <h4>500kl – 5000kl</h4>
+          <p>Fire suppression, large-scale agriculture, municipalities, industrial plants. Our largest engineered solutions.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to Get Started?</h2>
+      <p>Tell us your requirements and we'll send you a detailed, no-obligation quote within 24 hours.</p>
+      <a href="#contact" class="btn-white">Request Your Free Quote</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Get in Touch</h3>
+          <p style="color:var(--text-light);margin-bottom:30px;font-size:0.95rem;">Whether you need a small farm tank or a 5000kl industrial reservoir, we can help. Fill in the form or contact us directly.</p>
+
+          <div class="contact-item">
+            <div class="ci-icon">📞</div>
+            <div>
+              <h4>Phone / WhatsApp</h4>
+              <p><a href="tel:+27726000179" style="color:var(--blue);font-weight:600;">+27 72 600 0179</a></p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="ci-icon">📧</div>
+            <div>
+              <h4>Email</h4>
+              <p><a href="mailto:info@nwdamme.co.za" style="color:var(--blue);">info@nwdamme.co.za</a></p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="ci-icon">🌍</div>
+            <div>
+              <h4>Website</h4>
+              <p><a href="https://nwdamme.co.za" target="_blank" style="color:var(--blue);">nwdamme.co.za</a></p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="ci-icon">📍</div>
+            <div>
+              <h4>Service Area</h4>
+              <p>South Africa — Nationwide Delivery</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="ci-icon">⏰</div>
+            <div>
+              <h4>Response Time</h4>
+              <p>Quotes sent within 24 hours</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <h3>Request a Quote</h3>
+          <form id="quoteForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div class="form-group">
+              <label for="name">Full Name *</label>
+              <input type="text" id="name" name="name" placeholder="Jan Smit" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" placeholder="jan@farm.co.za" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone / WhatsApp *</label>
+              <input type="tel" id="phone" name="phone" placeholder="082 123 4567" required>
+            </div>
+            <div class="form-group">
+              <label for="product">Product Interest *</label>
+              <select id="product" name="product" required>
+                <option value="">Select a product...</option>
+                <option value="Potable Water Tank">Potable Water Tank (5kl–500kl)</option>
+                <option value="Zinc Dam">Zinc Dam (1kl–522kl)</option>
+                <option value="Grain Dam">Grain Dam (5–400 tons)</option>
+                <option value="Fire Fighting Tank">Fire Fighting Tank (100kl–5000kl)</option>
+                <option value="Concrete/Zinc Lining">Concrete / Zinc Dam Lining</option>
+                <option value="HDPE Earth Dam Liner">HDPE Earth Dam Liner</option>
+                <option value="Other">Other / Not Sure</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="size">Estimated Size (if known)</label>
+              <input type="text" id="size" name="size" placeholder="e.g. 50kl, 200kl, 5 ton grain">
+            </div>
+            <div class="form-group">
+              <label for="message">Project Details</label>
+              <textarea id="message" name="message" placeholder="Tell us about your project — location, purpose, timeline, any special requirements..."></textarea>
+            </div>
+            <button type="submit" class="form-submit">Send Quote Request</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Noordwes Damme</div>
+    <p style="margin-bottom:16px;">Steel Tanks &amp; Water Storage Solutions | South Africa</p>
+    <p>📞 <a href="tel:+27726000179" style="color:#90caf9;">+27 72 600 0179</a> &nbsp;|&nbsp; 📧 <a href="mailto:info@nwdamme.co.za" style="color:#90caf9;">info@nwdamme.co.za</a> &nbsp;|&nbsp; 🌐 <a href="https://nwdamme.co.za" style="color:#90caf9;">nwdamme.co.za</a></p>
+    <p style="margin-top:20px;color:#546e7a;">© 2026 Noordwes Damme. All rights reserved.</p>
+  </footer>
+
+  <!-- SCROLL TO TOP -->
+  <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">↑</button>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    // Scroll to top button
+    const scrollBtn = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      scrollBtn.classList.toggle('visible', window.scrollY > 400);
+    });
+
+    // Mobile nav close on link click
+    document.querySelectorAll('#navLinks a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+
+    // Scroll animations
+    const animEls = document.querySelectorAll('.animate-on-scroll');
+    const animObs = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          animObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    animEls.forEach(el => animObs.observe(el));
+
+    // Form submit — Formspree
+    document.getElementById('quoteForm').addEventListener('submit', function(e) {
+      // Let Formspree handle it normally
+      // Optionally show a thank-you message
+      const btn = this.querySelector('.form-submit');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+    });
+  </script>
+
+</body>
+</html>

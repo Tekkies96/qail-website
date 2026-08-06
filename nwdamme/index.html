@@ -12,9 +12,9 @@
 
     :root {
       --navy: #0a1628;
-      --blue: #1565c0;
-      --blue-light: #1e88e5;
-      --blue-dark: #0d47a1;
+      --primary: #c62828;
+      --primary-light: #e53935;
+      --primary-dark: #b71c1c;
       --orange: #e65100;
       --orange-light: #ff6d00;
       --grey-dark: #1a1a2e;
@@ -123,7 +123,7 @@
     .hero {
       margin-top: 70px;
       min-height: 90vh;
-      background: linear-gradient(105deg, var(--navy) 0%, var(--grey-dark) 60%, var(--blue-dark) 100%);
+      background: linear-gradient(105deg, var(--navy) 0%, var(--grey-dark) 60%, var(--primary-dark) 100%);
       display: flex;
       align-items: center;
       padding: 80px 40px;
@@ -155,7 +155,7 @@
     .hero-text .badge {
       display: inline-block;
       background: rgba(30,136,229,0.2);
-      border: 1px solid var(--blue-light);
+      border: 1px solid var(--primary-light);
       color: #90caf9;
       padding: 5px 16px;
       border-radius: 30px;
@@ -253,7 +253,7 @@
       position: absolute;
       bottom: -20px;
       left: -20px;
-      background: var(--blue);
+      background: var(--primary);
       color: var(--white);
       padding: 16px 24px;
       border-radius: 12px;
@@ -297,7 +297,7 @@
     .section-label {
       display: inline-block;
       background: rgba(30,136,229,0.1);
-      color: var(--blue);
+      color: var(--primary);
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
       font-size: 0.8rem;
@@ -445,7 +445,7 @@
       transition: border-color 0.2s;
     }
 
-    .size-card:hover { border-color: var(--blue); }
+    .size-card:hover { border-color: var(--primary); }
 
     .size-card .size-icon {
       font-size: 2rem;
@@ -619,13 +619,13 @@
     .form-group select:focus,
     .form-group textarea:focus {
       outline: none;
-      border-color: var(--blue);
+      border-color: var(--primary);
     }
 
     .form-group textarea { height: 100px; resize: vertical; }
 
     .form-submit {
-      background: var(--blue);
+      background: var(--primary);
       color: var(--white);
       padding: 14px 32px;
       border: none;
@@ -638,7 +638,7 @@
       transition: background 0.2s;
     }
 
-    .form-submit:hover { background: var(--blue-dark); }
+    .form-submit:hover { background: var(--primary-dark); }
 
     /* FOOTER */
     footer {
@@ -665,7 +665,7 @@
       right: 30px;
       width: 48px;
       height: 48px;
-      background: var(--blue);
+      background: var(--primary);
       color: var(--white);
       border: none;
       border-radius: 50%;
@@ -679,7 +679,7 @@
       z-index: 999;
     }
 
-    .scroll-top:hover { background: var(--blue-dark); }
+    .scroll-top:hover { background: var(--primary-dark); }
     .scroll-top.visible { display: flex; }
 
     /* ANIMATIONS */
@@ -1015,7 +1015,7 @@
             <div class="ci-icon">📞</div>
             <div>
               <h4>Phone / WhatsApp</h4>
-              <p><a href="tel:+27726000179" style="color:var(--blue);font-weight:600;">+27 72 600 0179</a></p>
+              <p><a href="tel:+27726000179" style="color:var(--primary);font-weight:600;">+27 72 600 0179</a></p>
             </div>
           </div>
 
@@ -1023,7 +1023,7 @@
             <div class="ci-icon">📧</div>
             <div>
               <h4>Email</h4>
-              <p><a href="mailto:info@nwdamme.co.za" style="color:var(--blue);">info@nwdamme.co.za</a></p>
+              <p><a href="mailto:info@nwdamme.co.za" style="color:var(--primary);">info@nwdamme.co.za</a></p>
             </div>
           </div>
 
@@ -1031,7 +1031,7 @@
             <div class="ci-icon">🌍</div>
             <div>
               <h4>Website</h4>
-              <p><a href="https://nwdamme.co.za" target="_blank" style="color:var(--blue);">nwdamme.co.za</a></p>
+              <p><a href="https://nwdamme.co.za" target="_blank" style="color:var(--primary);">nwdamme.co.za</a></p>
             </div>
           </div>
 
